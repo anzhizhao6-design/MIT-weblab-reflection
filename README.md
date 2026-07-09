@@ -1,4 +1,4 @@
-# MIT Web Lab Reflection
+# **MIT Web Lab Reflection**
 
 This repository documents my learning journey through the MIT Web Lab.
 
