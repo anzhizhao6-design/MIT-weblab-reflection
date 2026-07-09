@@ -11,7 +11,7 @@ This repository documents my learning journey through the MIT Web Lab.
 
 ## Workshop
 
-### Today's Hamster 🐹
+### Today's Hamster 
 
 A simple React practice project that displays a different hamster every day.
 
