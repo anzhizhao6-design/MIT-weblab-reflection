@@ -1,0 +1,275 @@
+/* ---- Page ---- */
+body {
+  background-color: #fff7ef;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  margin: 0;
+  padding: 24px;
+}
+
+/* ---- Utility ---- */
+.u-textCenter {
+  text-align: center;
+}
+
+/* ---- Title ---- */
+.page-title {
+  font-size: 52px;
+  color: #c0784a;
+  margin-bottom: 28px;
+}
+
+/* ---- Two-column row ---- */
+.row {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  padding: 8px 16px;
+  flex-wrap: wrap;
+}
+
+/* ---- Cards ---- */
+.card {
+  background-color: #fff8f0;
+  border: 3px solid #e8a870;
+  border-radius: 20px;
+  padding: 28px 32px;
+  flex: 1;
+  min-width: 260px;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  color: #b8733c;
+  font-size: 28px;
+  margin-top: 0;
+}
+
+.card p {
+  color: #5c4033;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+/* ---- Quote ---- */
+.quote {
+  font-size: 22px;
+  font-style: italic;
+  font-family: "Gaegu", "Comic Sans MS", cursive;
+  color: #a0724c !important;
+}
+
+/* ---- Big emoji ---- */
+.emoji-big {
+  font-size: 90px;
+  margin: 16px 0;
+}
+
+/* ---- Characteristic badge (in HamsterCard) ---- */
+.characteristic-badge {
+  display: inline-block;
+  background-color: #fef3e4;
+  border: 2px solid #e8c8a0;
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 18px !important;
+  color: #b8733c !important;
+  margin-top: 4px !important;
+}
+
+/* ---- Mood badge (in HamsterCard) ---- */
+.mood-badge {
+  font-size: 20px !important;
+  margin-top: 8px !important;
+}
+
+/* ---- Mood section (in HamsterInfo) ---- */
+.mood-section {
+  margin-top: 16px;
+}
+
+.mood-label {
+  font-size: 20px !important;
+  font-weight: bold;
+  margin-bottom: 8px !important;
+}
+
+.mood-bar-bg {
+  background-color: #f0e0d0;
+  border-radius: 10px;
+  height: 20px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mood-bar-fill {
+  background: linear-gradient(90deg, #f9a8a8, #fcd34d, #86efac);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.mood-number {
+  font-size: 15px !important;
+  color: #a08070 !important;
+  margin-top: 4px !important;
+}
+
+/* ---- Seed section ---- */
+.seed-section {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.seed-count {
+  font-size: 24px;
+  color: #5c4033;
+  margin-bottom: 8px;
+}
+
+.seed-button {
+  background-color: #fcd34d;
+  color: #5c4033;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 32px;
+  font-size: 18px;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.15s;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.seed-button:hover {
+  background-color: #fbbf24;
+  transform: translateY(-2px);
+}
+
+.seed-button:active {
+  transform: translateY(0);
+}
+
+/* ---- Reaction bubble ---- */
+.reaction-bubble {
+  display: inline-block;
+  margin-top: 2px;
+  background-color: #fff;
+  border: 2px solid #fcd34d;
+  border-radius: 16px;
+  padding: 14px 24px;
+  font-size: 20px;
+  font-family: "Gaegu", "Comic Sans MS", cursive;
+  color: #5c4033;
+  max-width: 420px;
+  animation: popIn 0.35s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.reaction-speaker {
+  font-weight: bold;
+  color: #c0784a;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ---- Food tray ---- */
+.food-tray {
+  margin-top: 20px;
+}
+
+.food-tray-title {
+  font-size: 20px;
+  color: #5c4033;
+  margin-bottom: 12px;
+}
+
+.food-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.food-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background-color: #fff;
+  border: 2px solid #e8d5c0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.food-item:hover {
+  transform: translateY(-3px);
+}
+
+.food-fav {
+  border-color: #fcd34d;
+  background-color: #fffdf5;
+}
+
+.food-hover {
+  border-color: #f59e0b;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+  transform: translateY(-3px);
+}
+
+.food-emoji {
+  font-size: 30px;
+}
+
+.food-label {
+  font-size: 11px;
+  color: #8b7355;
+}
+
+/* ---- Mobile ---- */
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    max-width: 90%;
+  }
+
+  .page-title {
+    font-size: 36px;
+  }
+
+  .seed-count {
+    font-size: 20px;
+  }
+
+  .seed-button {
+    font-size: 18px;
+  }
+}
