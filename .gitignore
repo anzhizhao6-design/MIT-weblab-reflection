@@ -4,7 +4,7 @@ node_modules
 # Vite build output
 dist
 
-# Environment files
+# Environment files (secrets — NEVER commit)
 .env
 .env.local
 .env.*.local
@@ -22,7 +22,11 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Editor backup files
+# Editor backup
 *~
 *.swp
 *.swo
+
+# Old workshop backups
+index-old.html
+styles-old.css

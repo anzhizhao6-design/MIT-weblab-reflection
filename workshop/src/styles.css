@@ -273,3 +273,446 @@ body {
     font-size: 18px;
   }
 }
+
+/* ======== NEW PAGES STYLES ======== */
+
+/* ---- Navbar ---- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px;
+  background-color: #fff8f0;
+  border-bottom: 2px solid #e8a870;
+  border-radius: 0 0 16px 16px;
+  margin-bottom: 32px;
+}
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #c0784a;
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 24px;
+}
+
+.navbar-links a {
+  color: #8b6914;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+  color: #c0784a;
+}
+
+/* ---- Hero (HomePage) ---- */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 32px 24px 48px;
+  max-width: 900px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.hero-left {
+  flex: 1;
+  min-width: 280px;
+}
+
+.hero-label {
+  font-size: 16px;
+  color: #b8733c;
+  margin-bottom: 8px;
+}
+
+.hero-heading {
+  font-size: 44px;
+  color: #c0784a;
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.hero-desc {
+  font-size: 18px;
+  color: #5c4033;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.hero-btn {
+  display: inline-block;
+  background-color: #fcd34d;
+  color: #5c4033;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 32px;
+  font-size: 18px;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.15s;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hero-btn:hover {
+  background-color: #fbbf24;
+  transform: translateY(-2px);
+}
+
+.hero-right {
+  flex-shrink: 0;
+}
+
+/* ---- Hamster Avatar ---- */
+.hamster-avatar {
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #e8a870;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s;
+}
+
+.hamster-avatar:hover {
+  transform: scale(1.05);
+}
+
+.hamster-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- About section ---- */
+.about-section {
+  text-align: center;
+  padding: 48px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  color: #5c4033;
+}
+
+.about-section h2 {
+  color: #c0784a;
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.about-section p {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+/* ---- Hamster Page ---- */
+.hamster-page {
+  display: flex;
+  gap: 32px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.profile-card {
+  background-color: #fff8f0;
+  border: 3px solid #e8a870;
+  border-radius: 20px;
+  padding: 28px;
+  text-align: center;
+  flex: 1;
+  min-width: 260px;
+  max-width: 340px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.profile-card .hamster-avatar {
+  margin: 0 auto 16px;
+}
+
+.profile-card h2 {
+  color: #b8733c;
+  font-size: 28px;
+  margin: 16px 0 4px;
+}
+
+.profile-age {
+  color: #a08070;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.profile-personality {
+  display: inline-block;
+  background-color: #fef3e4;
+  border: 2px solid #e8c8a0;
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: 16px;
+  color: #b8733c;
+  margin: 8px 0;
+}
+
+.profile-details {
+  text-align: left;
+  margin: 16px 0;
+}
+
+.profile-details p {
+  color: #5c4033;
+  font-size: 16px;
+  margin: 6px 0;
+}
+
+.profile-bio {
+  color: #5c4033;
+  font-size: 15px;
+  line-height: 1.6;
+  font-style: italic;
+  margin-top: 12px;
+}
+
+/* ---- Hamster side (Feed + Chat) ---- */
+.hamster-side {
+  flex: 2;
+  min-width: 320px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---- Feed ---- */
+.feed-section {
+  background-color: #fff8f0;
+  border: 3px solid #e8a870;
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.feed-section h3 {
+  color: #b8733c;
+  font-size: 22px;
+  margin: 0 0 12px;
+}
+
+.feed-post {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e8d5c0;
+}
+
+.feed-post:last-child {
+  border-bottom: none;
+}
+
+.feed-dot {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.feed-post p {
+  color: #5c4033;
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---- Chat ---- */
+.chat-box {
+  background-color: #fff8f0;
+  border: 3px solid #e8a870;
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-box h3 {
+  color: #b8733c;
+  font-size: 22px;
+  margin: 0 0 12px;
+}
+
+.chat-messages {
+  flex: 1;
+  min-height: 180px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 8px;
+  background-color: #fffdf8;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.chat-hint {
+  color: #a08070;
+  text-align: center;
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+.chat-bubble {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.chat-bubble.user {
+  flex-direction: row-reverse;
+}
+
+.chat-role {
+  font-size: 13px;
+  color: #a08070;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: center;
+}
+
+.chat-bubble p {
+  background-color: #fff;
+  border: 2px solid #e8d5c0;
+  border-radius: 14px;
+  padding: 8px 14px;
+  font-size: 15px;
+  color: #5c4033;
+  margin: 0;
+  max-width: 75%;
+  line-height: 1.4;
+}
+
+.chat-bubble.user p {
+  background-color: #fef3e4;
+  border-color: #fcd34d;
+}
+
+.chat-typing {
+  color: #a08070 !important;
+  font-style: italic;
+  font-size: 14px !important;
+}
+
+.chat-error {
+  color: #e88a6a;
+  text-align: center;
+  font-size: 14px;
+  padding: 8px;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 10px 16px;
+  border: 2px solid #e8d5c0;
+  border-radius: 20px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #5c4033;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+  border-color: #fcd34d;
+}
+
+.chat-send-btn {
+  background-color: #fcd34d;
+  color: #5c4033;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  background-color: #fbbf24;
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Hamster action buttons ---- */
+.hamster-actions {
+  text-align: center;
+  margin: 32px 0;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  color: #b8733c;
+  border: 2px solid #e8a870;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.btn-secondary:hover {
+  background-color: #fff8f0;
+  transform: translateY(-2px);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 700px) {
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .hero-heading {
+    font-size: 32px;
+  }
+
+  .hamster-page {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-card {
+    max-width: 90%;
+  }
+
+  .hamster-side {
+    max-width: 90%;
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
