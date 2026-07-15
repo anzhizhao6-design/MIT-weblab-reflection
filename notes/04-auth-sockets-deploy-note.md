@@ -1,6 +1,6 @@
-# web.lab 2026 — Advanced Topics Notes
+# web.lab 2026 — React Patterns, Auth, Sockets & Deploy Notes
 
-> MIT web.lab IAP 2026 • [Schedule](https://site.weblab.is/schedule)
+> MIT web.lab IAP 2026 • [Schedule](https://site.weblab.is/schedule) • [YouTube Playlist](https://www.youtube.com/playlist?list=PLVAxjdyIU8_z6iFliCz-n9zqf_ZRsbyPA)
 
 ---
 
@@ -17,7 +17,7 @@ const UserContext = createContext(null);
 
 <UserContext.Provider value={userId}>
   <Navbar />
-</UserContext.Provider>
+</UserContext.Provider>;
 
 // Anywhere deep in the tree:
 const userId = useContext(UserContext);
@@ -36,11 +36,11 @@ Client-side routing — no server request on navigation:
 </Route>
 ```
 
-| Concept | Purpose |
-|---------|---------|
-| `<Outlet />` | Placeholder for matched child route |
-| `:param` | Dynamic URL segment (`/profile/123`) |
-| `useParams()` | Read `:userId` from URL |
+| Concept       | Purpose                              |
+| ------------- | ------------------------------------ |
+| `<Outlet />`  | Placeholder for matched child route  |
+| `:param`      | Dynamic URL segment (`/profile/123`) |
+| `useParams()` | Read `:userId` from URL              |
 
 ---
 
@@ -56,10 +56,10 @@ Client-side routing — no server request on navigation:
 
 ```js
 // ❌ Never store plaintext
-password: "hunter2"
+password: "hunter2";
 
 // ✅ Store hash
-passwordHash: "$2b$10$7NkfBv..."
+passwordHash: "$2b$10$7NkfBv...";
 ```
 
 Hash functions are **one-way** — can't reverse. Server compares: `hash(input) === storedHash`.
@@ -70,12 +70,12 @@ web.lab shortcut: **Use Google Sign-In.** Let Google handle passwords.
 
 After login, how does the server remember you?
 
-| | Session | JWT |
-|------|---------|-----|
-| **Storage** | Server-side table | Client (the token itself) |
-| **Sent via** | Cookie (auto) | Manually in headers |
-| **Security** | Data on server | Token is proof — don't leak |
-| **Structure** | ID → lookup | `header.payload.signature` |
+|               | Session           | JWT                         |
+| ------------- | ----------------- | --------------------------- |
+| **Storage**   | Server-side table | Client (the token itself)   |
+| **Sent via**  | Cookie (auto)     | Manually in headers         |
+| **Security**  | Data on server    | Token is proof — don't leak |
+| **Structure** | ID → lookup       | `header.payload.signature`  |
 
 **Flow:** Login → server creates session → `Set-Cookie` → browser auto-attaches cookie on every request.
 
@@ -120,7 +120,7 @@ SESSION_SECRET=random
 ```
 
 ```js
-require('dotenv').config();
+require("dotenv").config();
 const url = process.env.MONGO_SRV;
 ```
 

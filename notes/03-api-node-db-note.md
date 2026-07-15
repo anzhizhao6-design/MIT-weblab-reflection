@@ -1,6 +1,6 @@
 # web.lab 2026 — APIs, Node & DB Notes
 
-> MIT web.lab IAP 2026 • [Schedule](https://site.weblab.is/schedule)
+> MIT web.lab IAP 2026 • [Schedule](https://site.weblab.is/schedule) • [YouTube Playlist](https://www.youtube.com/playlist?list=PLVAxjdyIU8_z6iFliCz-n9zqf_ZRsbyPA)
 
 ---
 

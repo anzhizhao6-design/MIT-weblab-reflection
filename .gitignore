@@ -30,3 +30,6 @@ npm-debug.log*
 # Old workshop backups
 index-old.html
 styles-old.css
+
+# SQLite database
+data/hamster.db
