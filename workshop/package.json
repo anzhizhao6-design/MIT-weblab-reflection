@@ -6,11 +6,15 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "node server/index.js",
+    "db:seed": "node server/db/seed.js",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^16.4.0",
     "express": "^4.21.0",
+    "mongoose": "^8.8.0",
+    "openai": "^4.73.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0"

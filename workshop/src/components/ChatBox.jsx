@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { getUserId } from '../utils/user.js';
 
 /**
  * ChatBox — user types a message, hamster replies via backend API.
@@ -31,7 +32,7 @@ const ChatBox = ({ hamster }) => {
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, hamsterId: hamster.id }),
+        body: JSON.stringify({ message: text, hamsterId: hamster.id, userId: getUserId() }),
       });
 
       if (!response.ok) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HamsterAvatar from "../components/HamsterAvatar.jsx";
@@ -6,6 +6,7 @@ import Feed from "../components/Feed.jsx";
 import FoodTray from "../components/FoodTray.jsx";
 import ChatBox from "../components/ChatBox.jsx";
 import hamsters from "../data/hamsters.js";
+import { getUserId } from "../utils/user.js";
 
 /** Convert mood score (0-100) into a label + emoji. */
 const getMoodLabel = (score) => {
@@ -43,12 +44,30 @@ const HamsterPage = () => {
   const [moodScore, setMoodScore] = useState(hamster.initialMoodScore);
   const [reaction, setReaction] = useState(null);
 
+  // Record visit to backend when hamster loads
+  useEffect(() => {
+    const userId = getUserId();
+    fetch('/api/visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, hamsterId: hamster.id }),
+    }).catch(() => {}); // silent — don't block the UI
+  }, [hamster.id]);
+
   const handleFeed = () => {
     const newSeeds = seeds + 1;
     const newMood = Math.min(moodScore + hamster.moodBoost, 100);
     setSeeds(newSeeds);
     setMoodScore(newMood);
     setReaction(pickReaction(hamster, newMood));
+
+    // Record feed to backend
+    const userId = getUserId();
+    fetch('/api/feed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, hamsterId: hamster.id }),
+    }).catch(() => {});
   };
 
   const handleMoodDown = (amount, message) => {
