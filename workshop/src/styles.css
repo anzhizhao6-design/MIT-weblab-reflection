@@ -198,17 +198,17 @@ body {
 }
 
 .food-tray-title {
-  font-size: 20px;
-  color: #5c4033;
+  font-size: 18px;
+  color: #b8733c;
   margin-bottom: 12px;
 }
 
 .food-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
-  max-width: 520px;
+  max-width: 560px;
   margin: 0 auto;
 }
 
@@ -216,13 +216,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   background-color: #fff;
   border: 2px solid #e8d5c0;
-  border-radius: 14px;
-  padding: 10px 14px;
+  border-radius: 10px;
+  padding: 10px 10px;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
   font-family: inherit;
 }
 
@@ -297,7 +300,12 @@ body {
 
 .navbar-links {
   display: flex;
-  gap: 24px;
+  gap: 32px;
+  align-items: center;
+}
+
+.navbar-links .account-dropdown {
+  margin-left: 0;
 }
 
 .navbar-links a {
@@ -312,65 +320,249 @@ body {
   color: #c0784a;
 }
 
-/* ---- Hero (HomePage) ---- */
-.hero {
+.navbar-visit-btn {
+  background: none;
+  border: 2px solid #e8a870;
+  color: #b8733c;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.navbar-visit-btn:hover {
+  background-color: #fff8f0;
+}
+
+.navbar-link-btn {
+  background: none;
+  border: none;
+  color: #8b6914;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.navbar-link-btn:hover {
+  color: #c0784a;
+}
+
+/* ---- Account dropdown ---- */
+.account-dropdown {
+  position: relative;
+}
+
+.account-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #fff;
+  border: 2px solid #e8a870;
+  border-radius: 14px;
+  padding: 14px 18px;
+  min-width: 260px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 48px;
-  padding: 32px 24px 48px;
-  max-width: 900px;
-  margin: 0 auto;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.hero-left {
-  flex: 1;
-  min-width: 280px;
+.account-label {
+  font-size: 12px;
+  color: #a08070;
+  min-width: 80px;
 }
 
-.hero-label {
+.account-id {
+  font-size: 13px;
+  color: #5c4033;
+  font-family: monospace;
+}
+
+.account-action {
+  background: none;
+  border: 1px solid #e8d5c0;
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  color: #8b6914;
+  transition: background-color 0.15s;
+}
+
+.account-action:hover {
+  background-color: #fff8f0;
+}
+
+.account-create {
+  color: #b8733c;
+  border-color: #e8a870;
+}
+
+.account-switch {
+  display: flex;
+  gap: 4px;
+}
+
+.account-input {
+  width: 130px;
+  padding: 3px 8px;
+  border: 1px solid #e8d5c0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+}
+
+.account-input:focus {
+  border-color: #fcd34d;
+}
+
+.account-error {
+  color: #e88a6a;
+  font-size: 11px;
+  margin-left: 88px;
+}
+
+/* ---- Hero card ---- */
+.hero-card-wrapper {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+.hero-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background:
+    linear-gradient(135deg, rgba(255,247,239,0.4) 0%, rgba(255,247,239,0.15) 50%, rgba(255,247,239,0) 100%),
+    url("/home.jpg") center/cover no-repeat;
+  border: 3px solid #e8a870;
+  border-radius: 24px;
+  padding: 48px 40px;
+  text-decoration: none;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  min-height: 240px;
+}
+
+.hero-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hero-card-text {
+  flex: 1;
+}
+
+.hero-card-text .hero-label {
   font-size: 16px;
   color: #b8733c;
   margin-bottom: 8px;
 }
 
-.hero-heading {
-  font-size: 44px;
+.hero-card-text .hero-heading {
+  font-size: 40px;
   color: #c0784a;
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   line-height: 1.2;
 }
 
-.hero-desc {
-  font-size: 18px;
+.hero-card-text .hero-desc {
+  font-size: 17px;
   color: #5c4033;
-  margin-bottom: 24px;
   line-height: 1.6;
+  max-width: 560px;
 }
 
-.hero-btn {
-  display: inline-block;
+.hero-card-arrow {
+  flex-shrink: 0;
+  margin-left: 24px;
+}
+
+.hero-card-arrow span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
   background-color: #fcd34d;
   color: #5c4033;
-  border: none;
-  border-radius: 30px;
-  padding: 14px 32px;
-  font-size: 18px;
-  font-family: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.15s;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: bold;
+  transition: transform 0.2s;
 }
 
-.hero-btn:hover {
-  background-color: #fbbf24;
-  transform: translateY(-2px);
+.hero-card:hover .hero-card-arrow span {
+  transform: translateX(4px);
 }
 
-.hero-right {
-  flex-shrink: 0;
+/* ---- About card ---- */
+.about-card-wrapper {
+  max-width: 800px;
+  margin: 0 auto 48px;
+  padding: 0 16px;
+}
+
+.about-card {
+  background-color: #fff8f0;
+  border: 2px solid #e8d5c0;
+  border-radius: 20px;
+  padding: 28px 32px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.about-card h2 {
+  color: #b8733c;
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+
+.about-card p {
+  color: #5c4033;
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---- About section (simple) ---- */
+.about-section {
+  text-align: center;
+  padding: 36px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.about-section h2 {
+  color: #b8733c;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.about-section p {
+  color: #5c4033;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 /* ---- Hamster Avatar ---- */
@@ -412,15 +604,460 @@ body {
   line-height: 1.7;
 }
 
-/* ---- Hamster Page ---- */
+/* ---- Hamster Page v2: two-column layout ---- */
+
+.hp-row {
+  display: flex;
+  gap: 8px;
+  max-width: 1400px;
+  margin: 0 auto 20px;
+  padding: 0 20px;
+  align-items: flex-start;
+}
+
+/* Left column: avatar + flip card + food */
+.hp-left {
+  flex: 2 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.hp-left-top {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  padding-left: 100px;
+}
+
+.hp-left-top .hamster-avatar {
+  flex-shrink: 0;
+}
+
+/* Chat in right column */
+.hp-row .chat-box {
+  flex: 0 0 340px;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  max-height: 550px;
+}
+
+.hp-row .chat-messages {
+  flex: 1;
+  max-height: none;
+  min-height: 260px;
+}
+
+.hp-row .chat-input-row {
+  margin-top: auto;
+}
+
+/* Flip card fills remaining space */
+.hp-left-top .flip-card {
+  flex: 1 1 auto;
+  max-width: none;
+  height: 240px;
+}
+
+/* Diary left-aligned */
+.flip-back .feed-section {
+  text-align: left;
+}
+
+.flip-back .feed-post {
+  justify-content: flex-start;
+}
+
+.hp-row {
+  display: flex;
+  gap: 28px;
+  max-width: 1400px;
+  margin: 0 auto 20px;
+  padding: 0 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+/* Avatar */
+.hp-row .hamster-avatar {
+  flex-shrink: 0;
+  width: 150px;
+  height: 150px;
+}
+
+/* Profile card v2 — white, hover lifts, compact horizontal rows */
+.hp-card {
+  flex: 1.3 1 300px;
+  max-width: 360px;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 14px 20px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.hp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.hp-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.hp-card-top h2 {
+  color: #b8733c;
+  font-size: 20px;
+  margin: 0;
+}
+
+.hp-card-mid {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.hp-card-mid span {
+  color: #5c4033;
+  font-size: 13px;
+}
+
+.hp-card-mood {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ---- Flip Card ---- */
+.flip-card {
+  flex: 2 1 auto;
+  max-width: none;
+  height: 250px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-inner {
+  transform: rotateX(180deg);
+}
+
+.flip-front,
+.flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.flip-front {
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 20px;
+  transition: box-shadow 0.2s;
+}
+
+.flip-front:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.flip-back {
+  background-color: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transform: rotateX(180deg);
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flip-back .feed-section {
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.flip-back .feed-section h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.flip-back .feed-posts-scroll {
+  max-height: none;
+  overflow-y: visible;
+}
+
+.flip-back .feed-post {
+  padding: 5px 0;
+}
+
+.flip-back .feed-post p {
+  font-size: 14px;
+}
+
+.flip-hint {
+  font-size: 11px;
+  color: #c0a080;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Row 2: Food + Chat — same height, aligned */
+.hp-food {
+  flex: 1.2 1 420px;
+  max-width: 1000px;
+  text-align: center;
+  margin-top: 4px;
+  padding-left: 30px;
+}
+
+.hp-row .chat-box {
+  flex: 1 1 280px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  margin-left: 24px;
+  margin-top: -8px;
+}
+
+.food-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.food-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background-color: #fff;
+  border: 2px solid #e8d5c0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.food-item.food-fav {
+  border-color: #fcd34d;
+  background-color: #fffdf5;
+}
+
+.food-emoji {
+  font-size: 28px;
+}
+
+.food-label {
+  font-size: 11px;
+  color: #8b7355;
+}
+
+.hp-row .chat-messages {
+  flex: 1;
+  min-height: 0;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Food tray title — match chat title */
+.food-tray-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #b8733c;
+  margin-bottom: 12px;
+  margin-top: 0;
+}
+
+.profile-bar .hamster-avatar {
+  flex-shrink: 0;
+}
+
+.profile-bar-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-bar-top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.profile-bar-top h2 {
+  color: #b8733c;
+  font-size: 24px;
+  margin: 0;
+}
+
+.profile-bar-age {
+  color: #a08070;
+  font-size: 14px;
+}
+
+.profile-bar-personality {
+  background-color: #fef3e4;
+  border: 2px solid #e8c8a0;
+  border-radius: 16px;
+  padding: 2px 12px;
+  font-size: 14px;
+  color: #b8733c;
+}
+
+.profile-bar-details {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.profile-bar-details span {
+  color: #5c4033;
+  font-size: 14px;
+}
+
+.profile-bar-mood {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mood-label-inline {
+  font-size: 14px;
+  font-weight: bold;
+  color: #5c4033;
+  white-space: nowrap;
+}
+
+.mood-bar-inline {
+  flex: 1;
+  max-width: 200px;
+  height: 12px;
+}
+
+.mood-number-inline {
+  font-size: 12px;
+  color: #a08070;
+  white-space: nowrap;
+}
+
+/* Feed sidebar (right of profile, scrollable) */
+.feed-sidebar {
+  flex: 1 1 260px;
+  max-width: 340px;
+  max-height: 180px;
+  overflow-y: auto;
+  background-color: #fff8f0;
+  border: 3px solid #e8a870;
+  border-radius: 20px;
+  padding: 14px 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.feed-sidebar .feed-section {
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.feed-sidebar .feed-section h3 {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+.feed-sidebar .feed-post p {
+  font-size: 14px;
+}
+
+/* Bottom row: 2 columns (Food + Chat) */
+.hamster-bottom {
+  display: flex;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.bottom-food {
+  flex: 1 1 300px;
+  max-width: 480px;
+  text-align: center;
+}
+
+.bottom-chat {
+  flex: 1.5 1 320px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-chat .chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-chat .chat-messages {
+  flex: 1;
+  min-height: 200px;
+  max-height: none;
+}
+
+/* Clean up: hide old seed section elements in new layout */
+.bottom-food .seed-section {
+  margin-top: 0;
+}
+
+.bottom-food .reaction-bubble {
+  margin-top: 10px;
+}
 .hamster-page {
   display: flex;
-  gap: 32px;
-  max-width: 960px;
+  gap: 24px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 8px 16px;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: stretch;
 }
 
 .profile-card {
@@ -429,9 +1066,8 @@ body {
   border-radius: 20px;
   padding: 28px;
   text-align: center;
-  flex: 1;
-  min-width: 260px;
-  max-width: 340px;
+  flex: 0 0 280px;
+  max-width: 300px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   height: fit-content;
 }
@@ -482,14 +1118,47 @@ body {
   margin-top: 12px;
 }
 
-/* ---- Hamster side (Feed + Chat) ---- */
-.hamster-side {
-  flex: 2;
-  min-width: 320px;
-  max-width: 560px;
+/* ---- Memory section ---- */
+.memory-section {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e8d5c0;
+}
+
+.memory-section p {
+  color: #a08070;
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+/* ---- Middle column (Feed + FoodTray) ---- */
+.hamster-middle {
+  flex: 1.6 1 400px;
+  max-width: 540px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
+}
+
+/* ---- Right column (Chat — tall) ---- */
+.hamster-side {
+  flex: 1.5 1 360px;
+  max-width: 480px;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hamster-side .chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hamster-side .chat-messages {
+  flex: 1;
+  min-height: 300px;
+  max-height: none;
 }
 
 /* ---- Feed ---- */
@@ -543,8 +1212,8 @@ body {
 }
 
 .chat-box h3 {
-  color: #b8733c;
   font-size: 22px;
+  color: #b8733c;
   margin: 0 0 12px;
 }
 
@@ -677,7 +1346,9 @@ body {
   font-family: inherit;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s, transform 0.15s;
+  transition:
+    background-color 0.2s,
+    transform 0.15s;
 }
 
 .btn-secondary:hover {
@@ -697,17 +1368,12 @@ body {
     font-size: 32px;
   }
 
-  .hamster-page {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .profile-card {
-    max-width: 90%;
-  }
-
-  .hamster-side {
-    max-width: 90%;
+  .hp-row .chat-box,
+  .hp-food,
+  .hp-card,
+  .hp-row .feed-section {
+    max-width: 95%;
+    flex: 1 1 100%;
   }
 
   .navbar {

@@ -1,17 +1,19 @@
-/**
- * Navbar — shared navigation bar with brand and links.
- * Props: none
- */
 import { Link } from 'react-router-dom';
+import AccountDropdown from './UserIdPrompt.jsx';
 
-const Navbar = () => {
+const Navbar = ({ onVisitAnother }) => {
   return (
     <nav className="navbar">
-      <Link to="/" className="navbar-brand">🐹 Hamster Daily</Link>
+      <Link to="/" className="navbar-brand">Hamster Daily</Link>
       <div className="navbar-links">
         <Link to="/">Home</Link>
         <Link to="/hamster">Today's Hamster</Link>
-        <a href="#about">About</a>
+        {onVisitAnother && (
+          <button className="navbar-link-btn" onClick={onVisitAnother}>
+            Visit Another
+          </button>
+        )}
+        <AccountDropdown />
       </div>
     </nav>
   );

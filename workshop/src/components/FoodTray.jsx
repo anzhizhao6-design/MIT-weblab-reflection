@@ -112,7 +112,7 @@ const FoodTray = ({ hamster, onFeed, onMoodDown }) => {
 
   return (
     <div className="food-tray">
-      <p className="food-tray-title">🍽️ Pick a snack for {hamster.name}:</p>
+      <p className="food-tray-title">What snack will you give {hamster.name}?</p>
       <div className="food-row">
         {foods.map((food) => {
           const isFav = food.name === hamster.favouriteFood;

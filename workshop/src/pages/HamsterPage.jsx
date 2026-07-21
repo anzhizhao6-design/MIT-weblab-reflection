@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import HamsterAvatar from "../components/HamsterAvatar.jsx";
 import Feed from "../components/Feed.jsx";
@@ -8,7 +7,6 @@ import ChatBox from "../components/ChatBox.jsx";
 import hamsters from "../data/hamsters.js";
 import { getUserId } from "../utils/user.js";
 
-/** Convert mood score (0-100) into a label + emoji. */
 const getMoodLabel = (score) => {
   if (score >= 80) return "Overjoyed 🤩";
   if (score >= 60) return "Happy 😊";
@@ -17,13 +15,11 @@ const getMoodLabel = (score) => {
   return "Hungry 😢";
 };
 
-/** Pick a random hamster different from the current one. */
 const pickAnother = (current) => {
   const others = hamsters.filter((h) => h.id !== current.id);
   return others[Math.floor(Math.random() * others.length)];
 };
 
-/** Pick a reaction: shy hamsters warm up when overjoyed. */
 const pickReaction = (hamster, moodAfterFeed) => {
   if (hamster.overjoyedReactions && moodAfterFeed >= 80) {
     const list = hamster.overjoyedReactions;
@@ -34,24 +30,24 @@ const pickReaction = (hamster, moodAfterFeed) => {
 };
 
 const HamsterPage = () => {
-  // Pick a random hamster once when the page loads
-  const [hamster, setHamster] = useState(() => {
-    return hamsters[Math.floor(Math.random() * hamsters.length)];
-  });
-
-  // Mood & feed state
+  const [hamster, setHamster] = useState(() => hamsters[Math.floor(Math.random() * hamsters.length)]);
   const [seeds, setSeeds] = useState(0);
   const [moodScore, setMoodScore] = useState(hamster.initialMoodScore);
   const [reaction, setReaction] = useState(null);
+  const [memory, setMemory] = useState(null);
+  const [flipped, setFlipped] = useState(false);
 
-  // Record visit to backend when hamster loads
   useEffect(() => {
     const userId = getUserId();
     fetch('/api/visit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, hamsterId: hamster.id }),
-    }).catch(() => {}); // silent — don't block the UI
+    })
+      .then(() => fetch(`/api/memory?userId=${userId}&hamsterId=${hamster.id}`))
+      .then((r) => r.json())
+      .then(setMemory)
+      .catch(() => {});
   }, [hamster.id]);
 
   const handleFeed = () => {
@@ -60,13 +56,10 @@ const HamsterPage = () => {
     setSeeds(newSeeds);
     setMoodScore(newMood);
     setReaction(pickReaction(hamster, newMood));
-
-    // Record feed to backend
-    const userId = getUserId();
     fetch('/api/feed', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, hamsterId: hamster.id }),
+      body: JSON.stringify({ userId: getUserId(), hamsterId: hamster.id }),
     }).catch(() => {});
   };
 
@@ -75,7 +68,7 @@ const HamsterPage = () => {
     setReaction(message);
   };
 
-  const handleMeetAnother = () => {
+  const handleVisitAnother = () => {
     const next = pickAnother(hamster);
     setHamster(next);
     setSeeds(0);
@@ -87,73 +80,64 @@ const HamsterPage = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar onVisitAnother={handleVisitAnother} />
 
-      <div className="hamster-page">
-        {/* Profile card */}
-        <div className="profile-card">
-          <HamsterAvatar src={hamster.image} alt={hamster.name} size={160} />
-          <h2>{hamster.name}</h2>
-          <p className="profile-age">{hamster.age} old</p>
-          <p className="profile-personality">{hamster.personality}</p>
-          <div className="profile-details">
-            <p>
-              <strong>Favourite Food:</strong> {hamster.favouriteFood}
-            </p>
-            <p>
-              <strong>Hobby:</strong> {hamster.hobby}
-            </p>
-          </div>
-          <p className="profile-bio">{hamster.bio}</p>
+      {/* Left column: Avatar + Flip Card + Snack */}
+      <div className="hp-row">
+        <div className="hp-left">
+          <div className="hp-left-top">
+            <HamsterAvatar src={hamster.image} alt={hamster.name} size={180} />
 
-          {/* Mood bar */}
-          <div className="mood-section">
-            <p className="mood-label"> Mood: {moodLabel}</p>
-            <div className="mood-bar-bg">
-              <div
-                className="mood-bar-fill"
-                style={{ width: `${moodScore}%` }}
-              />
+            <div className={`flip-card ${flipped ? 'flipped' : ''}`} onClick={() => setFlipped(!flipped)}>
+              <div className="flip-inner">
+                {/* Front: Profile Info */}
+                <div className="flip-front hp-card">
+                  <div className="hp-card-top">
+                    <h2>{hamster.name}</h2>
+                    <span className="profile-age">{hamster.age}</span>
+                    <span className="profile-personality">{hamster.personality}</span>
+                  </div>
+                  <div className="hp-card-mid">
+                    <span>🍽️ {hamster.favouriteFood}</span>
+                    <span>🎯 {hamster.hobby}</span>
+                    {memory && memory.visitCount > 0 && (
+                      <span>👋 {memory.visitCount} visit{memory.visitCount !== 1 ? 's' : ''}</span>
+                    )}
+                    {memory && memory.totalFeeds > 0 && (
+                      <span>🍽️ Fed {memory.totalFeeds}</span>
+                    )}
+                  </div>
+                  <div className="hp-card-mood">
+                    <span className="mood-label-inline">💛 {moodLabel}</span>
+                    <div className="mood-bar-bg mood-bar-inline">
+                      <div className="mood-bar-fill" style={{ width: `${moodScore}%` }} />
+                    </div>
+                    <span className="mood-number-inline">{moodScore}/100</span>
+                  </div>
+                  <p className="flip-hint">Click to flip ↻</p>
+                </div>
+
+                {/* Back: Hamster Diary */}
+                <div className="flip-back hp-card">
+                  <Feed feed={hamster.feed} name={hamster.name} />
+                  <p className="flip-hint">Click to flip back ↺</p>
+                </div>
+              </div>
             </div>
-            <p className="mood-number">{moodScore} / 100</p>
           </div>
-        </div>
 
-        {/* Right column: Feed + FoodTray + Chat */}
-        <div className="hamster-side">
-          <Feed feed={hamster.feed} name={hamster.name} />
-
-          {/* Food tray */}
-          <div className="seed-section">
-            <p className="seed-count">
-              {hamster.name} has been fed <strong>{seeds}</strong> time
-              {seeds !== 1 ? "s" : ""}!
-            </p>
-            <FoodTray
-              hamster={hamster}
-              onFeed={handleFeed}
-              onMoodDown={handleMoodDown}
-            />
+          <div className="hp-food">
+            <FoodTray hamster={hamster} onFeed={handleFeed} onMoodDown={handleMoodDown} />
             {reaction && (
               <div className="reaction-bubble">
-                <span className="reaction-speaker">{hamster.name}:</span>{" "}
-                {reaction}
+                <span className="reaction-speaker">{hamster.name}:</span> {reaction}
               </div>
             )}
           </div>
-
-          <ChatBox hamster={hamster} />
         </div>
-      </div>
 
-      {/* Buttons */}
-      <div className="hamster-actions">
-        <button className="btn-secondary" onClick={handleMeetAnother}>
-          Meet Another Hamster
-        </button>
-        <Link to="/" className="btn-secondary">
-          Back Home
-        </Link>
+        {/* Right column: Chat (tall, aligned with left column) */}
+        <ChatBox hamster={hamster} />
       </div>
     </div>
   );
