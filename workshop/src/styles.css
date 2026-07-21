@@ -735,6 +735,16 @@ body {
   font-size: 13px;
 }
 
+.hp-card-memory {
+  margin-top: 4px;
+}
+
+.hp-card-memory p {
+  color: #a08070;
+  font-size: 12px;
+  margin: 1px 0;
+}
+
 .hp-card-mood {
   display: flex;
   align-items: center;

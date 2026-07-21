@@ -100,13 +100,17 @@ const HamsterPage = () => {
                   <div className="hp-card-mid">
                     <span>🍽️ {hamster.favouriteFood}</span>
                     <span>🎯 {hamster.hobby}</span>
-                    {memory && memory.visitCount > 0 && (
-                      <span>👋 {memory.visitCount} visit{memory.visitCount !== 1 ? 's' : ''}</span>
-                    )}
-                    {memory && memory.totalFeeds > 0 && (
-                      <span>🍽️ Fed {memory.totalFeeds}</span>
-                    )}
                   </div>
+                  {memory && (memory.visitCount > 0 || memory.totalFeeds > 0) && (
+                    <div className="hp-card-memory">
+                      {memory.visitCount > 0 && (
+                        <p>👋 Visited {memory.visitCount} time{memory.visitCount !== 1 ? 's' : ''}</p>
+                      )}
+                      {memory.totalFeeds > 0 && (
+                        <p>🍽️ Fed {memory.totalFeeds} time{memory.totalFeeds !== 1 ? 's' : ''}</p>
+                      )}
+                    </div>
+                  )}
                   <div className="hp-card-mood">
                     <span className="mood-label-inline">💛 {moodLabel}</span>
                     <div className="mood-bar-bg mood-bar-inline">
