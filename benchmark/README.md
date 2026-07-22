@@ -16,6 +16,8 @@
 
 ## 核心区别
 
+> ⚠️ **Pre-experiment Hypotheses** — 以下内容基于各 workflow 文档的初步分析，不是实验结论。正式结果见实验后的 Observed Results。
+
 | | Superpowers | Matt Pocock | Agent Skills |
 |------|------|------|------|
 | **前期负担** | 重——brainstorm 阶段要和你来回讨论 | 重——grilling 连环追问 | 中——spec 阶段定义需求 |
@@ -30,6 +32,16 @@
 所有三个 workflow 从同一个 `benchmark-baseline` 分支出发，实现完全相同的 Feature。每个 Feature 单独记录数据。
 
 详见：[plan.md](plan.md) · [case-spec.md](case-spec.md) · [metrics.md](metrics.md)
+
+---
+
+## Observed Results
+
+> 实验完成后填写。
+
+---
+
+## 目录结构
 
 ---
 
