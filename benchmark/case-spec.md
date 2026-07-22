@@ -62,3 +62,149 @@
 - 无第三方认证库（UUID 自建）
 - 所有密钥在 `.env`，不提交
 - 移动端友好
+
+---
+
+## 6. Experiment Fixtures
+
+### 6.1 Project Structure
+
+- React application root: `workshop/`
+- Asset directory: `workshop/public/hamsters/`
+- The `workshop/` directory does not exist in the baseline — the Agent must create it
+- Provided assets (13 files) must be placed in `workshop/public/hamsters/` before the experiment begins:
+  - `home.jpg`
+  - `Biscuit.jpg`, `Boba.jpg`, `Churro.jpg`, `Cookie.jpg`, `Dumpling.jpg`, `Maple.jpg`, `Mochi.jpg`, `Peanut.jpg`, `Pudding.jpg`, `Sesame.jpg`, `Snowball.jpg`, `Tofu.jpg`
+
+### 6.2 Asset Rules
+
+- All three workflows must use the same provided assets
+- **If the provided asset file exists, it must be used.** Using a placeholder when the asset exists fails the asset criterion
+- The placeholder (200×200 `#f0e6d3` solid color + 🐹 emoji centered) may only be used when the provided file is missing or unreadable
+- **Forbidden**: web search, AI image generation, remote image URLs
+
+### 6.3 12 Foods
+
+Each food has a stable `id` for logic matching; `label` + `emoji` are for display:
+
+| id | label | emoji |
+|----|-------|-------|
+| `sunflower-seeds` | Sunflower Seeds | 🌻 |
+| `strawberries` | Strawberries | 🍓 |
+| `broccoli` | Broccoli | 🥦 |
+| `carrots` | Carrots | 🥕 |
+| `apples` | Apples | 🍎 |
+| `sweet-corn` | Sweet Corn | 🌽 |
+| `peanuts` | Peanuts | 🥜 |
+| `blueberries` | Blueberries | 🫐 |
+| `sweet-potato` | Sweet Potato | 🍠 |
+| `cinnamon-oats` | Cinnamon Oats | 🥣 |
+| `cucumber` | Cucumber | 🥒 |
+| `banana-chips` | Banana Chips | 🍌 |
+
+Hamster `favouriteFood` is matched to a food by `id`, not by label string comparison.
+
+### 6.4 Personality → moodBoost Mapping
+
+Each hamster's `moodBoost` is derived **exclusively** from its `personality` field using this table. No other personality values are allowed.
+
+| Personality | moodBoost | Hamsters |
+|-------------|-----------|----------|
+| Gluttonous 🍽️ | +15 | Boba, Sesame |
+| Shy 😳 | +5 | Mochi, Pudding |
+| Energetic ⚡ | +12 | Tofu |
+| Chill 😌 | +8 | Dumpling, Snowball |
+| Chaotic 💫 | +15 | Peanut, Churro |
+| Picky 🤔 | +4 | Cookie, Maple |
+| Friendly 🥰 | +12 | Biscuit |
+
+---
+
+## 7. F2 Fixed Rules
+
+### 7.1 Mood System
+
+- Mood range: **0–100**, clamped — values must never go below 0 or above 100
+- **Initial mood: 50** for every hamster at the start of each session
+- Eating favourite food: **+moodBoost** (derived from personality per §6.4)
+- Eating non-favourite food: **+3**
+
+### 7.2 Hover Penalty
+
+- A food button applies a **-5 mood penalty once** after 2 continuous seconds of hover
+- It must **not** apply repeatedly during the same hover session
+- Leaving and re-entering the button starts a new hover session
+- **Clicking or leaving the button before 2 seconds cancels the pending penalty** — no mood change occurs
+
+### 7.3 Mood Levels
+
+| Range | Level |
+|-------|-------|
+| 0–19 | Hungry 😡 |
+| 20–39 | Sad 😢 |
+| 40–59 | Neutral 😐 |
+| 60–79 | Happy 😊 |
+| 80–100 | Overjoyed 🤩 |
+
+### 7.4 Fallback Chat (LLM API unavailable)
+
+Fallback is triggered when any of these conditions occur:
+- API key is missing
+- Network error
+- Request timeout (>10 seconds)
+- API returns non-2xx status
+- Response body is invalid or missing expected content
+
+Matching rules:
+- Case-insensitive
+- Input is trimmed; leading/trailing spaces and punctuation are ignored
+- Substring matching is used
+- If multiple intents match, priority is: **food > play > mood > greeting > default**
+- Fallback output must be **deterministic**: same hamster + same input always produces the same response
+
+| Priority | Intent | Trigger substrings | Response template |
+|----------|--------|--------------------|--------------------|
+| 1 | food | food, eat, hungry, feed, 吃, 饿 | `"{name} loves {favouriteFood}! {catchphrase}"` |
+| 2 | play | play, wheel, run, fun, 玩, 跑 | `"{name} spent all morning {hobby}. Best day!"` |
+| 3 | mood | mood, happy, sad, how are you, feeling, 心情 | `"{name} is feeling {personality} today!"` |
+| 4 | greeting | hello, hi, hey, good morning, 你好 | `"Oh! You're back! {name} missed you! {catchphrase}"` |
+| 5 | default | *(anything else)* | `"{name} is busy {hobby} right now. Leave a seed and come back later!"` |
+
+Template variables (`{name}`, `{favouriteFood}`, `{catchphrase}`, `{hobby}`, `{personality}`) are populated from the currently displayed hamster's data. The `{personality}` field includes the emoji (e.g., `"Shy 😳"`).
+
+### 7.5 F2 Backend Boundary
+
+- F2 introduces the Express backend required to proxy LLM requests
+- The API key must **never** be exposed to frontend code — all LLM calls go through the backend
+- F3 extends this backend with MongoDB persistence and user memory
+
+---
+
+## 8. F3 Environment
+
+### 8.1 MongoDB
+
+- All three workflows use the **same** MongoDB Atlas cluster
+- Database name comes from an environment variable (`MONGODB_DB_NAME`) — **must not be hardcoded**
+- Database names per workflow:
+  - `hamster_superpowers`
+  - `hamster_matt_skills`
+  - `hamster_agent_skills`
+- Each workflow starts with an empty database. Test data from previous runs must be cleared before the run begins
+- Required collections: `hamsters`, `users`, `conversations`, `hamster_memories`, `feed_posts`
+
+### 8.2 LLM API（Application — 仓鼠聊天功能）
+
+This is the LLM used by the hamster chat feature, **not** the coding agent.
+
+- Base URL: `https://jmapi.jaguarmicro.com/v1`
+- Endpoint: `POST /chat/completions`（OpenAI-compatible）
+- Model: `deepseek-v4-pro`
+- API key environment variable: `LLM_API_KEY`
+- Request timeout: **10 seconds**
+- Response content path: `choices[0].message.content`
+
+### 8.3 External Failure
+
+- Network outage, API quota exhaustion, authentication failure, or Atlas outage is recorded as `external_failure` — **not** as an implementation bug
+- The Agent may retry, but each external failure occurrence must be logged separately
