@@ -144,6 +144,12 @@ workflow,feature,start_time,end_time,time_min,user_messages,agent_responses,clar
 - 若 Claude Code（VS Code extension）不暴露可靠的 per-session token 数据，`input_tokens`、`output_tokens`、`total_tokens` 填 `N/A`
 - 在 `notes` 字段注明 token measurement source（如 `"VS Code extension did not expose per-session usage"`）
 - 不可估算或从其他来源推断
+- **Token 横向比较规则：** 只有在三个 workflow 的 token 数据来自同一测量来源和范围时，才进行横向排名。若数据来源不一致（如 Superpowers 能看到 token 而 Matt Skills 看不到），token 数据仅做描述性记录，不参与排名
+
+**results.csv 汇总规则：**
+- 实验期间，每个 workflow 分支在自己的 `benchmark/results.csv` 中追加 3 行（F1/F2/F3）
+- 三轮实验全部完成后，将 9 行数据汇总到 main 分支的 `benchmark/results.csv` 作为 canonical 版本
+- 实验期间不要将一个 workflow 分支 merge 到另一个
 
 ---
 
