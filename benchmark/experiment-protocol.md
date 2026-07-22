@@ -8,7 +8,7 @@
 
 | 变量 | 固定值 |
 |------|--------|
-| Baseline commit | `685a1da` |
+| Baseline commit | `4e46671` |
 | Case specification | `benchmark/case-spec.md`（冻结版本） |
 | Evaluation metrics | `benchmark/metrics.md`（冻结版本） |
 | Coding Agent Model | Claude Code 实际使用的 Claude 模型（实验开始前通过 `/status` 记录） |
@@ -29,7 +29,7 @@
 每个 workflow 一个独立分支，从同一个 baseline commit 分出：
 
 ```
-685a1da (baseline)
+4e46671 (baseline)
     │
     ├── workflow/superpowers
     ├── workflow/matt-skills
