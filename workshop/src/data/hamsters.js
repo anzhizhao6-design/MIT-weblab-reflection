@@ -26,6 +26,11 @@ const hamsters = [
     image: '/hamsters/Biscuit.jpg',
     catchphrase: 'You\'re my favorite human!',
     moodBoost: 12,
+    diary: [
+      'Met a new human today! They had the BEST sunflower seeds. I did my happy dance and they smiled so big!',
+      'Spent the afternoon collecting twigs for my nest. It\'s going to be the coziest nest in the whole colony. Just wait!',
+      'Dreamt about an endless field of sunflower seeds last night. Woke up and my cheeks were already twitching with excitement!',
+    ],
   },
   {
     name: 'Boba',
@@ -37,6 +42,11 @@ const hamsters = [
     image: '/hamsters/Boba.jpg',
     catchphrase: 'Just one more bite... maybe two!',
     moodBoost: 15,
+    diary: [
+      'Tried a new snack today — cinnamon oats! I ate so many my cheeks looked like two little balloons. No regrets!',
+      'The human left the food jar open for 0.3 seconds. That was all I needed. Best. Day. Ever.',
+      'Note to self: six meals a day might be too many. (Just kidding, it\'s definitely not enough.)',
+    ],
   },
   {
     name: 'Churro',
@@ -48,6 +58,11 @@ const hamsters = [
     image: '/hamsters/Churro.jpg',
     catchphrase: 'Wheeee! Where am I going? Nobody knows!',
     moodBoost: 15,
+    diary: [
+      'REARRANGED MY ENTIRE BEDDING AT 3 AM!!! The old layout was boring. The new layout is also boring but at least it\'s DIFFERENT!',
+      'I hid a banana chip somewhere and now I can\'t find it. This is either a tragedy or a fun treasure hunt. Stay tuned.',
+      'Ran in zigzags today until I got dizzy. Then I ran in circles. Then I napped for 10 minutes and did it all again.',
+    ],
   },
   {
     name: 'Cookie',
@@ -59,6 +74,11 @@ const hamsters = [
     image: '/hamsters/Cookie.jpg',
     catchphrase: 'Hmm... I suppose this will do.',
     moodBoost: 4,
+    diary: [
+      'Inspected 47 sunflower seeds today. Three were acceptable. The standards must be maintained.',
+      'The human gave me a blueberry. I examined it from every angle. It passed the test. Barely.',
+      'Someone rearranged my food bowl. UNACCEPTABLE. I have spent two hours restoring proper color order.',
+    ],
   },
   {
     name: 'Dumpling',
@@ -70,6 +90,11 @@ const hamsters = [
     image: '/hamsters/Dumpling.jpg',
     catchphrase: 'Zzz... five more minutes...',
     moodBoost: 8,
+    diary: [
+      'Took three naps today. The first was excellent. The second was transcendent. The third was just showing off.',
+      'Found the coziest corner behind the water bottle. No one can see me here. Perfect for some quality dozing.',
+      'The wheel was looking at me today. I looked back. We came to an understanding. I napped instead.',
+    ],
   },
   {
     name: 'Maple',
@@ -81,6 +106,11 @@ const hamsters = [
     image: '/hamsters/Maple.jpg',
     catchphrase: 'This presentation is simply unacceptable.',
     moodBoost: 4,
+    diary: [
+      'Organized my food bowl by color gradient today. Red strawberries → orange carrots → yellow corn. A masterpiece.',
+      'The human added a new seed to my bowl without arranging it properly. I had to redo the WHOLE layout. Sigh.',
+      'Today\'s strawberry was perfectly symmetrical. I almost didn\'t want to eat it. Almost.',
+    ],
   },
   {
     name: 'Mochi',
@@ -92,6 +122,11 @@ const hamsters = [
     image: '/hamsters/Mochi.jpg',
     catchphrase: 'Oh! You see me? *hides*',
     moodBoost: 5,
+    diary: [
+      'The human came close to my cage today. I hid behind the wheel. They left a corn kernel. Maybe... maybe they\'re nice?',
+      'I drew a tiny heart in the sand when no one was looking. If anyone finds it, I\'ll deny everything.',
+      'Someone said my name today and I nearly fainted. But they also brought sweet corn, so maybe talking to humans isn\'t so scary?',
+    ],
   },
   {
     name: 'Peanut',
@@ -103,6 +138,11 @@ const hamsters = [
     image: '/hamsters/Peanut.jpg',
     catchphrase: 'PEANUTS! Did someone say PEANUTS?!',
     moodBoost: 15,
+    diary: [
+      'DUG A TUNNEL TODAY!!! It went nowhere but WHO CARES!!! The dirt was flying everywhere and it was GLORIOUS!!!',
+      'Someone said the word "peanut" within earshot and I have been vibrating with excitement for the past four hours.',
+      'Attempted to swim in the peanut jar. The human caught me. Worth it. I smelled like peanuts for the rest of the day.',
+    ],
   },
   {
     name: 'Pudding',
@@ -114,6 +154,11 @@ const hamsters = [
     image: '/hamsters/Pudding.jpg',
     catchphrase: '... *draws a heart in the sand* ...',
     moodBoost: 5,
+    diary: [
+      'Drew a spiral pattern in the sand today. It represents the infinite cycle of seeds and naps. Or maybe I just like spirals.',
+      'The human watched me draw for a whole minute. I got nervous and hid. But later I found a cucumber slice waiting for me. They understand.',
+      'Started a new sand art piece today. It\'s a portrait of... well, you\'ll see when it\'s done. Art takes time.',
+    ],
   },
   {
     name: 'Sesame',
@@ -125,6 +170,11 @@ const hamsters = [
     image: '/hamsters/Sesame.jpg',
     catchphrase: 'Look at these cheeks! Masterpieces!',
     moodBoost: 15,
+    diary: [
+      'Achieved PERFECT cheek symmetry today! Two identical apple chunks. I stared at my reflection for an hour. Magnificent.',
+      'The human laughed at my cheeks. I forgave them because they brought more apples. My cheeks forgive, but they never forget.',
+      'New record: fit an entire apple slice plus three seeds in my right cheek alone. The left cheek is demanding equal treatment.',
+    ],
   },
   {
     name: 'Snowball',
@@ -136,6 +186,11 @@ const hamsters = [
     image: '/hamsters/Snowball.jpg',
     catchphrase: 'The wheel turns, but the hamster stays still.',
     moodBoost: 8,
+    diary: [
+      'Sat on the wheel today. Did not run on it. The wheel is not for running — it is a meditation platform. Few understand this.',
+      'Contemplated the nature of seeds. They are tiny, yet they contain infinite potential. Also they taste good.',
+      'The human asked why I never run on the wheel. I smiled enigmatically. Some questions have no answers. Some answers have no questions.',
+    ],
   },
   {
     name: 'Tofu',
@@ -147,6 +202,11 @@ const hamsters = [
     image: '/hamsters/Tofu.jpg',
     catchphrase: 'FASTER! The wheel must go FASTER!',
     moodBoost: 12,
+    diary: [
+      'NEW SPEED RECORD!!! 47 wheel rotations in 10 seconds!!! I am UNSTOPPABLE!!! The other hamsters think I\'m part cheetah!!!',
+      'The wheel got so hot from friction today that I had to take a 30-second water break. Then I went RIGHT BACK to full speed.',
+      'Found a carrot at the end of my run. Best reward ever. Carrots are like rocket fuel. TO THE WHEEL!!!',
+    ],
   },
 ];
 
