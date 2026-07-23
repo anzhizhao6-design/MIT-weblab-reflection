@@ -1,0 +1,65 @@
+.foodtray-section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.foodtray-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #6b3a2a;
+  margin-bottom: 16px;
+}
+
+.foodtray-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.food-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px;
+  border: 2px solid #e8d5b0;
+  border-radius: 12px;
+  background: #fef9f0;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.food-btn:hover {
+  transform: scale(1.05);
+  border-color: #d4956b;
+}
+
+.food-btn:active {
+  transform: scale(0.95);
+}
+
+.food-btn.favourite {
+  border-color: #e6a817;
+  box-shadow: 0 0 8px rgba(230, 168, 23, 0.3);
+}
+
+.food-emoji {
+  font-size: 1.5rem;
+}
+
+.food-name {
+  font-size: 0.7rem;
+  color: #6b3a2a;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .foodtray-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
