@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './ProfileCard.css';
 
-function ProfileCard({ userId, hamsterName }) {
+function ProfileCard({ userId, hamsterName, trigger }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +24,7 @@ function ProfileCard({ userId, hamsterName }) {
         setStats({ visitCount: 0, feedCount: 0 });
         setLoading(false);
       });
-  }, [userId, hamsterName]);
+  }, [userId, hamsterName, trigger]);
 
   if (loading) {
     return (

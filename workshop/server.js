@@ -25,18 +25,23 @@ app.use(express.json());
 const MONGO_SRV = process.env.MONGO_SRV;
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'hamster_superpowers';
 
-// MongoDB connection
+// MongoDB connection — start server only after DB connects
 mongoose.connect(MONGO_SRV, { dbName: MONGODB_DB_NAME })
-  .then(() => console.log(`MongoDB connected: ${MONGODB_DB_NAME}`))
-  .catch((err) => console.error('MongoDB connection error:', err.message));
+  .then(() => {
+    console.log(`MongoDB connected: ${MONGODB_DB_NAME}`);
 
-app.use('/api/hamsters', hamsterRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/visit', visitRoutes);
-app.use('/api/feed', feedRoutes);
-app.use('/api/memory', memoryRoutes);
-app.use('/api/chat', chatRoutes);
+    app.use('/api/hamsters', hamsterRoutes);
+    app.use('/api/users', userRoutes);
+    app.use('/api/visit', visitRoutes);
+    app.use('/api/feed', feedRoutes);
+    app.use('/api/memory', memoryRoutes);
+    app.use('/api/chat', chatRoutes);
 
-app.listen(PORT, () => {
-  console.log(`F2 backend running on http://localhost:${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  });
