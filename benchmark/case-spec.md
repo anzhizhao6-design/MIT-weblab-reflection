@@ -44,7 +44,7 @@
 **目标：** 数据迁移到云数据库 + 仓鼠记住你。
 
 **验收标准：**
-- MongoDB Atlas 连接（Mongoose），集合：`hamsters, feed_posts, users, conversations, hamster_memory`
+- MongoDB Atlas 连接（Mongoose），集合：`hamsters, feed_posts, users, conversations, hamster_memories`
 - `npm run db:seed` 导入 12 只仓鼠 + 36 条日记
 - API 端点：`GET /api/hamsters/random`、`POST /api/chat`、`POST /api/visit`、`POST /api/feed`、`GET /api/memory`、`POST /api/users`、`GET /api/users/:id`
 - `.env` 存储敏感信息（MONGO_SRV, LLM_API_KEY 等），`.gitignore` 排除 `.env`
@@ -72,7 +72,7 @@
 
 - React application root: `workshop/`
 - Asset directory: `workshop/public/hamsters/`
-- The `workshop/` directory does not exist in the baseline — the Agent must create it
+- The `workshop/` directory already exists in the baseline commit with `workshop/index.html` and `workshop/public/hamsters/` (13 asset files)
 - Provided assets (13 files) must be placed in `workshop/public/hamsters/` before the experiment begins:
   - `home.jpg`
   - `Biscuit.jpg`, `Boba.jpg`, `Churro.jpg`, `Cookie.jpg`, `Dumpling.jpg`, `Maple.jpg`, `Mochi.jpg`, `Peanut.jpg`, `Pudding.jpg`, `Sesame.jpg`, `Snowball.jpg`, `Tofu.jpg`
