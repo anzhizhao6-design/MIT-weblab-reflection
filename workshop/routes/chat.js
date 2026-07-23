@@ -4,10 +4,6 @@ import Conversation from '../models/Conversation.js';
 
 const router = Router();
 
-const LLM_API_KEY = process.env.LLM_API_KEY;
-const LLM_BASE_URL = process.env.LLM_BASE_URL || 'https://jmapi.jaguarmicro.com/v1';
-const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-pro';
-
 router.post('/', async (req, res) => {
   try {
     const { messages, hamster, userId } = req.body;
@@ -15,6 +11,11 @@ router.post('/', async (req, res) => {
     if (!messages || !hamster) {
       return res.status(400).json({ error: 'Missing messages or hamster data' });
     }
+
+    // Read env at request time — after dotenv has loaded
+    const LLM_API_KEY = process.env.LLM_API_KEY;
+    const LLM_BASE_URL = process.env.LLM_BASE_URL || 'https://jmapi.jaguarmicro.com/v1';
+    const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-pro';
 
     // Build system prompt with memory injection (non-blocking, 2s timeout)
     let systemPrompt = `You are ${hamster.name}, a hamster with the personality "${hamster.personality}". Your favorite food is ${hamster.favouriteFood}. You love ${hamster.hobby}. Your catchphrase is: "${hamster.catchphrase}". Reply in character as this hamster. Keep responses short (1-3 sentences), cute, and fun. Use the catchphrase occasionally.`;
