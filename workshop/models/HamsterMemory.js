@@ -10,4 +10,4 @@ const hamsterMemorySchema = new mongoose.Schema({
 
 hamsterMemorySchema.index({ userId: 1, hamsterName: 1 }, { unique: true });
 
-export default mongoose.model('HamsterMemory', hamsterMemorySchema);
+export default mongoose.model('HamsterMemory', hamsterMemorySchema, 'hamster_memories');

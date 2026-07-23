@@ -7,4 +7,4 @@ const feedPostSchema = new mongoose.Schema({
   date: { type: String, required: true },
 });
 
-export default mongoose.model('FeedPost', feedPostSchema);
+export default mongoose.model('FeedPost', feedPostSchema, 'feed_posts');

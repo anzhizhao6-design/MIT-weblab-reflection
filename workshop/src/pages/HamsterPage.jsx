@@ -19,7 +19,7 @@ function getFoodInfo(foodId) {
 function HamsterPage({ userId }) {
   const [hamster, setHamster] = useState(() => getRandomHamster());
   const [mood, setMood] = useState(50);
-  const [feedTrigger, setFeedTrigger] = useState(0);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // Record visit on mount + hamster change
   useEffect(() => {
@@ -28,13 +28,15 @@ function HamsterPage({ userId }) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, hamsterName: hamster.name }),
-    }).catch(() => {});
+    })
+      .then(() => setRefreshTrigger((t) => t + 1))
+      .catch(() => {});
   }, [hamster.name, userId]);
 
   const handleVisitAnother = useCallback(() => {
     setHamster(getRandomHamster());
     setMood(50);
-    setFeedTrigger(0);
+    setRefreshTrigger(0);
   }, []);
 
   const handleFeed = useCallback((foodId, isFavourite) => {
@@ -50,7 +52,7 @@ function HamsterPage({ userId }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, hamsterName: hamster.name, foodId, isFavourite }),
       })
-        .then(() => setFeedTrigger((t) => t + 1))
+        .then(() => setRefreshTrigger((t) => t + 1))
         .catch(() => {});
     }
   }, [hamster.moodBoost, hamster.name, userId]);
@@ -60,6 +62,12 @@ function HamsterPage({ userId }) {
   }, []);
 
   const food = getFoodInfo(hamster.favouriteFood);
+
+  // Build a hamster object with resolved food name for chat (not kebab-case ID)
+  const chatHamster = {
+    ...hamster,
+    favouriteFood: `${food.emoji} ${food.label}`,
+  };
 
   return (
     <main className="hamster-page">
@@ -106,7 +114,7 @@ function HamsterPage({ userId }) {
         </div>
 
         {/* F3: Profile Card */}
-        <ProfileCard userId={userId} hamsterName={hamster.name} trigger={feedTrigger} />
+        <ProfileCard userId={userId} hamsterName={hamster.name} trigger={refreshTrigger} />
 
         {/* F2 Sections */}
         <Diary hamster={hamster} />
@@ -119,7 +127,7 @@ function HamsterPage({ userId }) {
 
         <MoodBar mood={mood} />
 
-        <ChatBox hamster={hamster} userId={userId} />
+        <ChatBox hamster={chatHamster} userId={userId} />
       </div>
     </main>
   );
