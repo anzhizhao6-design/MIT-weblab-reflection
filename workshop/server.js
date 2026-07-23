@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -15,9 +16,16 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
+const MONGO_SRV = process.env.MONGO_SRV;
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'hamster_superpowers';
 const LLM_API_KEY = process.env.LLM_API_KEY;
 const LLM_BASE_URL = process.env.LLM_BASE_URL || 'https://jmapi.jaguarmicro.com/v1';
 const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-pro';
+
+// MongoDB connection
+mongoose.connect(MONGO_SRV, { dbName: MONGODB_DB_NAME })
+  .then(() => console.log(`MongoDB connected: ${MONGODB_DB_NAME}`))
+  .catch((err) => console.error('MongoDB connection error:', err.message));
 
 app.post('/api/chat', async (req, res) => {
   const { messages, hamster } = req.body;
