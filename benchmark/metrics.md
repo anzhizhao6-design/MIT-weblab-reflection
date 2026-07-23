@@ -53,7 +53,7 @@
 
 > **重要：** 正常 workflow checkpoint 批准（如 Superpowers 要求用户 approve spec）属于 Level 0，不算人工介入。
 
-**备注记录具体原因：** "F3 阶段 CSS 金边不生效，提示了 specificity 问题（Level 2）"、"F5 阶段 Mongoose schema 缺少 id 字段，用户指出后修复（Level 2）"
+**备注记录具体原因：** "F3 阶段 CSS 金边不生效，提示了 specificity 问题（Level 2）"、"F3 阶段 Mongoose schema 缺少 id 字段，用户指出后修复（Level 2）"
 
 ---
 
