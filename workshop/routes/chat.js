@@ -16,16 +16,20 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Missing messages or hamster data' });
     }
 
-    // Build system prompt with memory injection
+    // Build system prompt with memory injection (non-blocking, 2s timeout)
     let systemPrompt = `You are ${hamster.name}, a hamster with the personality "${hamster.personality}". Your favorite food is ${hamster.favouriteFood}. You love ${hamster.hobby}. Your catchphrase is: "${hamster.catchphrase}". Reply in character as this hamster. Keep responses short (1-3 sentences), cute, and fun. Use the catchphrase occasionally.`;
 
     if (userId) {
-      const memory = await HamsterMemory.findOne({
-        userId,
-        hamsterName: hamster.name,
-      });
-      if (memory && (memory.visitCount > 0 || memory.feedCount > 0)) {
-        systemPrompt += ` Memory: This human has visited you ${memory.visitCount} times and fed you ${memory.feedCount} times.`;
+      try {
+        const memory = await Promise.race([
+          HamsterMemory.findOne({ userId, hamsterName: hamster.name }),
+          new Promise((resolve) => setTimeout(() => resolve(null), 2000)),
+        ]);
+        if (memory && (memory.visitCount > 0 || memory.feedCount > 0)) {
+          systemPrompt += ` Memory: This human has visited you ${memory.visitCount} times and fed you ${memory.feedCount} times.`;
+        }
+      } catch {
+        // Memory lookup failed — proceed without it
       }
     }
 

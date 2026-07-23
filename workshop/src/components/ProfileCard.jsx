@@ -3,14 +3,11 @@ import './ProfileCard.css';
 
 function ProfileCard({ userId, hamsterName, trigger }) {
   const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    setStats(null);
-
     if (!userId || !hamsterName) {
-      setLoading(false);
+      setInitialLoad(false);
       return;
     }
 
@@ -18,15 +15,15 @@ function ProfileCard({ userId, hamsterName, trigger }) {
       .then((res) => res.json())
       .then((data) => {
         setStats(data);
-        setLoading(false);
+        setInitialLoad(false);
       })
       .catch(() => {
-        setStats({ visitCount: 0, feedCount: 0 });
-        setLoading(false);
+        setStats((prev) => prev || { visitCount: 0, feedCount: 0 });
+        setInitialLoad(false);
       });
   }, [userId, hamsterName, trigger]);
 
-  if (loading) {
+  if (initialLoad) {
     return (
       <section className="profile-card">
         <p className="profile-loading">Loading stats...</p>
