@@ -1,1 +1,4 @@
 workflow,feature,start_time,end_time,time_min,user_messages,agent_responses,clarification_questions,retry_cycles,input_tokens,output_tokens,total_tokens,lines_added,lines_deleted,files_added,files_modified,bugs,human_intervention_level,run_success,spec_pass_count,spec_total,regression_count,readability,auto_fixed,replanned,repeated_mistake,used_docs,reused_code,external_failure,notes
+superpowers,F1,10:12,10:50,38,4,4,3,0,198015,71050,269065,3513,1,16,1,0,0,启动成功,7,7,0,4,N/A,否,否,是,N/A,0,token source: session JSONL
+superpowers,F2,13:37,14:15,38,4,4,3,0,120836,65756,186592,1808,5,9,4,0,0,启动成功,4,4,0,4,N/A,否,否,是,是,0,
+superpowers,F3,15:17,17:15,118,8,5,4,4,123099,122908,246007,1062,91,17,5,4,2,启动成功,8,8,0,4,部分,否,否,是,是,0,4 bugs: 集合名不匹配/visit不刷新/food ID/ESM hoisting; ESM hoisting auto-fixed by Agent
