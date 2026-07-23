@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
+import AccountPanel from './AccountPanel';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ userId, onSwitch }) {
   const location = useLocation();
 
   return (
@@ -21,6 +22,7 @@ function Navbar() {
           Today's Hamster
         </Link>
       </div>
+      <AccountPanel userId={userId} onSwitch={onSwitch} />
     </nav>
   );
 }
