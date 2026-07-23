@@ -1,0 +1,136 @@
+.hamster-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.hamster-card {
+  display: flex;
+  gap: 40px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 750px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  align-items: center;
+}
+
+.hamster-photo-wrapper {
+  flex-shrink: 0;
+}
+
+.hamster-photo {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #e8d5b0;
+}
+
+.hamster-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hamster-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #6b3a2a;
+}
+
+.hamster-catchphrase {
+  font-style: italic;
+  color: #8b7355;
+  font-size: 1rem;
+}
+
+.hamster-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #b8a080;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: #4a3728;
+  font-weight: 500;
+}
+
+.hamster-bio {
+  font-size: 0.95rem;
+  color: #5c4a38;
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+.visit-another-btn {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #d4956b;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.visit-another-btn:hover {
+  background-color: #c17f53;
+  transform: scale(1.03);
+}
+
+.visit-another-btn:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 768px) {
+  .hamster-page {
+    padding: 16px;
+  }
+
+  .hamster-card {
+    flex-direction: column;
+    padding: 24px;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .hamster-photo {
+    width: 180px;
+    height: 180px;
+  }
+
+  .hamster-details {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .hamster-name {
+    font-size: 1.5rem;
+  }
+
+  .visit-another-btn {
+    align-self: center;
+  }
+}
