@@ -4,6 +4,11 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import hamsterRoutes from './routes/hamsters.js';
+import userRoutes from './routes/users.js';
+import visitRoutes from './routes/visits.js';
+import feedRoutes from './routes/feeds.js';
+import memoryRoutes from './routes/memory.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,6 +31,12 @@ const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-pro';
 mongoose.connect(MONGO_SRV, { dbName: MONGODB_DB_NAME })
   .then(() => console.log(`MongoDB connected: ${MONGODB_DB_NAME}`))
   .catch((err) => console.error('MongoDB connection error:', err.message));
+
+app.use('/api/hamsters', hamsterRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/visit', visitRoutes);
+app.use('/api/feed', feedRoutes);
+app.use('/api/memory', memoryRoutes);
 
 app.post('/api/chat', async (req, res) => {
   const { messages, hamster } = req.body;
