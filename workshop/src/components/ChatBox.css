@@ -1,0 +1,125 @@
+.chat-section {
+  width: 100%;
+  max-width: 750px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex: 1;
+  min-height: 200px;
+  max-height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.75rem 0;
+  margin-top: 0.5rem;
+}
+
+.chat-placeholder {
+  text-align: center;
+  color: #b8947a;
+  font-style: italic;
+  padding: 2rem 0;
+  font-size: 0.95rem;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 0.65rem 1rem;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.chat-bubble-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #c8925a, #a0724a);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble-hamster {
+  align-self: flex-start;
+  background: #fdf3e2;
+  color: #4a3728;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-typing {
+  opacity: 0.7;
+  font-style: italic;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #f0e6d3;
+  padding-top: 0.75rem;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid #f0e6d3;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #4a3728;
+  background: #fef9f0;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus {
+  border-color: #c8925a;
+}
+
+.chat-input:disabled {
+  opacity: 0.6;
+}
+
+.chat-send-btn {
+  padding: 0.7rem 1.5rem;
+  background: linear-gradient(135deg, #c8925a, #a0724a);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.chat-send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .chat-section {
+    padding: 1.25rem;
+  }
+
+  .chat-messages {
+    max-height: 280px;
+  }
+
+  .chat-bubble {
+    max-width: 90%;
+  }
+}

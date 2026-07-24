@@ -1,5 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useReducer, useEffect } from 'react';
 import hamsters from '../data/hamsters';
+import Diary from '../components/Diary';
+import FoodTray from '../components/FoodTray';
+import ChatBox from '../components/ChatBox';
 import './HamsterPage.css';
 
 function getRandomHamster(excludeName) {
@@ -10,15 +13,43 @@ function getRandomHamster(excludeName) {
   return pool[index];
 }
 
+function moodReducer(state, action) {
+  switch (action.type) {
+    case 'FEED':
+      return Math.min(100, state + action.amount);
+    case 'HOVER_PENALTY':
+      return Math.max(0, state - 5);
+    case 'RESET':
+      return 50;
+    default:
+      return state;
+  }
+}
+
 function HamsterPage() {
   const [hamster, setHamster] = useState(() => getRandomHamster(null));
+  const [mood, dispatch] = useReducer(moodReducer, 50);
+
+  // Reset mood when hamster changes
+  useEffect(() => {
+    dispatch({ type: 'RESET' });
+  }, [hamster]);
 
   const visitAnother = useCallback(() => {
     setHamster((prev) => getRandomHamster(prev.name));
   }, []);
 
+  const handleFeed = useCallback((amount) => {
+    dispatch({ type: 'FEED', amount });
+  }, []);
+
+  const handleHoverPenalty = useCallback(() => {
+    dispatch({ type: 'HOVER_PENALTY' });
+  }, []);
+
   return (
     <div className="hamster-page">
+      {/* Existing F1: Hamster Card */}
       <div className="hamster-card">
         <div className="hamster-photo-wrapper">
           <img
@@ -50,6 +81,22 @@ function HamsterPage() {
           <p className="hamster-bio">{hamster.bio}</p>
         </div>
       </div>
+
+      {/* F2: Diary */}
+      <Diary hamsterName={hamster.name} />
+
+      {/* F2: Food Tray with Mood */}
+      <FoodTray
+        hamster={hamster}
+        mood={mood}
+        onFeed={handleFeed}
+        onHoverPenalty={handleHoverPenalty}
+      />
+
+      {/* F2: Chat */}
+      <ChatBox key={hamster.name} hamster={hamster} />
+
+      {/* F1: Visit Another */}
       <button className="visit-another-btn" onClick={visitAnother}>
         Visit Another
       </button>

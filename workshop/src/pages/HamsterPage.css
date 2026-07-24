@@ -3,11 +3,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 2rem;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #6b4226;
+  margin-bottom: 0.75rem;
+}
+
+/* === F1: Hamster Card === */
 .hamster-card {
   display: flex;
   align-items: flex-start;
@@ -89,6 +96,7 @@
   border-radius: 12px;
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 16px rgba(160, 114, 74, 0.3);
+  cursor: pointer;
 }
 
 .visit-another-btn:hover {
@@ -100,11 +108,11 @@
   transform: translateY(0);
 }
 
-/* Mobile: stack vertically */
+/* Mobile */
 @media (max-width: 768px) {
   .hamster-page {
     padding: 1rem;
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .hamster-card {

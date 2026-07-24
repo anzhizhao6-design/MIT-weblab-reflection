@@ -1,0 +1,123 @@
+.food-tray-section {
+  width: 100%;
+  max-width: 750px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #6b4226;
+  margin-bottom: 0.75rem;
+}
+
+.food-reaction {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #8b5e3c;
+  background: #fdf3e2;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  margin: 0.75rem 0;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.food-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.65rem 0.5rem;
+  background: #fef9f0;
+  border: 2px solid #f0e6d3;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  font-size: 0.85rem;
+}
+
+.food-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #d4b896;
+}
+
+.food-btn:active {
+  transform: translateY(0);
+}
+
+.food-btn-favourite {
+  border-color: #d4a017;
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.25), 0 2px 8px rgba(212, 160, 23, 0.15);
+  background: linear-gradient(135deg, #fffdf5, #fff8e1);
+}
+
+.food-btn-favourite:hover {
+  border-color: #b8860b;
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.35), 0 4px 16px rgba(212, 160, 23, 0.25);
+}
+
+.food-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.food-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b5a4e;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .food-tray-section {
+    padding: 1.25rem;
+  }
+
+  .food-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .food-btn {
+    padding: 0.5rem 0.35rem;
+  }
+
+  .food-emoji {
+    font-size: 1.3rem;
+  }
+
+  .food-label {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
