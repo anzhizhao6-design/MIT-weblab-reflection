@@ -1,0 +1,46 @@
+.profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: #fff;
+  border-radius: 14px;
+  padding: 0.8rem 1.5rem;
+  max-width: 750px;
+  width: 100%;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.profile-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.profile-stat-icon {
+  font-size: 1.2rem;
+}
+
+.profile-stat-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6b4226;
+}
+
+.profile-divider {
+  width: 1px;
+  height: 20px;
+  background: #f0e6d3;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 0.6rem 1rem;
+    gap: 1rem;
+  }
+
+  .profile-stat-value {
+    font-size: 0.85rem;
+  }
+}

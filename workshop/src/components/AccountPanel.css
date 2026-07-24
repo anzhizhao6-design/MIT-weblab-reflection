@@ -1,0 +1,108 @@
+.account-panel {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  max-width: 400px;
+  width: 100%;
+}
+
+.account-section {
+  margin-bottom: 1.25rem;
+}
+
+.account-section:last-child {
+  margin-bottom: 0;
+}
+
+.account-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #b8947a;
+  margin-bottom: 0.4rem;
+}
+
+.account-id-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.account-id {
+  flex: 1;
+  font-size: 0.9rem;
+  background: #fdf3e2;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  color: #6b4226;
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.account-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  white-space: nowrap;
+}
+
+.account-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.account-btn-copy {
+  background: #f0e6d3;
+  color: #6b4226;
+}
+
+.account-btn-copy:hover {
+  background: #e5d4b8;
+}
+
+.account-btn-switch {
+  background: linear-gradient(135deg, #c8925a, #a0724a);
+  color: #fff;
+}
+
+.account-btn-switch:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.account-hint {
+  font-size: 0.8rem;
+  color: #b8947a;
+  margin-bottom: 0.5rem;
+}
+
+.account-switch-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.account-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid #f0e6d3;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: monospace;
+  color: #4a3728;
+  background: #fef9f0;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.account-input:focus {
+  border-color: #c8925a;
+}

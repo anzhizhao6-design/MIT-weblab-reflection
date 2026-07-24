@@ -1,17 +1,10 @@
 import { useState, useCallback, useReducer, useEffect } from 'react';
-import hamsters from '../data/hamsters';
+import { useUser } from '../context/UserContext';
 import Diary from '../components/Diary';
 import FoodTray from '../components/FoodTray';
 import ChatBox from '../components/ChatBox';
+import ProfileCard from '../components/ProfileCard';
 import './HamsterPage.css';
-
-function getRandomHamster(excludeName) {
-  const pool = excludeName
-    ? hamsters.filter((h) => h.name !== excludeName)
-    : hamsters;
-  const index = Math.floor(Math.random() * pool.length);
-  return pool[index];
-}
 
 function moodReducer(state, action) {
   switch (action.type) {
@@ -27,8 +20,52 @@ function moodReducer(state, action) {
 }
 
 function HamsterPage() {
-  const [hamster, setHamster] = useState(() => getRandomHamster(null));
+  const { userId } = useUser();
+  const [hamster, setHamster] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [mood, dispatch] = useReducer(moodReducer, 50);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Fetch random hamster from API
+  const fetchHamster = useCallback(async (excludeName) => {
+    setLoading(true);
+    try {
+      let hamsterData = null;
+      for (let i = 0; i < 20; i++) {
+        const res = await fetch('/api/hamsters/random');
+        const data = await res.json();
+        if (!excludeName || data.name !== excludeName) {
+          hamsterData = data;
+          break;
+        }
+      }
+      if (hamsterData) {
+        setHamster(hamsterData);
+      }
+    } catch {
+      // If API fails, try again
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Initial fetch
+  useEffect(() => {
+    fetchHamster(null);
+  }, [fetchHamster]);
+
+  // Record visit when hamster changes — wait for POST then refresh ProfileCard
+  useEffect(() => {
+    if (hamster && userId) {
+      fetch('/api/visit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, hamsterName: hamster.name }),
+      })
+        .then(() => setRefreshKey((k) => k + 1))
+        .catch(() => {});
+    }
+  }, [hamster, userId]);
 
   // Reset mood when hamster changes
   useEffect(() => {
@@ -36,8 +73,10 @@ function HamsterPage() {
   }, [hamster]);
 
   const visitAnother = useCallback(() => {
-    setHamster((prev) => getRandomHamster(prev.name));
-  }, []);
+    if (hamster) {
+      fetchHamster(hamster.name);
+    }
+  }, [hamster, fetchHamster]);
 
   const handleFeed = useCallback((amount) => {
     dispatch({ type: 'FEED', amount });
@@ -47,9 +86,21 @@ function HamsterPage() {
     dispatch({ type: 'HOVER_PENALTY' });
   }, []);
 
+  const handleFeedRecorded = useCallback(() => {
+    setRefreshKey((k) => k + 1);
+  }, []);
+
+  if (loading || !hamster) {
+    return (
+      <div className="hamster-page">
+        <div className="hamster-loading">Finding your hamster...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="hamster-page">
-      {/* Existing F1: Hamster Card */}
+      {/* F1: Hamster Card */}
       <div className="hamster-card">
         <div className="hamster-photo-wrapper">
           <img
@@ -82,6 +133,9 @@ function HamsterPage() {
         </div>
       </div>
 
+      {/* F3: Profile Card */}
+      <ProfileCard userId={userId} hamsterName={hamster.name} refreshKey={refreshKey} />
+
       {/* F2: Diary */}
       <Diary hamsterName={hamster.name} />
 
@@ -91,10 +145,12 @@ function HamsterPage() {
         mood={mood}
         onFeed={handleFeed}
         onHoverPenalty={handleHoverPenalty}
+        userId={userId}
+        onFeedRecorded={handleFeedRecorded}
       />
 
       {/* F2: Chat */}
-      <ChatBox key={hamster.name} hamster={hamster} />
+      <ChatBox key={hamster.name} hamster={hamster} userId={userId} />
 
       {/* F1: Visit Another */}
       <button className="visit-another-btn" onClick={visitAnother}>

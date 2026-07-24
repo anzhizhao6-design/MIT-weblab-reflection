@@ -1,1 +1,4 @@
 workflow,feature,start_time,end_time,time_min,user_messages,agent_responses,clarification_questions,retry_cycles,input_tokens,output_tokens,total_tokens,lines_added,lines_deleted,files_added,files_modified,bugs,human_intervention_level,run_success,spec_pass_count,spec_total,regression_count,readability,auto_fixed,replanned,repeated_mistake,used_docs,reused_code,external_failure,notes
+agent-skills,F1,2026-07-24 15:33,2026-07-24 15:39,6,1,1,0,0,252528,79427,331955,656,1,14,1,0,0,true,7,7,N/A,5,N/A,false,false,true,N/A,0,
+agent-skills,F2,2026-07-24 15:48,2026-07-24 16:00,12,1,1,0,0,64292,94599,158891,2041,24,12,5,0,0,true,14,14,0,5,N/A,false,false,true,true,0,
+agent-skills,F3,2026-07-24 16:10,2026-07-24 17:16,23,6,6,0,0,102650,141273,243923,1111,48,12,9,3,2,true,15,15,0,5,true,false,false,true,true,0,"Agent self-fixed 4 bugs (race condition, role mapping, collection naming, token limit). Human debugged 3 remaining."

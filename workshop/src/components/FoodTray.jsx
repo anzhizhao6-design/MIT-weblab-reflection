@@ -21,7 +21,7 @@ function getReactionText(change, foodName, hamsterName) {
   return reactions[Math.floor(Math.random() * reactions.length)];
 }
 
-function FoodTray({ hamster, mood, onFeed, onHoverPenalty }) {
+function FoodTray({ hamster, mood, onFeed, onHoverPenalty, userId, onFeedRecorded }) {
   const [reaction, setReaction] = useState(null);
   const [favouriteFed, setFavouriteFed] = useState(false);
   const reactionTimer = useRef(null);
@@ -34,8 +34,7 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty }) {
 
   const handleMouseEnter = useCallback(
     (foodId) => {
-      // Start 2s timer for hover penalty
-      if (hoverTimers.current[foodId]) return; // already timing
+      if (hoverTimers.current[foodId]) return;
 
       hoverTimers.current[foodId] = setTimeout(() => {
         onHoverPenalty();
@@ -59,7 +58,6 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty }) {
 
   const handleClick = useCallback(
     (foodId) => {
-      // Cancel hover timer on click
       if (hoverTimers.current[foodId]) {
         clearTimeout(hoverTimers.current[foodId]);
         hoverTimers.current[foodId] = null;
@@ -73,11 +71,31 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty }) {
       }
 
       onFeed(change);
+
+      // F3: Record feed to API (fire-and-forget)
+      if (userId) {
+        fetch('/api/feed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId,
+            hamsterName: hamster.name,
+            foodId,
+            isFavourite,
+            moodChange: change,
+          }),
+        })
+          .then(() => {
+            if (onFeedRecorded) onFeedRecorded();
+          })
+          .catch(() => {});
+      }
+
       const food = foods.find((f) => f.id === foodId);
       setReaction(getReactionText(change, food.label, hamster.name));
       clearReaction();
     },
-    [hamster, onFeed, clearReaction, favouriteFed]
+    [hamster, onFeed, clearReaction, favouriteFed, userId]
   );
 
   return (

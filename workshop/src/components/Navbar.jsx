@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import AccountPanel from './AccountPanel';
 import './Navbar.css';
 
 function Navbar() {
   const location = useLocation();
+  const [showAccount, setShowAccount] = useState(false);
 
   return (
     <nav className="navbar">
@@ -26,6 +29,19 @@ function Navbar() {
             >
               Today's Hamster
             </Link>
+          </li>
+          <li className="navbar-account-li">
+            <button
+              className={`navbar-link navbar-account-btn ${showAccount ? 'active' : ''}`}
+              onClick={() => setShowAccount((v) => !v)}
+            >
+              👤 Account
+            </button>
+            {showAccount && (
+              <div className="navbar-account-dropdown">
+                <AccountPanel />
+              </div>
+            )}
           </li>
         </ul>
       </div>

@@ -2,13 +2,30 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { getFallbackResponse } from '../utils/chatFallback';
 import './ChatBox.css';
 
-function ChatBox({ hamster }) {
+async function saveConversation(userId, hamsterName, userMsg, hamsterMsg) {
+  if (!userId) return;
+  try {
+    await fetch('/api/conversations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId,
+        hamsterName,
+        userMessage: userMsg,
+        hamsterResponse: hamsterMsg,
+      }),
+    });
+  } catch {
+    // Non-critical
+  }
+}
+
+function ChatBox({ hamster, userId }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -23,6 +40,8 @@ function ChatBox({ hamster }) {
     setInput('');
     setLoading(true);
 
+    let responseContent = null;
+
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -36,26 +55,29 @@ function ChatBox({ hamster }) {
             hobby: hamster.hobby,
             catchphrase: hamster.catchphrase,
           },
+          userId: userId || undefined,
         }),
       });
 
       const data = await res.json();
 
       if (data.error) {
-        // Use fallback
-        const fallback = getFallbackResponse(text, hamster);
-        setMessages((prev) => [...prev, { role: 'hamster', content: fallback }]);
+        responseContent = getFallbackResponse(text, hamster);
       } else {
-        setMessages((prev) => [...prev, { role: 'hamster', content: data.content }]);
+        responseContent = data.content;
       }
     } catch {
-      // Network error → fallback
-      const fallback = getFallbackResponse(text, hamster);
-      setMessages((prev) => [...prev, { role: 'hamster', content: fallback }]);
-    } finally {
-      setLoading(false);
+      responseContent = getFallbackResponse(text, hamster);
     }
-  }, [input, messages, hamster, loading]);
+
+    // Always save both user message and hamster response
+    if (responseContent) {
+      setMessages((prev) => [...prev, { role: 'hamster', content: responseContent }]);
+      saveConversation(userId, hamster.name, text, responseContent);
+    }
+
+    setLoading(false);
+  }, [input, messages, hamster, loading, userId]);
 
   const handleKeyDown = useCallback(
     (e) => {
