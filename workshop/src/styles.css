@@ -1,0 +1,341 @@
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  background-color: #faf8f5;
+  color: #3d3027;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background-color: #fff;
+  border-bottom: 2px solid #f0e6d3;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #3d3027;
+  text-decoration: none;
+  letter-spacing: -0.3px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  font-size: 0.95rem;
+  color: #8b7355;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.navbar-link:hover {
+  color: #3d3027;
+}
+
+.navbar-link.active {
+  color: #3d3027;
+  border-bottom-color: #e8a850;
+}
+
+/* ===== Home Page — Hero ===== */
+.home-hero {
+  flex: 1;
+  display: flex;
+  cursor: pointer;
+  background-image: url('/hamsters/home.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: calc(100vh - 60px);
+}
+
+.home-hero-overlay {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  backdrop-filter: blur(0.5px);
+  transition: backdrop-filter 0.3s;
+}
+
+.home-hero:hover .home-hero-overlay {
+  backdrop-filter: blur(1px);
+}
+
+.home-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2rem;
+  max-width: 800px;
+}
+
+.home-hero-text {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.home-hero-arrow {
+  font-size: 4rem;
+  color: #e8a850;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: arrow-pulse 2s ease-in-out infinite;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.home-hero:hover .home-hero-arrow {
+  transform: translateX(8px);
+  color: #f0c070;
+}
+
+@keyframes arrow-pulse {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+.home-hero:hover .home-hero-arrow {
+  animation: none;
+}
+
+/* ===== Hamster Page — Profile Card ===== */
+.hamster-profile {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.hamster-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem 2rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hamster-photo-wrapper {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #f0e6d3;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.hamster-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hamster-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #3d3027;
+  letter-spacing: -0.3px;
+}
+
+.hamster-age {
+  font-size: 0.95rem;
+  color: #8b7355;
+  margin-top: -0.25rem;
+}
+
+.hamster-traits {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.75rem 0;
+  border-top: 1px solid #f0e6d3;
+  border-bottom: 1px solid #f0e6d3;
+}
+
+.hamster-trait {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.15rem 0;
+}
+
+.trait-label {
+  font-size: 0.85rem;
+  color: #8b7355;
+  font-weight: 500;
+}
+
+.trait-value {
+  font-size: 0.9rem;
+  color: #3d3027;
+  font-weight: 600;
+}
+
+.hamster-bio {
+  font-size: 0.95rem;
+  color: #5c4a3a;
+  line-height: 1.6;
+  padding: 0 0.5rem;
+}
+
+.hamster-catchphrase {
+  font-size: 0.9rem;
+  color: #8b7355;
+  font-style: italic;
+}
+
+.visit-another-btn {
+  margin-top: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #e8a850;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(232, 168, 80, 0.35);
+}
+
+.visit-another-btn:hover {
+  background: #d4953a;
+  transform: translateY(-1px);
+}
+
+.visit-another-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0.6rem 1rem;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+
+  .navbar-links {
+    gap: 1rem;
+  }
+
+  .navbar-link {
+    font-size: 0.85rem;
+  }
+
+  .home-hero {
+    min-height: calc(100vh - 80px);
+  }
+
+  .home-hero-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .home-hero-text {
+    font-size: 2rem;
+  }
+
+  .home-hero-arrow {
+    font-size: 3rem;
+    transform: rotate(90deg);
+  }
+
+  @keyframes arrow-pulse-mobile {
+    0%, 100% { transform: rotate(90deg) translateX(0); }
+    50% { transform: rotate(90deg) translateX(6px); }
+  }
+
+  .home-hero-arrow {
+    animation: arrow-pulse-mobile 2s ease-in-out infinite;
+  }
+
+  .home-hero:hover .home-hero-arrow {
+    transform: rotate(90deg) translateY(8px);
+  }
+
+  .hamster-profile {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .hamster-card {
+    padding: 1.5rem 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .hamster-photo-wrapper {
+    width: 140px;
+    height: 140px;
+  }
+
+  .hamster-name {
+    font-size: 1.4rem;
+  }
+}
