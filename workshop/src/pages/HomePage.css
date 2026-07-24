@@ -1,0 +1,94 @@
+.home-page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.home-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+  min-height: 400px;
+  padding: 3rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.25)),
+    url('/hamsters/home.jpg') center/cover no-repeat;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+}
+
+.home-card-text {
+  flex: 1;
+}
+
+.home-card-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+}
+
+.home-card-subtitle {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.home-card-arrow {
+  font-size: 3.5rem;
+  font-weight: 300;
+  flex-shrink: 0;
+  margin-left: 1.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s;
+}
+
+.home-card:hover .home-card-arrow {
+  transform: translateX(8px);
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+  .home-page {
+    padding: 1rem;
+  }
+
+  .home-card {
+    flex-direction: column;
+    text-align: center;
+    min-height: 320px;
+    padding: 2rem;
+  }
+
+  .home-card-title {
+    font-size: 1.8rem;
+  }
+
+  .home-card-subtitle {
+    font-size: 1rem;
+  }
+
+  .home-card-arrow {
+    margin-left: 0;
+    margin-top: 1.5rem;
+    font-size: 2.5rem;
+    transform: rotate(90deg);
+  }
+
+  .home-card:hover .home-card-arrow {
+    transform: rotate(90deg) translateX(8px);
+  }
+}
