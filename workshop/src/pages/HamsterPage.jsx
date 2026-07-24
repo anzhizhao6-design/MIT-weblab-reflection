@@ -37,6 +37,15 @@ const HamsterPage = () => {
   const [memory, setMemory] = useState(null);
   const [flipped, setFlipped] = useState(false);
 
+  const fetchMemory = () => {
+    const userId = getUserId();
+    if (!userId) return;
+    fetch(`/api/memory?userId=${userId}&hamsterId=${hamster.id}`)
+      .then((r) => r.json())
+      .then(setMemory)
+      .catch(() => {});
+  };
+
   useEffect(() => {
     const userId = getUserId();
     fetch('/api/visit', {
@@ -44,9 +53,7 @@ const HamsterPage = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, hamsterId: hamster.id }),
     })
-      .then(() => fetch(`/api/memory?userId=${userId}&hamsterId=${hamster.id}`))
-      .then((r) => r.json())
-      .then(setMemory)
+      .then(() => fetchMemory())
       .catch(() => {});
   }, [hamster.id]);
 
@@ -60,7 +67,9 @@ const HamsterPage = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: getUserId(), hamsterId: hamster.id }),
-    }).catch(() => {});
+    })
+      .then(() => fetchMemory())
+      .catch(() => {});
   };
 
   const handleMoodDown = (amount, message) => {
@@ -101,14 +110,10 @@ const HamsterPage = () => {
                     <span>🍽️ {hamster.favouriteFood}</span>
                     <span>🎯 {hamster.hobby}</span>
                   </div>
-                  {memory && (memory.visitCount > 0 || memory.totalFeeds > 0) && (
+                  {memory && (
                     <div className="hp-card-memory">
-                      {memory.visitCount > 0 && (
-                        <p>👋 Visited {memory.visitCount} time{memory.visitCount !== 1 ? 's' : ''}</p>
-                      )}
-                      {memory.totalFeeds > 0 && (
-                        <p>🍽️ Fed {memory.totalFeeds} time{memory.totalFeeds !== 1 ? 's' : ''}</p>
-                      )}
+                      <p>👋 Visited {memory.visitCount} time{memory.visitCount !== 1 ? 's' : ''}</p>
+                      <p>🍽️ Fed {memory.totalFeeds} time{memory.totalFeeds !== 1 ? 's' : ''}</p>
                     </div>
                   )}
                   <div className="hp-card-mood">
