@@ -81,6 +81,100 @@ body {
   border-bottom-color: #e8a850;
 }
 
+/* ===== Account Panel ===== */
+.account-panel {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+}
+
+.account-id {
+  font-size: 0.8rem;
+  color: #8b7355;
+  font-family: monospace;
+  background: #faf8f5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+}
+
+.account-btn {
+  background: none;
+  border: 1px solid #f0e6d3;
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+
+.account-btn:hover {
+  background: #f5f0e8;
+}
+
+.account-switch {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.4rem;
+  background: #fff;
+  border: 1px solid #f0e6d3;
+  border-radius: 0.75rem;
+  padding: 0.6rem;
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+  min-width: 220px;
+}
+
+.account-switch-input {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #f0e6d3;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  font-family: monospace;
+  outline: none;
+}
+
+.account-switch-input:focus {
+  border-color: #e8a850;
+}
+
+.account-switch-btn {
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: #e8a850;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.account-switch-btn:hover {
+  background: #d4953a;
+}
+
+.account-switch-new {
+  background: #8b7355;
+}
+
+.account-switch-new:hover {
+  background: #6b5940;
+}
+
+.account-error {
+  width: 100%;
+  font-size: 0.75rem;
+  color: #e85d5d;
+}
+
 /* ===== Home Page — Hero ===== */
 .home-hero {
   flex: 1;
@@ -175,6 +269,14 @@ body {
   gap: 1rem;
 }
 
+.hamster-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #8b7355;
+  font-size: 1.1rem;
+}
+
 /* ===== Hamster Card ===== */
 .hamster-card {
   background: #fff;
@@ -247,6 +349,20 @@ body {
   font-size: 0.9rem;
   color: #3d3027;
   font-weight: 600;
+}
+
+.hamster-memory {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  justify-content: center;
+}
+
+.memory-stat {
+  font-size: 0.82rem;
+  color: #8b7355;
+  font-weight: 500;
 }
 
 .hamster-bio {
@@ -615,6 +731,16 @@ body {
     grid-template-columns: 1fr;
     padding: 1rem;
     gap: 1rem;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .account-panel {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.3rem;
   }
 
   .hamster-card {

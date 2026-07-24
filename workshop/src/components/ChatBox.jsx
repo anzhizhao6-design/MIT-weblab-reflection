@@ -18,26 +18,10 @@ function buildSystemMessage(hamster) {
 }
 
 const FALLBACK_INTENTS = [
-  {
-    priority: 1,
-    intent: 'food',
-    triggers: ['food', 'eat', 'hungry', 'feed', '吃', '饿'],
-  },
-  {
-    priority: 2,
-    intent: 'play',
-    triggers: ['play', 'wheel', 'run', 'fun', '玩', '跑'],
-  },
-  {
-    priority: 3,
-    intent: 'mood',
-    triggers: ['mood', 'happy', 'sad', 'how are you', 'feeling', '心情'],
-  },
-  {
-    priority: 4,
-    intent: 'greeting',
-    triggers: ['hello', 'hi', 'hey', 'good morning', '你好'],
-  },
+  { priority: 1, intent: 'food', triggers: ['food', 'eat', 'hungry', 'feed', '吃', '饿'] },
+  { priority: 2, intent: 'play', triggers: ['play', 'wheel', 'run', 'fun', '玩', '跑'] },
+  { priority: 3, intent: 'mood', triggers: ['mood', 'happy', 'sad', 'how are you', 'feeling', '心情'] },
+  { priority: 4, intent: 'greeting', triggers: ['hello', 'hi', 'hey', 'good morning', '你好'] },
 ];
 
 function getFallbackReply(inputText, hamster) {
@@ -71,7 +55,7 @@ function getFallbackReply(inputText, hamster) {
   }
 }
 
-export default function ChatBox({ hamster, chatMessages, setChatMessages }) {
+export default function ChatBox({ hamster, userId, chatMessages, setChatMessages }) {
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef(null);
@@ -95,10 +79,16 @@ export default function ChatBox({ hamster, chatMessages, setChatMessages }) {
       const lastSix = updatedMessages.slice(-6);
       const payload = [systemMsg, ...lastSix];
 
+      const body = {
+        messages: payload,
+        userId: userId || null,
+        hamsterId: hamster.id || null,
+      };
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: payload }),
+        body: JSON.stringify(body),
       });
 
       if (res.ok) {
@@ -110,17 +100,15 @@ export default function ChatBox({ hamster, chatMessages, setChatMessages }) {
         }
       }
 
-      // Fallback
       const fallback = getFallbackReply(text, hamster);
       setChatMessages((prev) => [...prev, { role: 'assistant', content: fallback }]);
     } catch {
-      // Network error — fallback
       const fallback = getFallbackReply(text, hamster);
       setChatMessages((prev) => [...prev, { role: 'assistant', content: fallback }]);
     }
 
     setSending(false);
-  }, [input, sending, chatMessages, hamster, setChatMessages]);
+  }, [input, sending, chatMessages, hamster, userId, setChatMessages]);
 
   const handleKeyDown = useCallback(
     (e) => {
@@ -138,9 +126,7 @@ export default function ChatBox({ hamster, chatMessages, setChatMessages }) {
 
       <div className="chat-messages">
         {chatMessages.length === 0 && (
-          <p className="chat-placeholder">
-            Say hello to {hamster.name}!
-          </p>
+          <p className="chat-placeholder">Say hello to {hamster.name}!</p>
         )}
         {chatMessages.map((msg, i) => (
           <div key={i} className={`chat-msg ${msg.role === 'user' ? 'chat-msg-user' : 'chat-msg-hamster'}`}>

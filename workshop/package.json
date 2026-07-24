@@ -8,12 +8,14 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server/index.js",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server\""
+    "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
+    "db:seed": "node server/db/seed.js"
   },
   "dependencies": {
     "concurrently": "^9.0.1",
     "dotenv": "^17.4.2",
     "express": "^4.21.0",
+    "mongoose": "^9.8.0",
     "openai": "^4.67.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

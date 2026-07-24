@@ -1,6 +1,7 @@
+import AccountPanel from './AccountPanel';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ onUserIdChange }) {
   const location = useLocation();
 
   return (
@@ -22,6 +23,7 @@ export default function Navbar() {
           Today's Hamster
         </Link>
       </div>
+      <AccountPanel onUserIdChange={onUserIdChange} />
     </nav>
   );
 }

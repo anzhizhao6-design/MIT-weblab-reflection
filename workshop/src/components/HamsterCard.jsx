@@ -1,4 +1,4 @@
-export default function HamsterCard({ hamster, onVisitAnother }) {
+export default function HamsterCard({ hamster, memory, onVisitAnother }) {
   const foodLabel = hamster.favouriteFood
     .split('-')
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -26,6 +26,11 @@ export default function HamsterCard({ hamster, onVisitAnother }) {
           <span className="trait-label">Hobby</span>
           <span className="trait-value">{hamster.hobby}</span>
         </span>
+      </div>
+
+      <div className="hamster-memory">
+        <span className="memory-stat">👋 Visited {memory?.visitCount ?? 0} times</span>
+        <span className="memory-stat">🍽️ Fed {memory?.totalFeeds ?? 0} times</span>
       </div>
 
       <p className="hamster-bio">{hamster.bio}</p>
