@@ -2,9 +2,9 @@ workflow,feature,start_time,end_time,time_min,user_messages,agent_responses,clar
 superpowers,F1,10:12,10:50,38,4,4,3,0,198015,71050,269065,3513,1,16,1,0,0,true,7,7,N/A,4,N/A,false,false,true,N/A,0,token source: session JSONL
 superpowers,F2,13:37,14:15,38,4,4,3,0,120836,65756,186592,1808,5,9,4,0,0,true,4,4,0,4,N/A,false,false,true,true,0,
 superpowers,F3,15:17,17:15,118,13,13,5,4,123099,122908,246007,1062,91,17,5,4,2,true,8,8,0,4,partial,false,false,true,true,0,4 bugs: collection name mismatch / visit not refreshing / food ID / ESM hoisting (auto-fixed)
-matt-skills,F1,9:45,9:52,7,9,9,7,0,535238,125809,661047,2421,1,11,1,0,0,true,7,7,N/A,5,N/A,false,false,true,N/A,0,grilling workflow; no commits
-matt-skills,F2,10:29,10:39,10,7,7,6,0,40780,80175,120955,2260,53,8,5,0,0,true,4,4,0,3,N/A,false,false,true,true,0,no commits; OpenAI SDK used
-matt-skills,F3,14:20,14:54,34,8,8,5,2,681265,85460,766725,936,68,12,10,3,2,true,8,8,0,3,false,false,false,true,true,0,3 bugs: feed logic / collection naming / visit delay; no commits
+matt-skills,F1,9:45,9:52,7,9,9,7,0,535238,125809,661047,2421,1,11,1,0,0,true,7,7,N/A,5,N/A,false,false,true,N/A,0,"grilling workflow; no commits; retest: localStorage replay bug (cached session→blank page)"
+matt-skills,F2,10:29,10:39,10,7,7,6,0,40780,80175,120955,2260,53,8,5,0,0,true,4,4,0,3,N/A,false,false,true,true,0,"no commits; OpenAI SDK used; retest: same replay bug"
+matt-skills,F3,14:20,14:54,34,8,8,5,2,681265,85460,766725,936,68,12,10,3,2,true,8,8,0,3,false,false,false,true,true,0,"3 bugs: feed logic / collection naming / visit delay; no commits; retest: same replay bug"
 agent-skills,F1,15:33,15:39,6,1,1,0,0,252528,79427,331955,656,1,14,1,0,0,true,7,7,N/A,5,N/A,false,false,true,N/A,0,
 agent-skills,F2,15:48,16:00,12,1,1,0,0,64292,94599,158891,2041,24,12,5,0,0,true,14,14,0,5,N/A,false,false,true,true,0,
 agent-skills,F3,16:10,17:16,23,6,6,0,0,102650,141273,243923,1111,48,12,9,3,2,true,15,15,0,5,true,false,false,true,true,0,Agent self-fixed 4 bugs; fairness caveat — only this workflow was asked to count its own bugs
