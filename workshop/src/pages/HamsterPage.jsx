@@ -1,10 +1,19 @@
 import { useState, useCallback } from 'react';
 import hamsters from '../data/hamsters';
+import HamsterCard from '../components/HamsterCard';
+import Diary from '../components/Diary';
+import MoodBar from '../components/MoodBar';
+import FoodTray from '../components/FoodTray';
+import ChatBox from '../components/ChatBox';
 
 export default function HamsterPage() {
   const [currentIndex, setCurrentIndex] = useState(() =>
     Math.floor(Math.random() * hamsters.length)
   );
+  const [mood, setMood] = useState(50);
+  const [chatMessages, setChatMessages] = useState([]);
+
+  const hamster = hamsters[currentIndex];
 
   const visitAnother = useCallback(() => {
     setCurrentIndex((prevIndex) => {
@@ -14,45 +23,42 @@ export default function HamsterPage() {
       } while (newIndex === prevIndex && hamsters.length > 1);
       return newIndex;
     });
+    setMood(50);
+    setChatMessages([]);
   }, []);
 
-  const hamster = hamsters[currentIndex];
+  const handleFeed = useCallback(
+    (foodId, isClick, isPenalty) => {
+      setMood((prev) => {
+        if (isPenalty) {
+          return Math.max(0, prev - 5);
+        }
+
+        if (!isClick) return prev;
+
+        const isFavourite = hamster.favouriteFood === foodId;
+        const boost = isFavourite ? hamster.moodBoost : 3;
+        return Math.min(100, prev + boost);
+      });
+    },
+    [hamster]
+  );
 
   return (
-    <div className="hamster-profile">
-      <div className="hamster-card">
-        <div className="hamster-photo-wrapper">
-          <img
-            src={hamster.image}
-            alt={hamster.name}
-            className="hamster-photo"
-          />
-        </div>
+    <div className="hamster-page">
+      <div className="hamster-left-col">
+        <HamsterCard hamster={hamster} onVisitAnother={visitAnother} />
+        <Diary diary={hamster.diary} hamsterName={hamster.name} />
+      </div>
 
-        <h2 className="hamster-name">{hamster.name}</h2>
-        <p className="hamster-age">Age {hamster.age}</p>
-
-        <div className="hamster-traits">
-          <span className="hamster-trait">
-            <span className="trait-label">Personality</span>
-            <span className="trait-value">{hamster.personality}</span>
-          </span>
-          <span className="hamster-trait">
-            <span className="trait-label">Favourite Food</span>
-            <span className="trait-value">{hamster.favouriteFood}</span>
-          </span>
-          <span className="hamster-trait">
-            <span className="trait-label">Hobby</span>
-            <span className="trait-value">{hamster.hobby}</span>
-          </span>
-        </div>
-
-        <p className="hamster-bio">{hamster.bio}</p>
-        <p className="hamster-catchphrase">"{hamster.catchphrase}"</p>
-
-        <button className="visit-another-btn" onClick={visitAnother}>
-          Visit Another
-        </button>
+      <div className="hamster-right-col">
+        <MoodBar mood={mood} />
+        <FoodTray hamster={hamster} mood={mood} onFeed={handleFeed} />
+        <ChatBox
+          hamster={hamster}
+          chatMessages={chatMessages}
+          setChatMessages={setChatMessages}
+        />
       </div>
     </div>
   );
