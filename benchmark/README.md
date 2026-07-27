@@ -37,7 +37,34 @@
 
 ## Observed Results
 
-> 实验完成后填写。
+> Experiment completed 2026-07-24. Full data in `results.csv`. Session logs in `runs/`. Screenshots in `screenshots/`.
+
+### Summary
+
+| Workflow | Time | Tokens | Bugs | Human Int. | Build | Key Strength |
+|---|---:|---:|---:|---:|:---:|---|---|
+| **Superpowers** | 194min | 702K | 4 | Level 2 (F3) | ✅ | Lowest tokens, cleanest commits |
+| **Matt Skills** | 51min | 1,549K | 3 | Level 2 (F3) | ✅ | Fastest F1/F2, effective grilling |
+| **Agent Skills** | 41min | 735K | 7* | Level 0 | ✅ | Fastest overall, self-healing |
+
+> \*Agent Skills: 7 bugs all self-discovered and fixed after user asked for bug count. Fairness caveat — the other workflows were not prompted to count their own bugs.
+
+### Per-Feature Comparison
+
+| | F1 | | | | F2 | | | | F3 | | | |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Workflow | Time | Tokens | Bugs | Int. | Time | Tokens | Bugs | Int. | Time | Tokens | Bugs | Int. |
+| Superpowers | 38min | 269K | 0 | 0 | 38min | 187K | 0 | 0 | 118min | 246K | 4 | 2 |
+| Matt Skills | 7min | 661K | 0 | 0 | 10min | 121K | 0 | 0 | 34min | 767K | 3 | 2 |
+| Agent Skills | 6min | 332K | 0 | 0 | 12min | 159K | 0 | 0 | 23min | 244K | 7\* | 0 |
+
+### Key Findings
+
+1. **All workflows passed 19/19 acceptance criteria** — zero functional difference in final output.
+2. **Complexity amplifies differences**: F1/F2 were close; F3 separated the workflows dramatically (23min vs 118min).
+3. **No workflow self-detected bugs without prompting**: All three claimed zero bugs in initial self-reviews. The user found all bugs in Superpowers and Matt; Agent Skills found its own only after being asked.
+4. **Token efficiency ≠ speed**: Matt used 2.2× more tokens than Superpowers but finished 3.8× faster. Token count measures conversation verbosity, not wall-clock time.
+5. **Commits as a workflow signature**: Superpowers committed 18 times (incremental); Matt and Agent Skills committed 3 times (one per feature). Both approaches produced correct code.
 
 ---
 
