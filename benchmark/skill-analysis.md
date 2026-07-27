@@ -256,3 +256,40 @@ before continuing. Asking multiple questions at once is bewildering.
 7. **定义 "完成" 的硬标准。** 不要写 "确认一切正常"——写 "运行 `npm run dev` 并检查以下 7 个标准"。Superpowers 的 verification-before-completion 写了正确的原则，但 Agent 用 `npx vite build` 替代了功能验证——因为原则是软的。
 
 8. **Skill 写好后要测试。** 本次实验本质上是**对 skill 的集成测试**——Agent 拿着 skill 去完成一个真实项目。试验发现：硬性关卡有效、反模式表有效但在 TDD 场景未能强制执行、"何时不用"段是最被低估的设计。这些只能在真实任务中发现。
+
+---
+
+## 6. 场景适配：什么时候用什么 Workflow
+
+基于实验数据，按项目特征推荐：
+
+| 场景特征 | 推荐 Workflow | 理由 | 实验数据 |
+|---------|-------------|------|---------|
+| **需求模糊，需要先理清** | Matt Skills | grilling 一问一答最擅长澄清需求 | F1 grilling 7 个问题全部被回答，方案在编码前确定 |
+| **需求精确（如已有 spec 文档）** | Agent Skills | "何时不用" 段防止冗余步骤；无需 grilling | Agent Skills F1 0 clarification questions，6min 完成 |
+| **单人快速原型（< 2h）** | Matt 或 Agent Skills | Superpowers 的 planning 开销太大 | Superpowers 194min vs Matt 51min vs Agent Skills 41min |
+| **团队协作、需要设计文档留存** | Superpowers | 硬性关卡强制产出 design spec + plan | 唯一有 `.superpowers/sdd/` 和 `docs/superpowers/specs/` 的 workflow |
+| **多系统集成（前端 + 后端 + DB）** | Agent Skills | 门控流程 + 5 轴审查覆盖更多维度 | F3: 23min, 244K tokens（最快），7 bugs（最多但 4 个自发现） |
+| **UI 质量优先** | Agent Skills | `frontend-ui-engineering` skill 是唯一有 UI 标准的 | 5/5 readability，唯一有文字反应、diary 日期等细节 |
+| **预算敏感（token 最少）** | Superpowers | 最低 token 消耗 | 702K total tokens（Matt: 1,549K, Agent Skills: 735K） |
+| **需要增量 commit 历史** | Superpowers | 唯一 commit 数 > 1 的 workflow | 18 commits vs Matt/Agent Skills 各 3 commits |
+| **CI/CD 或自动化验收环境** | Agent Skills | 有 `ci-cd-and-automation` + `shipping-and-launch` | 内置部署和 CI 支持（本次实验未测试） |
+
+### 混合使用的建议
+
+三个 workflow 不是互斥的。从实验中提取的最佳组合：
+
+```
+需求阶段：Matt 的 grilling（一问一答，澄清模糊需求）
+    ↓
+设计阶段：Superpowers 的 brainstorming + writing-plans（产出留存文档）
+    ↓
+实现阶段：Agent Skills 的 incremental-implementation（小步提交）
+    ↓
+质量阶段：Agent Skills 的 code-review-and-quality（5 轴审查）
+         + Superpowers 的 verification-before-completion（硬性关卡）
+    ↓
+交付阶段：Agent Skills 的 shipping-and-launch
+```
+
+**但要小心：** 混合使用会增加 token 消耗。本实验的纯 workflow token 消耗：Superpowers 702K | Agent Skills 735K | Matt 1,549K。混合工作流可能达到 1M+ tokens。仅在项目复杂度高、质量要求高时推荐。

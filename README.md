@@ -83,7 +83,7 @@ npm run db:seed    # 导入数据库（需要 .env 配置 MongoDB）
 ## 相关文档
 
 - [完整实验报告](benchmark/README.md)
-- [Skill 设计与架构分析](benchmark/skill-analysis.md)
+- [Skill 设计与架构分析](benchmark/skill-analysis.md)（含场景推荐：什么时候用什么 workflow）
 - [Superpowers 观察笔记](benchmark/workflow-notes/superpowers.md)
 - [Matt Skills 观察笔记](benchmark/workflow-notes/matt-pocock.md)
 - [Agent Skills 观察笔记](benchmark/workflow-notes/agent-skills.md)
