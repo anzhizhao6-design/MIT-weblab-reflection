@@ -1368,6 +1368,10 @@ body {
 
 /* ---- Responsive ---- */
 @media (max-width: 700px) {
+  body {
+    padding: 12px 8px;
+  }
+
   .hero {
     flex-direction: column-reverse;
     text-align: center;
@@ -1387,14 +1391,21 @@ body {
   .hp-left {
     width: 100%;
     align-items: center;
+    margin: 0 auto;
+    padding: 0;
   }
 
   .hp-left-top {
     flex-direction: column;
     padding-left: 0;
+    margin-left: 0;
     gap: 16px;
     align-items: center;
     width: 100%;
+  }
+
+  .hp-row .hamster-avatar {
+    margin: 0 auto;
   }
 
   .hp-row .chat-box,
