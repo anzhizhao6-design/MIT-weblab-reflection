@@ -64,7 +64,7 @@ export default function useHamster() {
         });
         if (res.ok) {
           const data = await res.json();
-          setUserId(data.uuid);
+          setUserId(data.userId || data.uuid);
           try { window.localStorage.setItem('userId', data.uuid); } catch {}
           if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
             chrome.storage.local.set({ userId: data.uuid }).catch(() => {});
