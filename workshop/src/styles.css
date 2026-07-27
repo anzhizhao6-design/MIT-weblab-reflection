@@ -1378,12 +1378,34 @@ body {
     font-size: 32px;
   }
 
+  .hp-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hp-left-top {
+    flex-direction: column;
+    padding-left: 0;
+    gap: 16px;
+    align-items: center;
+  }
+
   .hp-row .chat-box,
   .hp-food,
   .hp-card,
   .hp-row .feed-section {
     max-width: 95%;
     flex: 1 1 100%;
+  }
+
+  .hp-row .chat-box {
+    flex: 1 1 auto;
+    width: 95%;
+  }
+
+  .flip-card {
+    width: 100%;
+    max-width: 95%;
   }
 
   .navbar {
