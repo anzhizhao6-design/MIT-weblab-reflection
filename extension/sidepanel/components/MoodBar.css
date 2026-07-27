@@ -1,0 +1,34 @@
+.mood-bar-container {
+  width: 100%;
+}
+
+.mood-bar-track {
+  width: 100%;
+  height: 8px;
+  background: #e8e0d4;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mood-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.mood-bar-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+.mood-level-text {
+  font-weight: 600;
+}
+
+.mood-bar-value {
+  color: #8b7355;
+  font-size: 10px;
+}

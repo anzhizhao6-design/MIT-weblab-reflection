@@ -1,0 +1,43 @@
+.diary-section {
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #4a3525;
+  font-weight: 600;
+}
+
+.diary-entry {
+  background: #faf6f0;
+  border: 1px solid #e8dcc8;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.diary-entry:hover {
+  background: #f5efe4;
+}
+
+.diary-date {
+  font-size: 10px;
+  color: #b0a090;
+  margin-bottom: 2px;
+}
+
+.diary-content {
+  font-size: 12px;
+  color: #5c4a3a;
+  line-height: 1.4;
+}
+
+.diary-toggle {
+  font-size: 10px;
+  color: #c4956a;
+  margin-top: 4px;
+  text-align: right;
+}

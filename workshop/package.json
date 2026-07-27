@@ -8,6 +8,8 @@
     "dev:vite": "vite",
     "dev:server": "node server/index.js",
     "build": "vite build",
+    "build:extension": "cd ../extension && npm run build",
+    "dev:extension": "cd ../extension && npm run dev",
     "preview": "vite preview",
     "db:seed": "node seed.js"
   },

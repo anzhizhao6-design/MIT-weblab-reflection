@@ -22,12 +22,28 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
+// Serve static assets (hamster photos) for extension side panel
+app.use(express.static(join(__dirname, '..', 'public')));
+
 // ── GET /api/hamsters/random ──────────────────────────────────
 app.get('/api/hamsters/random', async (req, res) => {
   try {
     const [hamster] = await Hamster.aggregate([{ $sample: { size: 1 } }]);
     if (!hamster) {
       return res.status(404).json({ error: 'No hamsters found' });
+    }
+    res.json(hamster);
+  } catch (err) {
+    res.status(500).json({ error: 'DB error' });
+  }
+});
+
+// ── GET /api/hamsters/:name ───────────────────────────────────
+app.get('/api/hamsters/:name', async (req, res) => {
+  try {
+    const hamster = await Hamster.findOne({ name: req.params.name });
+    if (!hamster) {
+      return res.status(404).json({ error: 'Hamster not found' });
     }
     res.json(hamster);
   } catch (err) {

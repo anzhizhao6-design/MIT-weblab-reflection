@@ -1,0 +1,84 @@
+/* Hamster Daily — Edge Side Panel Styles
+   Target width: ~350px, no horizontal overflow */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #fdfaf5;
+  color: #4a3525;
+  min-width: 320px;
+  max-width: 400px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 100%;
+  padding-bottom: 16px;
+  overflow-x: hidden;
+}
+
+/* Section title shared across components */
+.section-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #4a3525;
+  font-weight: 600;
+}
+
+/* Visit Another button */
+.visit-another-btn {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 8px 12px 0;
+  padding: 8px 0;
+  border: 1px solid #c4956a;
+  border-radius: 8px;
+  background: #fefcf8;
+  color: #c4956a;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.visit-another-btn:hover {
+  background: #c4956a;
+  color: #fff;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d0c4b0;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b0a090;
+}

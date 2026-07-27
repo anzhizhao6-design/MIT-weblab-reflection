@@ -1,0 +1,67 @@
+.status-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.status-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e8e0d4;
+  border-top-color: #c4956a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.status-icon {
+  font-size: 36px;
+}
+
+.status-overlay p {
+  margin: 0;
+  color: #5c4a3a;
+  font-size: 14px;
+}
+
+.status-hint {
+  font-size: 12px !important;
+  color: #8b7355 !important;
+  max-width: 280px;
+}
+
+.status-hint code {
+  background: #f0e8dc;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.status-retry-btn {
+  margin-top: 8px;
+  padding: 6px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #c4956a;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.status-retry-btn:hover {
+  background: #b07d52;
+}
