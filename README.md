@@ -85,8 +85,8 @@ npm run db:seed    # Seed database (requires .env with MongoDB)
 ## Further Reading
 
 - [Full Experiment Report](benchmark/README.md)
-- [Skill Design Analysis](benchmark/skill-analysis.md) (with workflow scene recommendations)
+- [Skill Design Analysis](benchmark/skill-analysis-EN.md) ([中文](benchmark/skill-analysis.md)) — with workflow scene recommendations
 - [Superpowers Notes](benchmark/workflow-notes/superpowers.md) ([中文](benchmark/workflow-notes/superpowers-zh.md))
 - [Matt Skills Notes](benchmark/workflow-notes/matt-pocock.md) ([中文](benchmark/workflow-notes/matt-pocock-zh.md))
 - [Agent Skills Notes](benchmark/workflow-notes/agent-skills.md) ([中文](benchmark/workflow-notes/agent-skills-zh.md))
-- [Development Log](development-log.md)
+- [Development Log](development-log-EN.md) ([中文](development-log.md))
