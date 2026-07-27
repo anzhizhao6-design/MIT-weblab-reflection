@@ -45,7 +45,7 @@
 |---|---|---|---|---|---|---|
 | **Superpowers** | 194min | 702K | 4 | Level 2 (F3) | ✅ | Lowest tokens, cleanest commits |
 | **Matt Skills** | 51min | 1,549K | 3 | Level 2 (F3) | ✅ | Fastest F1/F2, effective grilling |
-| **Agent Skills** | 41min | 735K | 7* | Level 0 | ✅ | Fastest overall, self-healing |
+| **Agent Skills** | 41min | 735K | 7* | Level 2 (F3) | ✅ | Fastest overall, self-audited 4 bugs |
 
 > \*Agent Skills: 7 bugs total — 3 found by user during manual testing, 4 found by Agent during post-implementation audit. Superpowers and Matt were not given the same audit prompt.
 
