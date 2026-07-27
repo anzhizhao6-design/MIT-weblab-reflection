@@ -42,7 +42,7 @@
 ### Summary
 
 | Workflow | Time | Tokens | Bugs | Human Int. | Build | Key Strength |
-|---|---:|---:|---:|---:|:---:|---|---|
+|---|---|---|---|---|---|---|
 | **Superpowers** | 194min | 702K | 4 | Level 2 (F3) | ✅ | Lowest tokens, cleanest commits |
 | **Matt Skills** | 51min | 1,549K | 3 | Level 2 (F3) | ✅ | Fastest F1/F2, effective grilling |
 | **Agent Skills** | 41min | 735K | 7* | Level 0 | ✅ | Fastest overall, self-healing |
@@ -51,12 +51,11 @@
 
 ### Per-Feature Comparison
 
-| | F1 | | | | F2 | | | | F3 | | | |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Workflow | Time | Tokens | Bugs | Int. | Time | Tokens | Bugs | Int. | Time | Tokens | Bugs | Int. |
-| Superpowers | 38min | 269K | 0 | 0 | 38min | 187K | 0 | 0 | 118min | 246K | 4 | 2 |
-| Matt Skills | 7min | 661K | 0 | 0 | 10min | 121K | 0 | 0 | 34min | 767K | 3 | 2 |
-| Agent Skills | 6min | 332K | 0 | 0 | 12min | 159K | 0 | 0 | 23min | 244K | 7\* | 0 |
+| Workflow | F1 Time | F1 Tokens | F1 Bugs | F1 Int. | F2 Time | F2 Tokens | F2 Bugs | F2 Int. | F3 Time | F3 Tokens | F3 Bugs | F3 Int. |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| **Superpowers** | 38min | 269K | 0 | 0 | 38min | 187K | 0 | 0 | 118min | 246K | 4 | 2 |
+| **Matt Skills** | 7min | 661K | 0 | 0 | 10min | 121K | 0 | 0 | 34min | 767K | 3 | 2 |
+| **Agent Skills** | 6min | 332K | 0 | 0 | 12min | 159K | 0 | 0 | 23min | 244K | 7\* | 0 |
 
 ### Key Findings
 
