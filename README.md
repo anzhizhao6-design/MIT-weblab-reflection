@@ -1,6 +1,6 @@
 # Hamster Daily — AI Workflow Benchmark
 
-> 用同一个全栈项目测试三种 AI 辅助开发工作流：哪个更快？哪个更省 token？哪个代码更好？
+> 用同一个全栈项目测试三种 AI 辅助开发工作流：哪个更快？哪个更省 token？哪个呈现效果更好？
 >
 > 🌐 **Live Demo**: [hamster-daily.onrender.com](https://hamster-daily.onrender.com)
 
@@ -10,7 +10,7 @@
 
 项目灵感来自 **MIT Web.Lab** 课程的全栈开发教学（[课程视频](https://www.youtube.com/playlist?list=PLVAxjdyIU8_z6iFliCz-n9zqf_ZRsbyPA) · [官方课件](https://site.weblab.is/schedule)），从 HTML/CSS 原型一步步演进为完整的前后端应用。开发全过程记录在 [`development-log.md`](development-log.md)。
 
-- 12 只仓鼠，各有性格（Gluttonous 🍽️ / Shy 😳 / Chaotic 💫 ...）
+- 12 只仓鼠，各有性格
 - LLM 驱动的智能聊天，API 不可用时退回关键词匹配
 - MongoDB 持久化记忆（访问次数、喂食次数、对话历史）
 - 详见：[`benchmark/case-spec.md`](benchmark/case-spec.md)
@@ -19,28 +19,28 @@
 
 三个 AI 工作流从**完全相同的起点**（`benchmark-baseline`，只有 HTML 原型 + 13 张图片）出发，实现完全相同的 3 个 Feature：
 
-| | Superpowers | Matt Pocock Skills | Agent Skills |
-|---|---|---|---|
-| **方法** | 前期 plan → 自主执行 | 连环追问 → TDD | 完整 SDLC：spec→plan→code→test→review |
-| **分支** | `workflow/superpowers` | `workflow/matt-skills` | `workflow/agent-skills` |
+|          | Superpowers            | Matt Pocock Skills     | Agent Skills                          |
+| -------- | ---------------------- | ---------------------- | ------------------------------------- |
+| **方法** | 前期 plan → 自主执行   | 连环追问 → TDD         | 完整 SDLC：spec→plan→code→test→review |
+| **分支** | `workflow/superpowers` | `workflow/matt-skills` | `workflow/agent-skills`               |
 
-## 结果一览
+### 结果一览
 
-| Workflow | 总时间 | 总 Token | 总 Bug | 人工介入 | 综合可读性 | 关键特点 |
-|---|---|---|---|---|---|---|
-| **Superpowers** | 194min | 702K | 4 | Level 2 | 4/5 | 最低 token、18 次 commit |
-| **Matt Skills** | 51min | 1,549K | 3 | Level 2 | 3.7/5 | 最快 F1/F2、grilling 高效 |
-| **Agent Skills** | 41min | 735K | 7* | Level 2 | 5/5 | 最快、最优 UI、self-audit 4 bugs |
+| Workflow         | 总时间 | 总 Token | 总 Bug | 人工介入 | 综合可读性 | 关键特点                         |
+| ---------------- | ------ | -------- | ------ | -------- | ---------- | -------------------------------- |
+| **Superpowers**  | 194min | 702K     | 4      | Level 2  | 4/5        | 最低 token、18 次 commit         |
+| **Matt Skills**  | 51min  | 1,549K   | 3      | Level 2  | 3.7/5      | 最快 F1/F2、grilling 高效        |
+| **Agent Skills** | 41min  | 735K     | 7\*    | Level 2  | 5/5        | 最快、最优 UI、self-audit 4 bugs |
 
 > \*Agent Skills: 3 bugs 由用户发现，4 bugs 由 Agent 在 post-implementation audit 中自发现。
 
 ### 三个 Feature 逐项对比
 
-| Workflow | F1 时间 | F1 Token | F2 时间 | F2 Token | F3 时间 | F3 Token | F3 Bug |
-|---|---|---|---|---|---|---|---|
-| **Superpowers** | 38min | 269K | 38min | 187K | 118min | 246K | 4 |
-| **Matt Skills** | 7min | 661K | 10min | 121K | 34min | 767K | 3 |
-| **Agent Skills** | 6min | 332K | 12min | 159K | 23min | 244K | 7\* |
+| Workflow         | F1 时间 | F1 Token | F2 时间 | F2 Token | F3 时间 | F3 Token | F3 Bug |
+| ---------------- | ------- | -------- | ------- | -------- | ------- | -------- | ------ |
+| **Superpowers**  | 38min   | 269K     | 38min   | 187K     | 118min  | 246K     | 4      |
+| **Matt Skills**  | 7min    | 661K     | 10min   | 121K     | 34min   | 767K     | 3      |
+| **Agent Skills** | 6min    | 332K     | 12min   | 159K     | 23min   | 244K     | 7\*    |
 
 ### 核心发现
 
