@@ -33,14 +33,8 @@ function ChatBox({ hamster, userId }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          messages: newMessages,
-          hamster: {
-            name: hamster.name,
-            personality: hamster.personality,
-            favouriteFood: hamster.favouriteFood,
-            hobby: hamster.hobby,
-            catchphrase: hamster.catchphrase,
-          },
+          message: text,
+          hamsterId: hamster.id,
           userId: userId || undefined,
         }),
       });
@@ -50,7 +44,7 @@ function ChatBox({ hamster, userId }) {
       if (data.error) {
         responseContent = getFallbackResponse(text, hamster);
       } else {
-        responseContent = data.content;
+        responseContent = data.reply;
       }
     } catch {
       responseContent = getFallbackResponse(text, hamster);
