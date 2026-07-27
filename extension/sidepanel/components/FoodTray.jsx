@@ -65,7 +65,8 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty, userId, onFeedRecorde
         hoverTimers.current[foodId] = null;
       }
 
-      const isFavourite = foodId === hamster.favouriteFood;
+      const food = foods.find((f) => f.id === foodId);
+      const isFavourite = food?.label === hamster.favouriteFood;
       const change = isFavourite ? hamster.moodBoost : 3;
 
       if (isFavourite && !favouriteFed) {
@@ -92,7 +93,6 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty, userId, onFeedRecorde
           .catch(() => {});
       }
 
-      const food = foods.find((f) => f.id === foodId);
       setReaction(getReactionText(change, food.label, hamster.name));
       clearReaction();
     },
@@ -105,7 +105,7 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty, userId, onFeedRecorde
       {reaction && <div className="food-reaction">{reaction}</div>}
       <div className="food-grid">
         {foods.map((food) => {
-          const isFavourite = food.id === hamster.favouriteFood;
+          const isFavourite = food.label === hamster.favouriteFood;
           return (
             <button
               key={food.id}
