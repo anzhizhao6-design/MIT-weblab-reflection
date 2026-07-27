@@ -65,6 +65,7 @@ All 19 acceptance criteria passed. Zero regressions. User verified.
 - Visual result: See `benchmark/screenshots/matt-skills/` (5 screenshots)
 - Runtime errors: None significant
 - Deployment status: Not deployed（benchmark did not require deployment）
+- Readability scores: F1: 5/5, F2: 3/5, F3: 3/5. F1 was excellent. F2 diary layout didn't align with the info panel, reducing visual polish. F3 template felt less refined than Agent Skills. However, the LLM responses felt more natural than Superpowers' fallback-heavy approach.
 
 ## 7. Metrics
 

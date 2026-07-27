@@ -68,6 +68,7 @@ All 19 acceptance criteria passed. Zero regressions. Agent produced a detailed s
 - Visual result: See `benchmark/screenshots/agent-skills/` (5 screenshots)
 - Runtime errors: Port conflict and proxy errors on F3 initial run; resolved by Agent
 - Deployment status: Not deployed（benchmark did not require deployment）
+- Readability scores: F1: 5/5, F2: 5/5, F3: 5/5. Highest overall. F2 placed mood bar and food tray together — intuitive layout. Diary entries had dates. F3 was the only workflow to show reaction text on food clicks. UI felt the most polished.
 
 ## 7. Metrics
 

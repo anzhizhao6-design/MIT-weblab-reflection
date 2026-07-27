@@ -67,6 +67,7 @@ All 19 acceptance criteria passed (7 F1 + 4 F2 + 8 F3). Zero regressions. Build 
 - Visual result: See `benchmark/screenshots/superpowers/` (6 screenshots)
 - Runtime errors: Port conflict on F3 (Vite + Express both on 3001); resolved
 - Deployment status: Not deployed（benchmark did not require deployment）
+- Readability scores: F1: 4/5, F2: 4/5, F3: 4/5. Consistent, clean code. Generated copy (hamster bios, diary entries) was functional but not particularly creative.
 
 ## 7. Metrics
 
