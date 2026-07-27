@@ -96,7 +96,7 @@ All 19 acceptance criteria passed. Zero regressions. User verified.
 - **F1 token bloat**: 661K tokens for F1 (2.5× Superpowers). The grilling consumed significant tokens before any code was written.
 - **F3 token explosion**: 767K tokens — 3.1× Superpowers. Suggested Matt's questioning approach doesn't scale well to complex multi-system features.
 - **Did not self-detect bugs**: Like Superpowers, Agent reported zero concerns. All 3 F3 bugs required user diagnosis.
-- **Build artifacts committed**: Agent committed `node_modules`, `dist/`, and `.vite/` into the F1 commit — needed manual cleanup.
+- **Build artifacts in initial commit**: F1 commit included `node_modules/` and `dist/` (2,361 files). Resolved by adding `.gitignore` and amending. Suggests `.gitignore` should be part of the scaffold step.
 
 ## 10. Key Takeaway
 Matt's grilling approach is remarkably fast for well-scoped tasks — F1 (7min) and F2 (10min) were the fastest of any workflow. But the upfront questioning doesn't prevent bugs in complex features; F3 still needed user debugging despite 18 clarification questions across the project. The single-commit-per-feature pattern is a double-edged sword: fast to deliver but no safety net. Best suited for experienced developers who know exactly what they want and can answer grilling questions quickly.
