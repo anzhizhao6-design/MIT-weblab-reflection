@@ -90,3 +90,4 @@ npm run db:seed    # Seed database (requires .env with MongoDB)
 - [Matt Skills Notes](benchmark/workflow-notes/matt-pocock.md) ([中文](benchmark/workflow-notes/matt-pocock-zh.md))
 - [Agent Skills Notes](benchmark/workflow-notes/agent-skills.md) ([中文](benchmark/workflow-notes/agent-skills-zh.md))
 - [Development Log](development-log-EN.md) ([中文](development-log.md))
+- [Edge Extension](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/edge-extension) — 浏览器侧边栏仓鼠

@@ -89,3 +89,4 @@ npm run db:seed    # 导入数据库（需要 .env 配置 MongoDB）
 - [Matt Skills 观察笔记](benchmark/workflow-notes/matt-pocock.md)
 - [Agent Skills 观察笔记](benchmark/workflow-notes/agent-skills.md)
 - [项目开发全过程](development-log.md)
+- [Edge 扩展](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/edge-extension) — 浏览器侧边栏仓鼠
