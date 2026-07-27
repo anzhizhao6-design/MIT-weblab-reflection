@@ -42,14 +42,7 @@ Agent Skills created structured plans using `planning-and-task-breakdown` and `s
 - **F3**: Single commit — MongoDB models → seed script → 6 API routes → ProfileCard → AccountPanel → UserContext → chat memory injection.
 
 ### Step 3 — Debugging
-F1 and F2 had zero bugs. F3 had 7 bugs, but critically — **Agent self-discovered and self-fixed** most of them after the user asked for a bug count:
-1. Express startup failure (port conflict)
-2. ECONNREFUSED proxy error (DB blocked listen)
-3. Visit/Fed count always 0 (no refresh mechanism)
-4. LLM always invalid_response (role `hamster` not mapped to `assistant`)
-5. Conversations not saved to DB (only LLM path saved)
-6. Collection name wrong (`hamstermemories` → `hamster_memories`)
-7. Chat replies truncated (max_tokens: 150 → 300)
+F1 and F2 had zero bugs. F3 had 7 bugs — **3 found by the user** during manual testing (feed/visit counts not updating, chat responses broken), and **4 found by the Agent** after being asked to audit its own work (port conflict, proxy error, collection naming, token limit). Agent self-fixed all 7.
 
 ### Step 4 — Final Verification
 All 19 acceptance criteria passed. Zero regressions. Agent produced a detailed self-verification report listing each criterion, status, and evidence.
@@ -58,9 +51,15 @@ All 19 acceptance criteria passed. Zero regressions. Agent produced a detailed s
 
 | Issue | Cause | Resolution | Human intervention |
 |-------|-------|------------|-------------------|
-| 7 F3 bugs (see above) | Various — port conflict, role mapping, refresh mechanism, collection naming, token limit | Agent self-diagnosed and self-fixed all 7 after user asked for bug count | Partially — user asked "how many bugs?", Agent then found and fixed all 7 independently |
+| Feed + Visit count not changing | No refresh mechanism; `useEffect` dependencies never updated | Added `refreshKey` state, event-driven refresh | Yes (Level 2) — user observed and reported |
+| Chat responses broken | `role: 'hamster'` not mapped to `'assistant'` for LLM API | Server-side role mapping + restart | Yes (Level 2) — user observed and reported |
+| Feed count not updating (`npm run dev` tested) | Same root cause as above | Same fix | Yes (Level 2) |
+| Express port conflict + proxy error | `await connectDB()` blocked `listen()`; port 3001 race | `listen()` before DB connection; DB in background | No — Agent self-fixed |
+| LLM `invalid_response` on all messages | See chat role mapping above | Fixed with role mapping | No — Agent self-fixed |
+| Collection name `hamstermemories` ≠ spec | Mongoose default pluralisation | Added `{ collection: 'hamster_memories' }` | No — Agent self-fixed |
+| Chat replies truncated mid-sentence | `max_tokens: 150` too low | Raised to 300 | No — Agent self-fixed |
 
-> **Fairness note:** Only this workflow was explicitly asked to count its own bugs post-implementation. The other two workflows were not given this prompt. It is unclear how many of the 7 bugs Agent Skills would have self-discovered without prompting.
+> **Fairness note:** The 3 user-found bugs were discovered during manual acceptance testing — the same process used for Superpowers and Matt. The 4 self-found bugs were identified after a post-implementation audit prompt that was only given to this workflow. Without that prompt, Agent Skills F3 would have been recorded as 3 bugs (user-found), comparable to Matt (3) and Superpowers (4).
 
 ## 6. Results
 - Build succeeded: Yes (all three features)
@@ -92,7 +91,7 @@ All 19 acceptance criteria passed. Zero regressions. Agent produced a detailed s
 ## 8. Strengths
 - **Fastest overall**: 41 minutes — 4.7× faster than Superpowers, 20% faster than Matt.
 - **Lowest user interaction**: Only 8 user messages total (1 for F1, 1 for F2, 6 for F3). Almost fully autonomous.
-- **Self-healing when prompted**: When asked to count bugs, Agent not only listed them but fixed all 7 independently.
+- **Self-healing when prompted**: When asked to audit its own work, Agent found and fixed 4 additional bugs independently. Combined with user-found 3 bugs, total 7 identified and resolved.
 - **No clarification questions needed**: Agent read the spec and made decisions autonomously without grilling the user.
 - **Detailed self-verification**: Each feature had a criterion-by-criterion verification report with evidence.
 
@@ -101,4 +100,4 @@ All 19 acceptance criteria passed. Zero regressions. Agent produced a detailed s
 - **No incremental commits**: Each feature was one commit — same as Matt.
 
 ## 10. Key Takeaway
-Agent Skills was the most efficient workflow by every metric — fastest (41min), least user interaction (8 messages), zero human intervention. However, like the others, its self-verification had a blind spot: it claimed zero bugs until explicitly asked to look again. The key insight is that **asking an Agent to count its own bugs triggers a genuine review pass** — not just a superficial checklist. This suggests Agent Skills' `code-review-and-quality` skill needs a stronger default trigger rather than relying on the user to initiate it.
+Agent Skills was the most efficient workflow — fastest (41min), least user interaction (8 messages). However, like the others, its self-verification had a blind spot: it claimed zero bugs until the user found 3 during manual testing. When subsequently asked to audit its own work, the Agent found 4 more bugs and fixed all 7. The key insight is that **prompting an Agent to self-audit triggers a genuine second review pass** — not just a superficial checklist. This is a lever available to all workflows, not unique to Agent Skills.

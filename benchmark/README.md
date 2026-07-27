@@ -47,7 +47,7 @@
 | **Matt Skills** | 51min | 1,549K | 3 | Level 2 (F3) | ✅ | Fastest F1/F2, effective grilling |
 | **Agent Skills** | 41min | 735K | 7* | Level 0 | ✅ | Fastest overall, self-healing |
 
-> \*Agent Skills: 7 bugs all self-discovered and fixed. The user asked this workflow to count and report its bugs; Superpowers and Matt were not given this prompt. The `auto_fixed` metric in `results.csv` reflects this difference.
+> \*Agent Skills: 7 bugs total — 3 found by user during manual testing, 4 found by Agent during post-implementation audit. Superpowers and Matt were not given the same audit prompt.
 
 ### Per-Feature Comparison
 
@@ -61,7 +61,7 @@
 
 1. **All workflows passed 19/19 acceptance criteria** — zero functional difference in final output.
 2. **Complexity amplifies differences**: F1/F2 were close; F3 separated the workflows dramatically (23min vs 118min).
-3. **No workflow self-detected bugs without prompting**: All three claimed zero bugs in initial self-reviews. The user found all bugs in Superpowers and Matt; Agent Skills found its own only after being asked.
+3. **No workflow self-detected bugs during initial implementation**: All three claimed zero bugs in self-reviews. User found bugs in all three workflows during acceptance testing (Superpowers: 4, Matt: 3, Agent Skills: 3). Agent Skills later found 4 additional bugs when prompted to self-audit.
 4. **Token efficiency ≠ speed**: Matt used 2.2× more tokens than Superpowers but finished 3.8× faster. Token count measures conversation verbosity, not wall-clock time.
 5. **Commits as a workflow signature**: Superpowers committed 18 times (incremental); Matt and Agent Skills committed 3 times (one per feature). Both approaches produced correct code.
 
