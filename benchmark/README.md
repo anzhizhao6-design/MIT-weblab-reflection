@@ -75,6 +75,8 @@ benchmark/
 ├── plan.md                 ← 实验设计
 ├── case-spec.md            ← Feature 精确定义
 ├── metrics.md              ← 评价指标
+├── experiment-protocol.md  ← 实验执行规则
+├── skill-analysis.md       ← Skill 设计与架构分析
 ├── baseline-log/           ← 原始项目的开发日志
 ├── workflow-notes/         ← 三个 workflow 的深入分析
 ├── results.csv             ← 实验数据
