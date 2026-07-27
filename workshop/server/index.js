@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { connectDb } from './db/database.js';
-import { getRandomHamster, getHamsterById } from './services/hamsterService.js';
+import { getRandomHamster, getHamsterById, getHamsterByName } from './services/hamsterService.js';
 import { saveMessage, getHistory, generateHamsterReply } from './services/chatService.js';
 import { ensureUser, recordVisit, recordFeed, getMemory } from './services/memoryService.js';
 import User from './models/User.js';
@@ -24,6 +24,17 @@ app.get('/api/hamsters/random', async (req, res) => {
   try {
     const hamster = await getRandomHamster();
     if (!hamster) return res.status(404).json({ error: 'No hamsters found.' });
+    res.json(hamster);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/hamsters/:name
+app.get('/api/hamsters/:name', async (req, res) => {
+  try {
+    const hamster = await getHamsterByName(req.params.name);
+    if (!hamster) return res.status(404).json({ error: 'Hamster not found.' });
     res.json(hamster);
   } catch (err) {
     res.status(500).json({ error: err.message });

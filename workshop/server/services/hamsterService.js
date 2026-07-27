@@ -9,3 +9,7 @@ export async function getRandomHamster() {
 export async function getHamsterById(id) {
   return Hamster.findOne({ id });
 }
+
+export async function getHamsterByName(name) {
+  return Hamster.findOne({ name });
+}
