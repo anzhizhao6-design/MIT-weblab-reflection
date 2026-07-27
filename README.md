@@ -1,91 +1,92 @@
 # Hamster Daily — AI Workflow Benchmark
 
-> 用同一个全栈项目测试三种 AI 辅助开发工作流：哪个更快？哪个更省 token？哪个呈现效果更好？
+> Comparing three AI-assisted development workflows on the same full-stack project: which is faster, cheaper, and produces better code?
 >
 > 🌐 **Live Demo**: [hamster-daily.onrender.com](https://hamster-daily.onrender.com)
 
-## 项目
+## Project
 
-**Hamster Daily** — 一个 React + Vite + Express + MongoDB 的仓鼠互动网站。每天随机展示一只仓鼠，可以喂食、看日记、和它聊天，仓鼠会记住你的访问。
+**Hamster Daily** — a React + Vite + Express + MongoDB hamster interaction website. Each day shows a random hamster; users can feed them, read diaries, and chat. Hamsters remember your visits.
 
-项目灵感来自 **MIT Web.Lab** 课程的全栈开发教学（[课程视频](https://www.youtube.com/playlist?list=PLVAxjdyIU8_z6iFliCz-n9zqf_ZRsbyPA) · [官方课件](https://site.weblab.is/schedule)），从 HTML/CSS 原型一步步演进为完整的前后端应用。开发全过程记录在 [`development-log.md`](development-log.md)。
+Built while learning full-stack development through **MIT Web.Lab** ([course videos](https://www.youtube.com/playlist?list=PLVAxjdyIU8_z6iFliCz-n9zqf_ZRsbyPA) · [slides](https://site.weblab.is/schedule)), evolving from an HTML/CSS prototype to a complete frontend + backend application. Full development log: [`development-log.md`](development-log.md).
 
-- 12 只仓鼠，各有性格
-- LLM 驱动的智能聊天，API 不可用时退回关键词匹配
-- MongoDB 持久化记忆（访问次数、喂食次数、对话历史）
-- 详见：[`benchmark/case-spec.md`](benchmark/case-spec.md)
+- 12 hamsters, each with a distinct personality
+- LLM-powered chat with keyword fallback
+- MongoDB persistence (visit counts, feed history, conversations)
+- Full spec: [`benchmark/case-spec.md`](benchmark/case-spec.md)
 
-## 实验：三种 Workflow，同一个 Spec
+## The Experiment: Three Workflows, One Spec
 
-三个 AI 工作流从**完全相同的起点**（`benchmark-baseline`，只有 HTML 原型 + 13 张图片）出发，实现完全相同的 3 个 Feature：
+Three AI workflows started from the **same baseline** (`benchmark-baseline`, just an HTML prototype + 13 images) and built the same 3 features:
 
-|          | Superpowers            | Matt Pocock Skills     | Agent Skills                          |
-| -------- | ---------------------- | ---------------------- | ------------------------------------- |
-| **方法** | 前期 plan → 自主执行   | 连环追问 → TDD         | 完整 SDLC：spec→plan→code→test→review |
-| **分支** | `workflow/superpowers` | `workflow/matt-skills` | `workflow/agent-skills`               |
+| | Superpowers | Matt Pocock Skills | Agent Skills |
+|---|---|---|---|
+| **Approach** | Upfront plan → autonomous execution | Relentless questioning → TDD | Full SDLC: spec→plan→code→test→review |
+| **Branch** | `workflow/superpowers` | `workflow/matt-skills` | `workflow/agent-skills` |
 
-### 结果一览
+### Results at a Glance
 
-| Workflow         | 总时间 | 总 Token | 总 Bug | 人工介入 | 综合可读性 | 关键特点                         |
-| ---------------- | ------ | -------- | ------ | -------- | ---------- | -------------------------------- |
-| **Superpowers**  | 194min | 702K     | 4      | Level 2  | 4/5        | 最低 token、18 次 commit         |
-| **Matt Skills**  | 51min  | 1,549K   | 3      | Level 2  | 3.7/5      | 最快 F1/F2、grilling 高效        |
-| **Agent Skills** | 41min  | 735K     | 7\*    | Level 2  | 5/5        | 最快、最优 UI、self-audit 4 bugs |
+| Workflow | Total Time | Total Tokens | Total Bugs | Human Int. | Readability | Key Trait |
+|---|---|---|---|---|---|---|
+| **Superpowers** | 194min | 702K | 4 | Level 2 | 4/5 | Lowest token usage, 18 commits |
+| **Matt Skills** | 51min | 1,549K | 3 | Level 2 | 3.7/5 | Fastest F1/F2, effective grilling |
+| **Agent Skills** | 41min | 735K | 7\* | Level 2 | 5/5 | Fastest overall, best UI, self-audited 4 bugs |
 
-> \*Agent Skills: 3 bugs 由用户发现，4 bugs 由 Agent 在 post-implementation audit 中自发现。
+> \*Agent Skills: 3 bugs found by user, 4 by Agent during post-implementation audit.
 
-### 三个 Feature 逐项对比
+### Per-Feature Breakdown
 
-| Workflow         | F1 时间 | F1 Token | F2 时间 | F2 Token | F3 时间 | F3 Token | F3 Bug |
-| ---------------- | ------- | -------- | ------- | -------- | ------- | -------- | ------ |
-| **Superpowers**  | 38min   | 269K     | 38min   | 187K     | 118min  | 246K     | 4      |
-| **Matt Skills**  | 7min    | 661K     | 10min   | 121K     | 34min   | 767K     | 3      |
-| **Agent Skills** | 6min    | 332K     | 12min   | 159K     | 23min   | 244K     | 7\*    |
+| Workflow | F1 Time | F1 Tokens | F2 Time | F2 Tokens | F3 Time | F3 Tokens | F3 Bugs |
+|---|---|---|---|---|---|---|---|
+| **Superpowers** | 38min | 269K | 38min | 187K | 118min | 246K | 4 |
+| **Matt Skills** | 7min | 661K | 10min | 121K | 34min | 767K | 3 |
+| **Agent Skills** | 6min | 332K | 12min | 159K | 23min | 244K | 7\* |
 
-### 核心发现
+### Key Findings
 
-1. **所有 workflow 都完成了全部 19 条验收标准** — 最终功能完全一致。
-2. **复杂度放大差异** — F1/F2 差距很小；F3（数据库 + API + 记忆系统）拉开了显著差距：23min vs 118min。
-3. **Token ≠ 速度** — Matt 用了 2.2× 的 token 但快了 3.8×。Agent Skills 用中等 token 达到了最快速度。
-4. **没有 workflow 能主动发现 bug** — 三个 workflow 初始自评都声称 0 bugs。所有 bug 均由用户验收测试发现。
-5. **Commit 风格反映 workflow 哲学** — Superpowers 提交了 18 次（增量式）；Matt 和 Agent Skills 各提交 3 次（一 feature 一次）。
+1. **All workflows passed 19/19 acceptance criteria** — zero functional difference in final output.
+2. **Complexity amplifies differences** — F1/F2 were close; F3 (database + APIs + memory) separated dramatically: 23min vs 118min.
+3. **Tokens ≠ speed** — Matt used 2.2× more tokens but finished 3.8× faster.
+4. **No workflow self-detected bugs during initial implementation** — all three claimed zero bugs. User found 3–4 in each.
+5. **Commit style reflects workflow philosophy** — Superpowers: 18 incremental commits; Matt and Agent Skills: 1 per feature.
 
-## 仓库结构
+## Repo Structure
 
 ```
 MIT-weblab-reflection/
-├── README.md                  ← 你在这里（总报告）
-├── workshop/                  ← Hamster Daily 完整代码（main 分支）
-├── notes/                     ← 开发学习笔记（HTML/CSS → React → Node → DB）
+├── README.md                  ← You are here (report)
+├── README-zh.md               ← Chinese version
+├── workshop/                  ← Hamster Daily source (main branch)
+├── notes/                     ← Learning notes (HTML/CSS → React → Node → DB)
 ├── benchmark/
-│   ├── README.md              ← Benchmark 详细介绍
-│   ├── plan.md                ← 实验设计
-│   ├── case-spec.md           ← Feature 精确定义（冻结版）
-│   ├── metrics.md             ← 评价指标（7 维度）
-│   ├── experiment-protocol.md ← 实验执行规则（冻结版）
-│   ├── skill-analysis.md      ← Skill 设计与架构分析
-│   ├── results.csv            ← 9 行实验数据
-│   ├── workflow-notes/        ← 三个 workflow 的观察笔记
-│   ├── screenshots/           ← 各 workflow 的 UI 截图
-│   ├── runs/                  ← 完整 session log（JSONL）
-│   └── baseline-log/          ← 原始项目的开发日志
-└── development-log.md          ← 项目开发全过程记录
+│   ├── README.md              ← Detailed benchmark docs
+│   ├── plan.md                ← Experiment design
+│   ├── case-spec.md           ← Frozen feature specification
+│   ├── metrics.md             ← Evaluation metrics (7 dimensions)
+│   ├── experiment-protocol.md ← Frozen experiment protocol
+│   ├── skill-analysis.md      ← Skill design & architecture analysis
+│   ├── results.csv            ← 9 rows of experiment data
+│   ├── workflow-notes/        ← Per-workflow observation notes (EN + ZH)
+│   ├── screenshots/           ← UI screenshots per workflow
+│   ├── runs/                  ← Full session logs (JSONL)
+│   └── baseline-log/          ← Original project development log
+└── development-log.md         ← Complete project dev journal
 ```
 
-## 快速开始
+## Quick Start
 
 ```bash
 cd workshop
 npm install
 npm run dev        # http://localhost:3000
-npm run db:seed    # 导入数据库（需要 .env 配置 MongoDB）
+npm run db:seed    # Seed database (requires .env with MongoDB)
 ```
 
-## 相关文档
+## Further Reading
 
-- [完整实验报告](benchmark/README.md)
-- [Skill 设计与架构分析](benchmark/skill-analysis.md)（含场景推荐：什么时候用什么 workflow）
-- [Superpowers 观察笔记](benchmark/workflow-notes/superpowers.md)
-- [Matt Skills 观察笔记](benchmark/workflow-notes/matt-pocock.md)
-- [Agent Skills 观察笔记](benchmark/workflow-notes/agent-skills.md)
-- [项目开发全过程](development-log.md)
+- [Full Experiment Report](benchmark/README.md)
+- [Skill Design Analysis](benchmark/skill-analysis.md) (with workflow scene recommendations)
+- [Superpowers Notes](benchmark/workflow-notes/superpowers.md) ([中文](benchmark/workflow-notes/superpowers-zh.md))
+- [Matt Skills Notes](benchmark/workflow-notes/matt-pocock.md) ([中文](benchmark/workflow-notes/matt-pocock-zh.md))
+- [Agent Skills Notes](benchmark/workflow-notes/agent-skills.md) ([中文](benchmark/workflow-notes/agent-skills-zh.md))
+- [Development Log](development-log.md)
