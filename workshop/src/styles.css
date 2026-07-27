@@ -1381,6 +1381,12 @@ body {
   .hp-row {
     flex-direction: column;
     align-items: center;
+    padding: 0;
+  }
+
+  .hp-left {
+    width: 100%;
+    align-items: center;
   }
 
   .hp-left-top {
@@ -1388,6 +1394,7 @@ body {
     padding-left: 0;
     gap: 16px;
     align-items: center;
+    width: 100%;
   }
 
   .hp-row .chat-box,
