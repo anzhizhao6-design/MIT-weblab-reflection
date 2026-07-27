@@ -1,109 +1,106 @@
 # Hamster Daily — Edge Extension
 
-> 将 Hamster Daily 搬到浏览器侧边栏。每次打开，看看今天的仓鼠。
+> Bring your daily hamster to the browser sidebar. One click, instant serotonin.
 
-## 设计思路
+## Why This Exists
 
-这个扩展和 [主站](https://hamster-daily.onrender.com) 共享同一套后端和数据，但交互完全不同——侧边栏 350px 宽，随手打开、随手关闭，不需要切换标签页。
+The [main site](https://hamster-daily.onrender.com) is great, but you have to switch tabs. This extension puts the hamster in your sidebar — 350px wide, always one click away. Feed, chat, and check your daily hamster without leaving your current page.
 
-### 与主站的共享架构
+### Shared Architecture with Main
 
 ```
 ┌─────────────────┐     ┌──────────────────┐
-│  主站 (main)     │     │  扩展 (extension) │
+│  Website (main)  │     │  Extension        │
 │  React + Vite    │     │  React + Vite     │
-│  localhost:3000  │     │  sidePanel API    │
+│  port 3000       │     │  sidePanel API    │
 └───────┬─────────┘     └────────┬─────────┘
-        │  共享 API               │  共享 API
+        │   Shared API            │   Shared API
         └──────────┬─────────────┘
                    ▼
         ┌──────────────────┐
-        │  后端 (main)      │
+        │  Backend (main)   │
         │  Express :3001    │
         │  MongoDB Atlas    │
         │  LLM API (JM)     │
         └──────────────────┘
 ```
 
-**共用内容：**
-- **API 全部复用** — `/api/hamsters/random`、`/api/chat`、`/api/visit`、`/api/feed`、`/api/memory`、`/api/users`（其中 `/api/hamsters/:name` 和 CORS 是为了扩展专门加的）
-- **数据库共享** — 同一个 MongoDB `hamster_main`。喂食、访问计数、聊天记录在两个平台上实时同步
-- **userId 同步** — 打开主站时 Content Script 自动将 UUID 写入扩展存储，侧边栏随后使用同一身份
+**Shared:**
+- **API** — `/api/hamsters/random`, `/api/chat`, `/api/visit`, `/api/feed`, `/api/memory`, `/api/users` (two endpoints added for the extension: `/api/hamsters/:name` and CORS middleware)
+- **Database** — same MongoDB `hamster_main`. Feed counts, visits, and chat history sync in real time
+- **userId** — Content Script reads the website's localStorage UUID and writes it to extension storage. Same identity on both platforms
 
-**不同之处：**
-- 扩展 UI 针对 350px 窄屏重新设计（2 列食物、4 条聊天记录、1 条日记可展开）
-- 扩展只加载当前仓鼠数据，不是全部 12 只
-- 状态保持——关闭侧边栏再打开还是同一只仓鼠
+**Different:**
+- UI redesigned for 350px (2-column food grid, 4-message chat, 1 expandable diary entry)
+- Loads only the current hamster, not all 12
+- State preserved across sidebar open/close
 
-## 安装与使用
+## Installation
 
-### 前提条件
+### Prerequisites
 - Node.js ≥ 18
-- [后端](https://hamster-daily.onrender.com) 运行中（默认已部署）
+- [Backend](https://hamster-daily.onrender.com) running (deployed by default)
 
-### 安装步骤
+### Steps
 
 ```bash
-# 1. 进入扩展目录
+# 1. Enter extension directory
 cd extension
 
-# 2. 安装依赖
+# 2. Install dependencies
 npm install
 
-# 3. 构建
+# 3. Build
 npm run build
 
-# 4. 在 Edge 中加载
-# edge://extensions/ → 打开「开发者模式」→「加载解压缩的扩展」→ 选择 extension/ 文件夹
+# 4. Load in Edge
+# edge://extensions/ → enable "Developer mode" → "Load unpacked" → select extension/ folder
 ```
 
-### 日常使用
-- 点击浏览器工具栏的 🐹 图标，侧边栏打开
-- 如果打开 [主站](https://hamster-daily.onrender.com)，userId 自动同步——两个平台共享身份
-- 如果没打开主站，扩展使用自己生成的 UUID（可在主站 Account 面板粘贴同步）
+### Usage
 
-### 开发模式
+- Click the 🐹 icon in the toolbar to open the sidebar
+- Open the [main site](https://hamster-daily.onrender.com) to auto-sync your userId
+- Without the main site, the extension generates its own UUID (sync it later via the Account panel)
+
+### Development
 
 ```bash
 cd extension
-npm run dev     # 启动 Vite 开发服务器（热更新）
+npm run dev     # Vite dev server with hot reload
 ```
 
-然后在 `edge://extensions/` 重新加载扩展。
+Then reload the extension in `edge://extensions/`.
 
-## 后端接口
+## API Endpoints
 
-所有 API 指向 `https://hamster-daily.onrender.com`：
+All requests target `https://hamster-daily.onrender.com`:
 
-| 端点 | 方法 | 用途 | 扩展特有？ |
-|------|------|------|-----------|
-| `/api/hamsters/random` | GET | 随机仓鼠 | 否 |
-| `/api/hamsters/:name` | GET | 按名恢复仓鼠 | **是**（为扩展新增） |
-| `/api/chat` | POST | 发送聊天消息 | 否 |
-| `/api/visit` | POST | 记录访问 | 否 |
-| `/api/feed` | POST | 记录喂食 | 否 |
-| `/api/memory` | GET | 查询访问/喂食计数 | 否 |
-| `/api/users` | POST | 注册新用户 | 否 |
+| Endpoint | Method | Purpose | Extension-specific? |
+|----------|--------|---------|-------------------|
+| `/api/hamsters/random` | GET | Random hamster | No |
+| `/api/hamsters/:name` | GET | Restore hamster by name | **Yes** (added for extension) |
+| `/api/chat` | POST | Send chat message | No |
+| `/api/visit` | POST | Record visit | No |
+| `/api/feed` | POST | Record feed | No |
+| `/api/memory` | GET | Query visit/feed counts | No |
+| `/api/users` | POST | Register new user | No |
 
-### 格式差异说明
+## Tech Stack
 
-主站原先的 API 使用 `hamsterId`（数字）和自定义响应格式。扩展最初基于 Agent Skills 分支（使用 `hamsterName` 字符串），适配为与 main 后端兼容的格式。详见 commit history。
+- **Frontend**: React 18 + Vite 5
+- **Extension API**: Manifest V3 (sidePanel + storage + content scripts)
+- **Backend**: Shared with main branch — Express + MongoDB + LLM API
+- **Shared data**: `workshop/src/data/hamsters.js`, `foods.js`, `chatFallback.js` via Vite alias `@shared`
 
-## 技术栈
+## Known Limitations
 
-- **前端**: React 18 + Vite 5
-- **扩展 API**: Manifest V3（sidePanel + storage + content scripts）
-- **后端**: 复用 main 分支的 Express + MongoDB + LLM API
-- **共享数据**: `workshop/src/data/hamsters.js`、`foods.js`、`chatFallback.js`（通过 Vite 别名 `@shared`）
+- **Render free tier sleep** — server hibernates after 15min of inactivity. Visit the [main site](https://hamster-daily.onrender.com) first to wake it
+- **Content Script scope** — userId sync only triggers on `hamster-daily.onrender.com`
+- **Fallback chat** — reverts to keyword matching when LLM API is unavailable (same behavior as the website)
 
-## 已知限制
+## Links
 
-- **Render 免费休眠** — 15 分钟无请求后服务器休眠，打开扩展前先访问一次 [主站](https://hamster-daily.onrender.com)
-- **Content Script 作用域** — userId 同步仅当用户打开 `hamster-daily.onrender.com` 时触发
-- **Fallback 聊天** — LLM API 不可用时，扩展退回关键词匹配回复（与主站行为一致）
-
-## 相关链接
-
-- [主站](https://hamster-daily.onrender.com)
-- [主站源码 (main)](https://github.com/anzhizhao6-design/MIT-weblab-reflection)
-- [Benchmark 实验报告](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/main/benchmark)
+- [Main site](https://hamster-daily.onrender.com)
+- [Source code (main)](https://github.com/anzhizhao6-design/MIT-weblab-reflection)
+- [Benchmark report](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/main/benchmark)
