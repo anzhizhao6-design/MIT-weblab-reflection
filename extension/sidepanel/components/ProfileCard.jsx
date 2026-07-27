@@ -3,21 +3,21 @@ import './ProfileCard.css';
 
 const API_BASE = 'https://hamster-daily.onrender.com';
 
-function ProfileCard({ userId, hamsterName, refreshKey }) {
-  const [stats, setStats] = useState({ visitCount: 0, feedCount: 0 });
+function ProfileCard({ userId, hamsterId, refreshKey }) {
+  const [stats, setStats] = useState({ visitCount: 0, totalFeeds: 0 });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!userId || !hamsterName) return;
+    if (!userId || !hamsterId) return;
 
-    fetch(`${API_BASE}/api/memory?userId=${encodeURIComponent(userId)}&hamsterName=${encodeURIComponent(hamsterName)}`)
+    fetch(`${API_BASE}/api/memory?userId=${encodeURIComponent(userId)}&hamsterId=${encodeURIComponent(hamsterId)}`)
       .then((r) => r.json())
       .then((data) => {
         setStats(data);
         setLoaded(true);
       })
       .catch(() => {});
-  }, [userId, hamsterName, refreshKey]);
+  }, [userId, hamsterId, refreshKey]);
 
   if (!loaded) return null;
 
@@ -33,7 +33,7 @@ function ProfileCard({ userId, hamsterName, refreshKey }) {
       <div className="profile-stat">
         <span className="profile-stat-icon">🍽️</span>
         <span className="profile-stat-value">
-          Fed {stats.feedCount} time{stats.feedCount !== 1 ? 's' : ''}
+          Fed {stats.totalFeeds} time{stats.totalFeeds !== 1 ? 's' : ''}
         </span>
       </div>
     </div>

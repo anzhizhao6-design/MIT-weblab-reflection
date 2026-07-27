@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="app-container">
       <HamsterCard hamster={hamster} mood={mood} />
-      <ProfileCard userId={userId} hamsterName={hamster.name} refreshKey={refreshKey} />
+      <ProfileCard userId={userId} hamsterId={hamster.id} refreshKey={refreshKey} />
       <DiaryEntry hamsterName={hamster.name} />
       <FoodTray
         hamster={hamster}

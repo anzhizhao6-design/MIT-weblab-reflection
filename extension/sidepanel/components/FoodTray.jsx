@@ -80,7 +80,7 @@ function FoodTray({ hamster, mood, onFeed, onHoverPenalty, userId, onFeedRecorde
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             userId,
-            hamsterName: hamster.name,
+            hamsterId: hamster.id,
             foodId,
             isFavourite,
             moodChange: change,

@@ -138,7 +138,7 @@ export default function useHamster() {
           fetch(`${API_BASE}/api/visit`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId, hamsterName: hamsterData.name }),
+            body: JSON.stringify({ userId, hamsterId: hamsterData.id }),
           })
             .then(() => setRefreshKey((k) => k + 1))
             .catch(() => {});
