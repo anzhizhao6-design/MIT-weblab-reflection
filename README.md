@@ -57,7 +57,7 @@ MIT-weblab-reflection/
 ├── README.md                  ← You are here (report)
 ├── README-zh.md               ← Chinese version
 ├── workshop/                  ← Hamster Daily source (main branch)
-├── notes/                     ← Learning notes (HTML/CSS → React → Node → DB)
+├── mit-notes/                     ← Learning notes (HTML/CSS → React → Node → DB)
 ├── benchmark/
 │   ├── README.md              ← Detailed benchmark docs
 │   ├── plan.md                ← Experiment design
@@ -66,7 +66,7 @@ MIT-weblab-reflection/
 │   ├── experiment-protocol.md ← Frozen experiment protocol
 │   ├── skill-analysis.md      ← Skill design & architecture analysis
 │   ├── results.csv            ← 9 rows of experiment data
-│   ├── workflow-notes/        ← Per-workflow observation notes (EN + ZH)
+│   ├── workflow-mit-notes/        ← Per-workflow observation notes (EN + ZH)
 │   ├── screenshots/           ← UI screenshots per workflow
 │   ├── runs/                  ← Full session logs (JSONL)
 │   └── baseline-log/          ← Original project development log
@@ -86,8 +86,8 @@ npm run db:seed    # Seed database (requires .env with MongoDB)
 
 - [Full Experiment Report](benchmark/README.md) ([中文](benchmark/README-zh.md))
 - [Skill Design Analysis](benchmark/skill-analysis-EN.md) ([中文](benchmark/skill-analysis.md)) — with workflow scene recommendations
-- [Superpowers Notes](benchmark/workflow-notes/superpowers.md) ([中文](benchmark/workflow-notes/superpowers-zh.md))
-- [Matt Skills Notes](benchmark/workflow-notes/matt-pocock.md) ([中文](benchmark/workflow-notes/matt-pocock-zh.md))
-- [Agent Skills Notes](benchmark/workflow-notes/agent-skills.md) ([中文](benchmark/workflow-notes/agent-skills-zh.md))
+- [Superpowers Notes](benchmark/workflow-mit-notes/superpowers.md) ([中文](benchmark/workflow-mit-notes/superpowers-zh.md))
+- [Matt Skills Notes](benchmark/workflow-mit-notes/matt-pocock.md) ([中文](benchmark/workflow-mit-notes/matt-pocock-zh.md))
+- [Agent Skills Notes](benchmark/workflow-mit-notes/agent-skills.md) ([中文](benchmark/workflow-mit-notes/agent-skills-zh.md))
 - [Development Log](development-log-EN.md) ([中文](development-log.md))
 - [Edge Extension](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/edge-extension) — 浏览器侧边栏仓鼠

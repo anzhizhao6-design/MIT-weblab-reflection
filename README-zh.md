@@ -56,7 +56,7 @@
 MIT-weblab-reflection/
 ├── README.md                  ← 你在这里（总报告）
 ├── workshop/                  ← Hamster Daily 完整代码（main 分支）
-├── notes/                     ← 开发学习笔记（HTML/CSS → React → Node → DB）
+├── mit-notes/                     ← 开发学习笔记（HTML/CSS → React → Node → DB）
 ├── benchmark/
 │   ├── README.md              ← Benchmark 详细介绍
 │   ├── plan.md                ← 实验设计
@@ -65,7 +65,7 @@ MIT-weblab-reflection/
 │   ├── experiment-protocol.md ← 实验执行规则（冻结版）
 │   ├── skill-analysis.md      ← Skill 设计与架构分析
 │   ├── results.csv            ← 9 行实验数据
-│   ├── workflow-notes/        ← 三个 workflow 的观察笔记
+│   ├── workflow-mit-notes/        ← 三个 workflow 的观察笔记
 │   ├── screenshots/           ← 各 workflow 的 UI 截图
 │   ├── runs/                  ← 完整 session log（JSONL）
 │   └── baseline-log/          ← 原始项目的开发日志
@@ -85,8 +85,8 @@ npm run db:seed    # 导入数据库（需要 .env 配置 MongoDB）
 
 - [完整实验报告](benchmark/README.md)
 - [Skill 设计与架构分析](benchmark/skill-analysis.md)（含场景推荐：什么时候用什么 workflow）
-- [Superpowers 观察笔记](benchmark/workflow-notes/superpowers.md)
-- [Matt Skills 观察笔记](benchmark/workflow-notes/matt-pocock.md)
-- [Agent Skills 观察笔记](benchmark/workflow-notes/agent-skills.md)
+- [Superpowers 观察笔记](benchmark/workflow-mit-notes/superpowers.md)
+- [Matt Skills 观察笔记](benchmark/workflow-mit-notes/matt-pocock.md)
+- [Agent Skills 观察笔记](benchmark/workflow-mit-notes/agent-skills.md)
 - [项目开发全过程](development-log.md)
 - [Edge 扩展](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/edge-extension) — 浏览器侧边栏仓鼠
