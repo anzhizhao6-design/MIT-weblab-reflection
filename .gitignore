@@ -1,0 +1,6 @@
+.superpowers/
+.agents/
+.claude/
+skills-lock.json
+package-lock.json
+.vscode/
