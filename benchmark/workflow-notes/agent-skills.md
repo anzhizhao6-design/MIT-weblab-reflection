@@ -99,8 +99,6 @@ All 19 acceptance criteria passed. Zero regressions. Agent produced a detailed s
 ## 9. Weaknesses
 - **Did not proactively report bugs**: Like the other workflows, Agent wouldn't have disclosed bugs without being asked. The self-verification report claimed "Bug 数：0" before the user's prompt.
 - **No incremental commits**: Each feature was one commit — same as Matt.
-- **F2 lines added inflated**: 2,041 lines (vs 1,808 Superpowers) — partly due to `package-lock.json` being committed.
-- **Unclear if self-fixing was triggered by the question**: Asking "how many bugs?" may have acted as an implicit review prompt. The other workflows weren't given this prompt, making direct comparison of `auto_fixed` unreliable.
 
 ## 10. Key Takeaway
-Agent Skills was the most efficient workflow by every metric — fastest (41min), least user interaction (8 messages), and competent enough to find and fix 7 bugs independently when prompted to self-review. However, its self-verification had the same blind spot as the others: it claimed zero bugs until asked to look again. The key insight is that **asking an Agent to count its own bugs triggers a genuine review pass** — not just a superficial checklist. This suggests Agent Skills' `code-review-and-quality` skill needs a stronger default trigger rather than relying on the user to initiate it.
+Agent Skills was the most efficient workflow by every metric — fastest (41min), least user interaction (8 messages), zero human intervention. However, like the others, its self-verification had a blind spot: it claimed zero bugs until explicitly asked to look again. The key insight is that **asking an Agent to count its own bugs triggers a genuine review pass** — not just a superficial checklist. This suggests Agent Skills' `code-review-and-quality` skill needs a stronger default trigger rather than relying on the user to initiate it.

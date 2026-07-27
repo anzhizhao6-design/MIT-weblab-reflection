@@ -47,7 +47,7 @@
 | **Matt Skills** | 51min | 1,549K | 3 | Level 2 (F3) | ✅ | Fastest F1/F2, effective grilling |
 | **Agent Skills** | 41min | 735K | 7* | Level 0 | ✅ | Fastest overall, self-healing |
 
-> \*Agent Skills: 7 bugs all self-discovered and fixed after user asked for bug count. Fairness caveat — the other workflows were not prompted to count their own bugs.
+> \*Agent Skills: 7 bugs all self-discovered and fixed. The user asked this workflow to count and report its bugs; Superpowers and Matt were not given this prompt. The `auto_fixed` metric in `results.csv` reflects this difference.
 
 ### Per-Feature Comparison
 
