@@ -63,6 +63,7 @@ MIT-weblab-reflection/
 │   ├── case-spec.md           ← Feature 精确定义（冻结版）
 │   ├── metrics.md             ← 评价指标（7 维度）
 │   ├── experiment-protocol.md ← 实验执行规则（冻结版）
+│   ├── skill-analysis.md      ← Skill 设计与架构分析
 │   ├── results.csv            ← 9 行实验数据
 │   ├── workflow-notes/        ← 三个 workflow 的观察笔记
 │   ├── screenshots/           ← 各 workflow 的 UI 截图
