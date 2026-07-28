@@ -141,7 +141,7 @@ const checkers = [
       // Click it and verify hamster changes
       const before = await page.$eval('h2', el => el.textContent).catch(() => '');
       await page.click('button');
-      await page.waitForTimeout(500);
+      await new Promise(r => setTimeout(r, 500));
       const after = await page.$eval('h2', el => el.textContent).catch(() => '');
       const pass = before !== after;
       return { pass, detail: `before:"${before}" → after:"${after}"` };
