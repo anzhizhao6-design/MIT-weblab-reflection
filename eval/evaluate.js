@@ -49,8 +49,8 @@ async function promptLLMCredentials() {
     return null;
   }
 
-  const baseUrl = process.env.LLM_BASE_URL || await ask('  LLM Base URL [https://api.deepseek.com/v1]: ') || 'https://api.deepseek.com/v1';
-  const model = process.env.LLM_MODEL || await ask('  LLM Model [deepseek-chat]: ') || 'deepseek-chat';
+  const baseUrl = process.env.LLM_BASE_URL || await ask('  LLM Base URL (default: https://api.deepseek.com/v1): ') || 'https://api.deepseek.com/v1';
+  const model = process.env.LLM_MODEL || await ask('  LLM Model (default: deepseek-chat): ') || 'deepseek-chat';
 
   readline.close();
   console.log(`  ✅ Judge ready: ${model} @ ${baseUrl}\n`);
