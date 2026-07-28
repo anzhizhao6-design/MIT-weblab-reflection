@@ -30,6 +30,7 @@ const baselineRef = args.baseline || 'HEAD~1';
 const targetRef = args.target || 'HEAD';
 const port = args.port || '3000';
 const baseUrl = `http://localhost:${port}`;
+const useJudge = !args['no-judge'];
 
 // ── Interactive: LLM credentials for AI Judge ──────────────
 
