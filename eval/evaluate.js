@@ -28,7 +28,8 @@ const project = args.project || 'hamster';
 const sessionPath = args.session;
 const baselineRef = args.baseline || 'HEAD~1';
 const targetRef = args.target || 'HEAD';
-const useJudge = !args['no-judge']; // --no-judge skips AI judge
+const port = args.port || '3000';
+const baseUrl = `http://localhost:${port}`;
 
 // ── Interactive: LLM credentials for AI Judge ──────────────
 
@@ -72,6 +73,8 @@ async function runChecker(checker, page) {
   try {
     if (checker.type === 'browser') {
       if (!page) return { pass: null, detail: 'no browser page' };
+      // Inject base URL for page.goto
+      page.__baseUrl = baseUrl;
       return await checker.check(page);
     }
     return await checker.check();
@@ -119,6 +122,8 @@ async function main() {
 
   if (hasBrowserCheckers) {
     try {
+      // Set base URL for checker page.goto() calls
+      process.env.EVAL_BASE_URL = baseUrl;
       const puppeteer = require('puppeteer-core');
       // Use system Edge (Windows) — no Chromium download needed
       const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
@@ -129,8 +134,11 @@ async function main() {
       });
       // Create a blank page for checkers
       page = await browser.newPage();
+      // Monkey-patch: redirect hardcoded localhost:3000 → actual port
+      const _goto = page.goto.bind(page);
+      page.goto = (url, opts) => _goto(url.replace('http://localhost:3000', baseUrl), opts);
 
-      console.log('  Browser launched\n');
+      console.log(`  Browser launched (mapping :3000 → :${port})\n`);
     } catch {
       console.warn('  ⚠ Puppeteer not installed. Browser checks will be skipped.\n');
     }
