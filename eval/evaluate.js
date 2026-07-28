@@ -118,8 +118,13 @@ async function main() {
 
   if (hasBrowserCheckers) {
     try {
-      const puppeteer = require('puppeteer');
-      browser = await puppeteer.launch({ headless: 'new' });
+      const puppeteer = require('puppeteer-core');
+      // Use system Edge (Windows) — no Chromium download needed
+      const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
+      browser = await puppeteer.launch({
+        executablePath: edgePath,
+        headless: 'new',
+      });
       console.log('  Browser launched\n');
     } catch {
       console.warn('  ⚠ Puppeteer not installed. Browser checks will be skipped.\n');
