@@ -1,7 +1,7 @@
 /**
  * evaluate.js — Main entry point for the AI Workflow Evaluation Platform
  *
- * Usage: node eval/evaluate.js --project=<name> --session=<jsonl> --baseline=<ref> [--target=<ref>]
+ * Usage: node eval/evaluate.js --project=<name> --session=<jsonl> --baseline=<ref> [--target=<ref>] [--no-judge]
  *
  * Pipeline:
  *   1. Run spec checkers → pass/fail matrix
@@ -28,6 +28,34 @@ const project = args.project || 'hamster';
 const sessionPath = args.session;
 const baselineRef = args.baseline || 'HEAD~1';
 const targetRef = args.target || 'HEAD';
+const useJudge = !args['no-judge']; // --no-judge skips AI judge
+
+// ── Interactive: LLM credentials for AI Judge ──────────────
+
+async function promptLLMCredentials() {
+  const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  const ask = (q) => new Promise(r => readline.question(q, r));
+
+  console.log('── AI Judge Setup ──');
+  console.log('(leave blank to skip AI judge, or set env vars LLM_API_KEY / LLM_BASE_URL / LLM_MODEL)\n');
+
+  const key = process.env.LLM_API_KEY || await ask('  LLM API Key: ');
+  if (!key) {
+    console.log('  ⏭  No key provided. AI Judge will be skipped.\n');
+    readline.close();
+    return null;
+  }
+
+  const baseUrl = process.env.LLM_BASE_URL || await ask('  LLM Base URL [https://api.deepseek.com/v1]: ') || 'https://api.deepseek.com/v1';
+  const model = process.env.LLM_MODEL || await ask('  LLM Model [deepseek-chat]: ') || 'deepseek-chat';
+
+  readline.close();
+  console.log(`  ✅ Judge ready: ${model} @ ${baseUrl}\n`);
+  return { key, baseUrl, model };
+}
 
 // ── Load & Run Checkers ───────────────────────────────────
 
@@ -72,6 +100,12 @@ async function main() {
   console.log(`Project: ${project}`);
   console.log(`Session: ${sessionPath || 'N/A'}`);
   console.log(`Baseline: ${baselineRef} → Target: ${targetRef}\n`);
+
+  // ── AI Judge credentials ──────────────────────────────────
+  let judgeCredentials = null;
+  if (useJudge) {
+    judgeCredentials = await promptLLMCredentials();
+  }
 
   // ── Step 1: Spec Checkers ───────────────────────────────
   console.log('── Step 1: Spec Checkers ──');
@@ -139,7 +173,27 @@ async function main() {
     console.warn(`  ⚠ Git parse failed: ${err.message}`);
   }
 
-  // ── Step 4: Output ───────────────────────────────────────
+  // ── Step 3.5: AI Judge (readability) ──────────────────────────
+  console.log('\n── Step 3.5: AI Judge ──');
+
+  let readabilityScore = '';
+  if (judgeCredentials && gitData.lines_added > 0) {
+    try {
+      const { callJudge } = require('./judges/call');
+      // Set env vars for the judge caller (not persisted)
+      process.env.LLM_API_KEY = judgeCredentials.key;
+      process.env.LLM_BASE_URL = judgeCredentials.baseUrl;
+      process.env.LLM_MODEL = judgeCredentials.model;
+      const result = await callJudge('readability', { diff: `Lines: +${gitData.lines_added} -${gitData.lines_deleted}, Files: +${gitData.files_added} ~${gitData.files_modified}` });
+      readabilityScore = result.score || '';
+      console.log(`  Readability: ${result.score}/5`);
+      if (result.detail) console.log(`  ${result.detail.substring(0, 200)}`);
+    } catch (err) {
+      console.warn(`  ⚠ Judge failed: ${err.message}`);
+    }
+  } else {
+    console.log('  Skipped (no judge credentials or no code changes).');
+  }
   console.log('\n── Step 4: CSV Output ──');
 
   const totalSpecPassed = Object.values(specResults).reduce((s, r) => s + r.passed, 0);
@@ -168,7 +222,7 @@ async function main() {
     totalSpecPassed, // spec_pass_count
     totalSpecTotal,
     '', // regression_count
-    '', // readability (AI Judge fills)
+    readabilityScore,
     '', // auto_fixed
     '', // replanned
     '', // repeated_mistake
