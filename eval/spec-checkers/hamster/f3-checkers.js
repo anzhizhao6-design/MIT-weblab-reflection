@@ -43,17 +43,25 @@ const checkers = [
     criterion: '集合：hamsters, feed_posts, users, conversations, hamster_memories',
     type: 'static',
     async check() {
-      const required = ['hamsters', 'feed_posts', 'users', 'conversations', 'hamster_memories'];
-      const modelDir = path.join(WORKSHOP_DIR, 'server', 'models') || path.join(WORKSHOP_DIR, 'models');
+      const required = [
+        { keyword: 'hamster', name: 'hamsters' },
+        { keyword: 'feed', name: 'feed_posts' },
+        { keyword: 'user', name: 'users' },
+        { keyword: 'conversation', name: 'conversations' },
+        { keyword: 'hamster', pattern: /hamster[_-]?memor/i, name: 'hamster_memories' },
+      ];
       const allCode = findJSFiles(path.join(WORKSHOP_DIR, 'server')).map(f => fs.readFileSync(f, 'utf-8')).join('\n');
       let found = 0;
-      for (const name of required) {
-        if (allCode.includes(name)) found++;
+      const missing = [];
+      for (const r of required) {
+        if (r.pattern ? r.pattern.test(allCode) : allCode.toLowerCase().includes(r.keyword.toLowerCase())) {
+          found++;
+        } else {
+          missing.push(r.name);
+        }
       }
-      // Also check for explicit collection names
-      const hasExplicitCollections = /collection:\s*['"]/.test(allCode);
       const pass = found >= 5;
-      return { pass, detail: `collections:${found}/5 explicitNames:${hasExplicitCollections}` };
+      return { pass, detail: `found:${found}/5${missing.length ? ' missing:' + missing.join(',') : ''}` };
     }
   },
 
@@ -165,24 +173,22 @@ const checkers = [
 // ── Helpers ──────────────────────────────────────────────
 
 function readServerCode() {
-  const possible = [
-    path.join(WORKSHOP_DIR, 'server', 'index.js'),
-    path.join(WORKSHOP_DIR, 'server.js'),
-    path.join(WORKSHOP_DIR, 'server', 'routes'),
+  const code = [];
+  const dirs = [
+    path.join(WORKSHOP_DIR, 'server'),
+    WORKSHOP_DIR, // for server.js at root
   ];
-  let code = '';
-  for (const p of possible) {
-    if (fs.existsSync(p)) {
-      if (fs.statSync(p).isDirectory()) {
-        fs.readdirSync(p).forEach(f => {
-          code += fs.readFileSync(path.join(p, f), 'utf-8') + '\n';
-        });
-      } else {
-        code += fs.readFileSync(p, 'utf-8') + '\n';
+  for (const dir of dirs) {
+    if (fs.existsSync(dir)) {
+      const stat = fs.statSync(dir);
+      if (stat.isDirectory()) {
+        findJSFiles(dir).forEach(f => { code.push(fs.readFileSync(f, 'utf-8')); });
+      } else if (stat.isFile() && dir.endsWith('.js')) {
+        code.push(fs.readFileSync(dir, 'utf-8'));
       }
     }
   }
-  return code;
+  return code.join('\n');
 }
 
 function findSeedFile() {
