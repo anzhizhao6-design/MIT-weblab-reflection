@@ -242,14 +242,16 @@ async function main() {
     '', // notes
   ].join(',');
 
-  // Write CSV header if file doesn't exist
-  const header = 'project,feature,start_time,end_time,time_min,user_messages,agent_responses,clarification_questions,retry_cycles,input_tokens,output_tokens,total_tokens,lines_added,lines_deleted,files_added,files_modified,bugs,human_intervention_level,run_success,spec_pass_count,spec_total,regression_count,readability,auto_fixed,replanned,repeated_mistake,used_docs,reused_code,external_failure,notes\n';
+  // Write CSV only when session data is available
+  if (sessionPath) {
+    const header = 'project,feature,start_time,end_time,time_min,user_messages,agent_responses,clarification_questions,retry_cycles,input_tokens,output_tokens,total_tokens,lines_added,lines_deleted,files_added,files_modified,bugs,human_intervention_level,run_success,spec_pass_count,spec_total,regression_count,readability,auto_fixed,replanned,repeated_mistake,used_docs,reused_code,external_failure,notes\n';
 
-  if (!fs.existsSync(OUTPUT)) {
-    fs.writeFileSync(OUTPUT, header, 'utf-8');
+    // Always write fresh (overwrite, not append) to avoid stale rows
+    fs.writeFileSync(OUTPUT, header + csvRow + '\n', 'utf-8');
+    console.log(`  Written to eval/output/results.csv`);
+  } else {
+    console.log('  ⏭ CSV skipped: no --session= provided.');
   }
-  fs.appendFileSync(OUTPUT, csvRow + '\n', 'utf-8');
-  console.log(`  Appended to eval/output/results.csv`);
 
   console.log('\n=== Done ===');
 }
