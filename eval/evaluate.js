@@ -68,11 +68,11 @@ function loadCheckers(feature) {
   return require(checkerPath).checkers;
 }
 
-async function runChecker(checker, browser) {
+async function runChecker(checker, page) {
   try {
     if (checker.type === 'browser') {
-      if (!browser) return { pass: null, detail: 'no browser instance' };
-      return await checker.check(browser);
+      if (!page) return { pass: null, detail: 'no browser page' };
+      return await checker.check(page);
     }
     return await checker.check();
   } catch (err) {
@@ -80,13 +80,13 @@ async function runChecker(checker, browser) {
   }
 }
 
-async function runFeatureCheckers(feature, browser) {
+async function runFeatureCheckers(feature, page) {
   const checkers = loadCheckers(feature);
   if (checkers.length === 0) return { passed: 0, total: 0, details: [] };
 
   const results = [];
   for (const c of checkers) {
-    const r = await runChecker(c, browser);
+    const r = await runChecker(c, page);
     results.push({ id: c.id, criterion: c.criterion, ...r });
   }
   const passed = results.filter(r => r.pass).length;
@@ -111,6 +111,7 @@ async function main() {
   console.log('── Step 1: Spec Checkers ──');
 
   let browser = null;
+  let page = null;
   const hasBrowserCheckers = ['f1', 'f2', 'f3'].some(f => {
     const checkers = loadCheckers(f);
     return checkers.some(c => c.type === 'browser');
@@ -124,7 +125,11 @@ async function main() {
       browser = await puppeteer.launch({
         executablePath: edgePath,
         headless: 'new',
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
+      // Create a blank page for checkers
+      page = await browser.newPage();
+
       console.log('  Browser launched\n');
     } catch {
       console.warn('  ⚠ Puppeteer not installed. Browser checks will be skipped.\n');
@@ -133,7 +138,7 @@ async function main() {
 
   const specResults = {};
   for (const f of ['f1', 'f2', 'f3']) {
-    const r = await runFeatureCheckers(f, browser);
+    const r = await runFeatureCheckers(f, page);
     specResults[f] = r;
     if (r.total > 0) {
       console.log(`  ${f}: ${r.passed}/${r.total} passed`);
