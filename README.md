@@ -73,6 +73,53 @@ MIT-weblab-reflection/
 └── development-log.md         ← Complete project dev journal
 ```
 
+## Automated Evaluation Platform
+
+> `feature/auto-eval` — Project-agnostic automated evaluation for AI-assisted development workflows.
+
+### What it does
+
+Runs spec compliance checkers, parses session logs, and calls an independent AI judge — no manual metrics recording needed.
+
+```
+node eval/evaluate.js --workflow=superpowers --no-judge
+```
+
+| Layer | Tool | What it checks |
+|-------|------|---------------|
+| **Spec Checkers** | `eval/spec-checkers/` | Static code analysis + Puppeteer browser tests. 19 criteria across F1/F2/F3, each returning pass/fail with evidence. |
+| **Data Parsers** | `eval/parsers/` | Token usage (JSONL), code changes (`git diff`), conversation metrics. Fully automated. |
+| **AI Judge** | `eval/judges/` | Independent LLM scores readability (5-axis rubric), UI quality, and code reuse. Separate model from the coding agent for fairness. |
+
+### How it works
+
+```
+eval/
+├── evaluate.js            ← Main entry: checkers → parsers → judge → CSV
+├── eval-config.json       ← Register workflows once, run with --workflow=
+├── spec-checkers/
+│   └── hamster/           ← 19 spec criteria as executable checks
+├── parsers/
+│   ├── token-parser.js    ← JSONL → {input, output, total} tokens
+│   ├── git-parser.js      ← git diff → {lines, files, commits}
+│   └── session-parser.js  ← JSONL → {user, agent, clarify} messages
+├── judges/
+│   ├── readability.md     ← 5-dimension rubric (naming, structure, formatting, comments, DRY)
+│   ├── ui-quality.md      ← 5-dimension rubric (layout, spacing, hierarchy, color, mobile)
+│   ├── code-reuse.md      ← Verdict: Yes/No/N/A with evidence
+│   └── call.js            ← Calls external LLM (DeepSeek/OpenAI-compatible) with rubric
+└── output/
+    └── results.csv        ← Auto-generated evaluation rows
+```
+
+### Portability
+
+Swap the test project by replacing `eval/spec-checkers/hamster/` with a new project folder. Parsers, judges, and evaluate.js are project-agnostic.
+
+See: [`feature/auto-eval`](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/auto-eval)
+
+---
+
 ## Quick Start
 
 ```bash

@@ -72,6 +72,32 @@ MIT-weblab-reflection/
 └── development-log.md          ← 项目开发全过程记录
 ```
 
+## 自动化评估平台
+
+> `feature/auto-eval` — 项目无关的 AI 工作流自动化评估平台。换项目时只需替换 spec checker，其余可直接复用。
+
+### 三层架构
+
+| 层 | 工具 | 功能 |
+|----|------|------|
+| **Spec Checker** | `eval/spec-checkers/` | 静态代码分析 + Puppeteer 浏览器测试。19 条验收标准，每条返回 pass/fail + 证据 |
+| **数据解析器** | `eval/parsers/` | Token 用量（JSONL）、代码变更（git diff）、对话指标。全自动提取 |
+| **AI 评委** | `eval/judges/` | 独立 LLM 打分：可读性（5 维 rubric）、UI 质量、代码复用。与编码 Agent 使用不同模型保证公平 |
+
+### 使用方式
+
+```bash
+node eval/evaluate.js --workflow=superpowers --no-judge
+```
+
+### 可迁移性
+
+替换 `eval/spec-checkers/hamster/` 为新的项目文件夹即可。Parser、Judge、evaluate.js 均为项目无关。
+
+详见：[`feature/auto-eval`](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/auto-eval)
+
+---
+
 ## 快速开始
 
 ```bash
