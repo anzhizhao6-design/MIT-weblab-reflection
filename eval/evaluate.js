@@ -204,7 +204,7 @@ async function main() {
       process.env.LLM_BASE_URL = judgeCredentials.baseUrl;
       process.env.LLM_MODEL = judgeCredentials.model;
       const { execSync } = require('child_process');
-      const diffContent = execSync(`git diff ${baselineRef}..${targetRef} --stat -- workshop/ ':!workshop/node_modules' ':!workshop/.vite' ':!workshop/dist' ':!.superpowers'`, { encoding: 'utf-8' });
+      const diffContent = execSync(`git diff ${baselineRef}..${targetRef} -- workshop/`, { encoding: 'utf-8' });
       const result = await callJudge('readability', { diff: diffContent });
       readabilityScore = result.score || '';
       console.log(`  Readability: ${result.score}/5`);

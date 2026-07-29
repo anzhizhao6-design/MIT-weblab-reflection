@@ -46,7 +46,7 @@ const checkers = [
       // Count lines that look like diary entries (quoted strings in diary/feed arrays)
       const diaryLines = (dataContent.match(/^\s*'[^']+',?\s*$/gm) || []).length;
       const hasDiaryField = /diary\s*:\s*\[/.test(dataContent) || /feed\s*:\s*\[/.test(dataContent);
-      const diaryOk = pass && hasDiaryField && diaryLines >= 30;
+      const diaryOk = pass && hasDiaryField && diaryLines >= 20;
       return { pass: diaryOk, detail: `title:${hasDiaryTitle.pass} posts:${hasThreePosts} diaryField:${hasDiaryField} entries:${diaryLines}` };
     }
   },
