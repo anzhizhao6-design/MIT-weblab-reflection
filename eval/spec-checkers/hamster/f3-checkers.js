@@ -158,12 +158,16 @@ const checkers = [
     criterion: '聊天记忆注入 + UUID 身份',
     type: 'static',
     async check() {
-      const allCode = findJSFiles(path.join(WORKSHOP_DIR, 'src', 'server'))
+      const allCode = findJSFiles(path.join(WORKSHOP_DIR, 'src'))
         .concat(findJSFiles(path.join(WORKSHOP_DIR, 'server')))
+        .concat(findJSFiles(path.join(WORKSHOP_DIR, 'models')))
+        .concat(findJSFiles(path.join(WORKSHOP_DIR, 'routes')))
         .map(f => fs.readFileSync(f, 'utf-8')).join('\n');
-      const hasMemoryInjection = /Memory:|memoryContext|memory.*visit.*feed/i.test(allCode);
-      const hasUUID = /crypto\.randomUUID|uuid|localStorage/.test(allCode);
-      const hasAccountPanel = /Account|account|switch.*device|paste.*id/i.test(allCode);
+      const rootServer = fs.existsSync(path.join(WORKSHOP_DIR, 'server.js')) ? fs.readFileSync(path.join(WORKSHOP_DIR, 'server.js'), 'utf-8') : '';
+      const fullCode = allCode + rootServer;
+      const hasMemoryInjection = /Memory:|memoryContext|memory.*visit.*feed/i.test(fullCode);
+      const hasUUID = /crypto\.randomUUID|uuid|localStorage/.test(fullCode);
+      const hasAccountPanel = /Account|account|switch.*device|paste.*id/i.test(fullCode);
       const pass = hasMemoryInjection && hasUUID && hasAccountPanel;
       return { pass, detail: `memory:${hasMemoryInjection} uuid:${hasUUID} account:${hasAccountPanel}` };
     }
@@ -174,18 +178,21 @@ const checkers = [
 
 function readServerCode() {
   const code = [];
-  const dirs = [
+  // Scan multiple possible server code locations
+  const paths = [
     path.join(WORKSHOP_DIR, 'server'),
-    WORKSHOP_DIR, // for server.js at root
+    path.join(WORKSHOP_DIR, 'models'),
+    path.join(WORKSHOP_DIR, 'routes'),
   ];
-  for (const dir of dirs) {
+  // Also check root-level server files
+  const rootFiles = ['server.js', 'seed.js', 'db.js'];
+  for (const f of rootFiles) {
+    const full = path.join(WORKSHOP_DIR, f);
+    if (fs.existsSync(full)) code.push(fs.readFileSync(full, 'utf-8'));
+  }
+  for (const dir of paths) {
     if (fs.existsSync(dir)) {
-      const stat = fs.statSync(dir);
-      if (stat.isDirectory()) {
-        findJSFiles(dir).forEach(f => { code.push(fs.readFileSync(f, 'utf-8')); });
-      } else if (stat.isFile() && dir.endsWith('.js')) {
-        code.push(fs.readFileSync(dir, 'utf-8'));
-      }
+      findJSFiles(dir).forEach(f => { code.push(fs.readFileSync(f, 'utf-8')); });
     }
   }
   return code.join('\n');
