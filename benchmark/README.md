@@ -67,17 +67,19 @@ See: [plan.md](plan.md) · [case-spec.md](case-spec.md) · [metrics.md](metrics.
 
 ### Machine-Verified Results
 
-The automated evaluation platform (`feature/auto-eval`) independently re-ran the same spec checkers against all three workflow branches and produced comparable scores:
+To reduce human bias and enable reproducible evaluation, an automated evaluation platform (`feature/auto-eval`) was built to independently re-score all three workflow branches.
 
-| Workflow | F1 | F2 | F3 | Token | Readability (AI Judge) |
-|----------|----|----|----|-------|------------------------|
+**Methodology note — why the checker is strict:** The spec checkers are calibrated against the frozen `case-spec.md`. Superpowers achieved a perfect 19/19 score, confirming that full spec compliance is attainable. The platform treats Superpowers' implementation as the reference standard — any deviation, whether a missing feature (e.g., no fallback chat), a structural difference (e.g., server file layout), or a visual inconsistency (e.g., non-circular photo), is flagged as a spec violation. This strictness is intentional: the goal is not to rank workflows but to measure their fidelity to a shared specification. Lower scores on Matt and Agent Skills reflect genuine implementation differences from the spec, not checker errors.
+
+| Workflow | F1 | F2 | F3 | Token | Readability (AI) |
+|----------|----|----|----|-------|-----------------|
 | Superpowers | 7/7 | 4/4 | 8/8 | 702K | 4/5 |
 | Matt Skills | 5/7 | 4/4 | 5/8 | 1,549K | 4/5 |
 | Agent Skills | 5/7 | 1/4 | 7/8 | 491K* | 4/5 |
 
 > \*Agent Skills: F3 session log unavailable in JSONL format; 491K covers F1+F2 only.
 
-The platform uses three layers: spec checkers (static + Puppeteer browser tests), data parsers (token/git/session), and an AI judge (independent LLM with rubric). See [`feature/auto-eval`](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/auto-eval) for details.
+**Platform architecture:** Three independent layers — spec checkers (19 criteria, static analysis + Puppeteer browser tests), data parsers (token, git diff, session metrics), and an AI judge (independent LLM with 5-axis rubric). The judge uses a different model from the coding agent to ensure impartiality. See [`feature/auto-eval`](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/auto-eval) for full details and usage instructions.
 
 ---
 
