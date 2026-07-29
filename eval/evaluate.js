@@ -28,9 +28,31 @@ const project = args.project || 'hamster';
 let sessionPath = args.session;
 let baselineRef = args.baseline || 'HEAD~1';
 const targetRef = args.target || 'HEAD';
-const port = args.port || '3000';
+const port = args.port || null;
 
 // ── Load workflow config ─────────────────────────────────
+
+// ── Auto-detect port ─────────────────────────────────────
+
+async function detectPort() {
+  if (port) return;
+  const http = require('http');
+  const ports = [3000, 5173, 5174];
+  for (const p of ports) {
+    try {
+      await new Promise((resolve, reject) => {
+        const req = http.get(`http://localhost:${p}`, (res) => { res.resume(); resolve(); });
+        req.on('error', reject);
+        req.setTimeout(2000, () => { req.destroy(); reject(new Error('timeout')); });
+      });
+      baseUrl = `http://localhost:${p}`;
+      console.log(`  Auto-detected port: ${p}
+`);
+      return;
+    } catch {}
+  }
+  baseUrl = 'http://localhost:3000';
+}
 if (args.workflow) {
   const configPath = path.join(__dirname, 'eval-config.json');
   if (fs.existsSync(configPath)) {
@@ -45,7 +67,7 @@ if (args.workflow) {
     }
   }
 }
-const baseUrl = `http://localhost:${port}`;
+let baseUrl = port ? `http://localhost:${port}` : null;
 const useJudge = !args['no-judge'];
 
 // ── Interactive: LLM credentials for AI Judge ──────────────
@@ -116,6 +138,7 @@ async function runFeatureCheckers(feature, page) {
 // ── Main ───────────────────────────────────────────────────
 
 async function main() {
+  await detectPort();
   console.log('=== AI Workflow Eval Platform ===\n');
   console.log(`Project: ${project}`);
   console.log(`Session: ${sessionPath || 'N/A'}`);
