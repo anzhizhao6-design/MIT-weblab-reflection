@@ -50,7 +50,14 @@ const checkers = [
         { keyword: 'conversation', name: 'conversations' },
         { keyword: 'hamster', pattern: /hamster[_-]?memor/i, name: 'hamster_memories' },
       ];
-      const allCode = findJSFiles(path.join(WORKSHOP_DIR, 'server')).map(f => fs.readFileSync(f, 'utf-8')).join('\n');
+      let allCode = findJSFiles(path.join(WORKSHOP_DIR, 'server'))
+        .concat(findJSFiles(path.join(WORKSHOP_DIR, 'models')))
+        .concat(findJSFiles(path.join(WORKSHOP_DIR, 'routes')))
+        .map(f => fs.readFileSync(f, 'utf-8')).join('\n');
+      const rootServer = path.join(WORKSHOP_DIR, 'server.js');
+      if (fs.existsSync(rootServer)) {
+        allCode += fs.readFileSync(rootServer, 'utf-8');
+      }
       let found = 0;
       const missing = [];
       for (const r of required) {
