@@ -97,6 +97,7 @@ node eval/evaluate.js --workflow=superpowers --no-judge
 eval/
 ├── evaluate.js            ← Main entry: checkers → parsers → judge → CSV
 ├── eval-config.json       ← Register workflows once, run with --workflow=
+├── batch-eval.ps1         ← One-click PowerShell script: runs all 3 workflows
 ├── spec-checkers/
 │   └── hamster/           ← 19 spec criteria as executable checks
 ├── parsers/
