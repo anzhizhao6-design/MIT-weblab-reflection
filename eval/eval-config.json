@@ -10,7 +10,7 @@
       "baseline": "37c159d"
     },
     "agent-skills": {
-      "session": "benchmark/runs/agent-skills/agent-skills-F1-F2-F3.jsonl",
+      "session": "benchmark/runs/agent-skills/agent-skills-F1-F2.jsonl",
       "baseline": "37c159d"
     }
   }

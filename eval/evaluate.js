@@ -67,7 +67,7 @@ if (args.workflow) {
     }
   }
 }
-let baseUrl = port ? `http://localhost:${port}` : null;
+let baseUrl = port ? `http://localhost: ${baseUrl}` : null;
 const useJudge = !args['no-judge'];
 
 // ── Interactive: LLM credentials for AI Judge ──────────────
@@ -178,7 +178,7 @@ async function main() {
       const _goto = page.goto.bind(page);
       page.goto = (url, opts) => _goto(url.replace('http://localhost:3000', baseUrl), opts);
 
-      console.log(`  Browser launched (mapping :3000 → :${port})\n`);
+      console.log(`  Browser launched (mapping :3000 → : ${baseUrl})\n`);
     } catch {
       console.warn('  ⚠ Puppeteer not installed. Browser checks will be skipped.\n');
     }
