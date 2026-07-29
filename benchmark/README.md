@@ -65,6 +65,20 @@ See: [plan.md](plan.md) · [case-spec.md](case-spec.md) · [metrics.md](metrics.
 4. **Tokens ≠ speed**: Matt used 2.2× more tokens than Superpowers but finished 3.8× faster.
 5. **Commit style reflects workflow philosophy**: Superpowers: 18 incremental commits; Matt and Agent Skills: 3 (one per feature). Both produced correct code.
 
+### Machine-Verified Results
+
+The automated evaluation platform (`feature/auto-eval`) independently re-ran the same spec checkers against all three workflow branches and produced comparable scores:
+
+| Workflow | F1 | F2 | F3 | Token | Readability (AI Judge) |
+|----------|----|----|----|-------|------------------------|
+| Superpowers | 7/7 | 4/4 | 8/8 | 702K | 4/5 |
+| Matt Skills | 5/7 | 4/4 | 5/8 | 1,549K | 4/5 |
+| Agent Skills | 5/7 | 1/4 | 7/8 | 491K* | 4/5 |
+
+> \*Agent Skills: F3 session log unavailable in JSONL format; 491K covers F1+F2 only.
+
+The platform uses three layers: spec checkers (static + Puppeteer browser tests), data parsers (token/git/session), and an AI judge (independent LLM with rubric). See [`feature/auto-eval`](https://github.com/anzhizhao6-design/MIT-weblab-reflection/tree/feature/auto-eval) for details.
+
 ---
 
 ## Directory Structure
