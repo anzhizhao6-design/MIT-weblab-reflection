@@ -1,81 +1,81 @@
 # Eval Platform
 
-> ⚠️ 本文档是 `eval/README.md`，为便于 GitHub 展示放到分支根目录。平台入口为 `eval/evaluate.js`。
+> Project-agnostic automated evaluation for AI-assisted development workflows. Swap `spec-checkers/<project>/` to evaluate a different project.
 
-> 项目无关的 AI 工作流自动化评估平台。换项目时只替换 `spec-checkers/<project>/`，其余直接复用。
+> ⚠️ This document is `eval/README.md`, placed at the branch root for GitHub visibility. The platform entry point is `eval/evaluate.js`.
 
-## 快速开始
+## Quick Start
 
 ```bash
-# 1. 启动被测项目网站
+# 1. Start the project under test
 cd workshop && npm run dev
 
-# 2. 运行评估（自动探测端口、读配置、跑 checker）
+# 2. Run evaluation (auto-detect port, read config, execute checkers)
 node eval/evaluate.js --workflow=superpowers --no-judge
 
-# 3. 带 AI Judge 评分
+# 3. With AI Judge scoring
 node eval/evaluate.js --workflow=superpowers
 ```
 
-## 三层架构
+## Three-Layer Architecture
 
-### 1. Spec Checkers（客观层）
+### 1. Spec Checkers (Objective)
 
-每条验收标准 → 一个可执行 checker，返回 `{ pass: boolean, detail: string }`。
+Each acceptance criterion → one executable checker, returning `{ pass: boolean, detail: string }`.
 
-| 类型 | 说明 | 示例 |
-|------|------|------|
-| `static` | 文件扫描、代码正则匹配 | 检查 `package.json` 是否有 React 依赖 |
-| `browser` | Puppeteer 打开页面检查 DOM | `page.goto('/hamster')` → 检查是否显示仓鼠名 |
+| Type | Method | Example |
+|------|--------|---------|
+| `static` | File scanning, regex matching | Check `package.json` for React dependency |
+| `browser` | Puppeteer opens page, inspects DOM | `page.goto('/hamster')` → verify hamster name displayed |
 
-当前 `hamster/` 项目有 19 个 checker（F1: 7, F2: 4, F3: 8）。浏览器 checker 用系统 Edge（`puppeteer-core`），无需下载 Chromium。
+Current `hamster/` project: 19 checkers (F1: 7, F2: 4, F3: 8). Browser checkers use system Edge via `puppeteer-core` — no Chromium download needed.
 
-### 2. Data Parsers（数据层）
+### 2. Data Parsers (Automated)
 
-全自动从源文件提取，无需人工记录：
+Fully automated extraction from source files. No manual recording.
 
-| Parser | 输入 | 输出 | 换项目 |
-|--------|------|------|--------|
-| `token-parser.js` | Session JSONL | `{ input_tokens, output_tokens, total_tokens }` | 否 |
-| `git-parser.js` | `git diff` | `{ lines_added, lines_deleted, files_added, files_modified, commits }` | 否 |
-| `session-parser.js` | Session JSONL | `{ user_messages, agent_responses, clarification_questions }` | 否 |
+| Parser | Input | Output | Project-agnostic |
+|--------|-------|--------|------------------|
+| `token-parser.js` | Session JSONL | `{ input_tokens, output_tokens, total_tokens }` | Yes |
+| `git-parser.js` | `git diff` | `{ lines_added, lines_deleted, files_added, files_modified, commits }` | Yes |
+| `session-parser.js` | Session JSONL | `{ user_messages, agent_responses, clarification_questions }` | Yes |
 
-### 3. AI Judge（主观层）
+### 3. AI Judge (Subjective)
 
-独立 LLM（非编码 Agent）根据 rubric 打分。每次评分附带 2-3 句具体证据。
+Independent LLM (not the coding agent) scores using rubrics. Each score is accompanied by 2–3 pieces of specific evidence.
 
-| Judge | 评估维度 | 评分方式 |
-|-------|---------|---------|
-| `readability.md` | 5 维：命名 (25%)、结构 (25%)、格式 (15%)、注释 (15%)、DRY (20%) | 1-5 分 |
-| `ui-quality.md` | 5 维：布局、间距、视觉层级、色彩、移动适配 | 1-5 分 |
-| `code-reuse.md` | 对比两个 Feature 的 diff | Yes / No / N/A + 证据 |
+| Judge | Dimensions | Scale |
+|-------|-----------|-------|
+| `readability.md` | 5-axis: Naming (25%), Structure (25%), Formatting (15%), Comments (15%), DRY (20%) | 1–5 |
+| `ui-quality.md` | 5-axis: Layout, Spacing, Hierarchy, Color, Mobile | 1–5 |
+| `code-reuse.md` | Compare diffs across features | Yes / No / N/A + evidence |
 
-Judge 支持 DeepSeek、OpenAI 或任何 OpenAI-compatible 的 API。首次运行时交互式输入 key（也可设 `LLM_API_KEY` 环境变量跳过）。
+Supports DeepSeek, OpenAI, or any OpenAI-compatible API. Enter credentials interactively on first run (or set `LLM_API_KEY` env var to skip).
 
-## 目录结构
+## Directory Structure
 
 ```
 eval/
-├── evaluate.js            ← 主入口：checkers → parsers → judge → CSV
-├── eval-config.json       ← 注册 workflow（session 路径、baseline commit），运行用 --workflow=
+├── evaluate.js            ← Main entry: checkers → parsers → judge → CSV
+├── eval-config.json       ← Register workflows (session path, baseline commit). Run with --workflow=
 ├── spec-checkers/
-│   └── hamster/           ← 19 条验收标准（F1: 7, F2: 4, F3: 8）
+│   └── hamster/           ← 19 acceptance criteria (F1: 7, F2: 4, F3: 8)
 ├── parsers/
 │   ├── token-parser.js
 │   ├── git-parser.js
 │   └── session-parser.js
 ├── judges/
-│   ├── readability.md     ← rubric: 命名/结构/格式/注释/DRY
-│   ├── ui-quality.md      ← rubric: 布局/间距/层级/色彩/移动
-│   ├── code-reuse.md      ← rubric: Yes/No/N/A + 证据
-│   └── call.js            ← 调外部 LLM API
+│   ├── readability.md     ← Rubric: naming/structure/formatting/comments/DRY
+│   ├── ui-quality.md      ← Rubric: layout/spacing/hierarchy/color/mobile
+│   ├── code-reuse.md      ← Rubric: Yes/No/N/A + evidence
+│   └── call.js            ← Calls external LLM API
 └── output/
-    └── results.csv        ← 自动生成的评估行
+    └── results.csv        ← Auto-generated evaluation rows
 ```
 
-## 已验证结果
+## Verified Results
 
-平台在三个 workflow 上产出与人工记录高度一致的评分：
+The platform independently re-evaluated all three workflow branches, producing scores highly consistent with manual recording:
 
 | Workflow | F1 | F2 | F3 | Token | Readability (AI) |
 |----------|----|----|----|-------|-----------------|
@@ -83,28 +83,32 @@ eval/
 | Matt Skills | 5/7 | 4/4 | 5/8 | 1,549K | 4/5 |
 | Agent Skills | 5/7 | 1/4 | 7/8 | 491K* | 4/5 |
 
-> \*Agent Skills: F3 session log 为 `.md` 格式，JSONL 仅覆盖 F1+F2。
+> \*Agent Skills: F3 session log in `.md` format; JSONL covers F1+F2 only.
 
-### 与人工记录对比
+### Cross-Validation with Manual Records
 
-| 指标 | 人工 | 平台 | 一致性 |
-|------|------|------|--------|
-| Token | 手动从 JSONL 提取 | 自动解析 | ✅ 完全一致 (702K / 1,549K) |
-| Spec 合规 | 逐条手动验收 | 自动化 checker | ✅ 方向一致 |
-| Readability | 主观打分 | AI Judge + rubric | ≈ 平台偏保守 (全 4/5) |
-| 耗时 | ~10min/workflow | ~30s/workflow | ⚡ 20× 加速 |
+| Metric | Manual | Platform | Agreement |
+|--------|--------|----------|-----------|
+| Token count | Manual JSONL extraction | Automated parsing | ✅ Exact match (702K / 1,549K) |
+| Spec compliance | Manual per-criterion verification | Automated checkers | ✅ Consistent direction |
+| Readability | Subjective scoring | AI Judge + rubric | ≈ Platform slightly more conservative (all 4/5) |
+| Time per workflow | ~10min | ~30s | ⚡ 20× speedup |
 
-## 换项目
+## Methodology Note
 
-1. 把被测项目代码放到 `workshop/`（或指定路径）
-2. 在 `spec-checkers/` 下新建 `<project>/` 文件夹
-3. 编写该项目每个 Feature 的 checker
-4. 在 `eval-config.json` 注册 workflow 的 session 路径和 baseline commit
-5. 其余无需修改——parser、judge、evaluate.js 均为项目无关
+The spec checkers are calibrated against the frozen `case-spec.md`. Superpowers achieved a perfect 19/19 score, confirming full spec compliance is attainable. The platform treats Superpowers' implementation as the reference standard — deviations in Matt and Agent Skills reflect genuine implementation differences (e.g., no fallback chat, different server file layout, non-circular photo), not checker errors. This strictness is intentional: the goal is to measure specification fidelity, not to rank workflows.
 
-## 已知限制
+## Porting to Another Project
 
-- **浏览器 checker 需要被测项目本地运行**（`npm run dev`）
-- **MongoDB checker 需要数据库连接**（种子数据需预先导入）
-- **AI Judge 需要独立 API key**（建议和编码 Agent 使用不同模型保证公平）
-- **Puppeteer 在受限环境可能无法安装**——此时仅静态 checker 可用
+1. Place the project under test in `workshop/` (or specify a custom path)
+2. Create a new folder under `spec-checkers/` (e.g., `spec-checkers/todo-app/`)
+3. Write checkers for each feature
+4. Register workflows in `eval-config.json` (session path, baseline commit)
+5. No other changes needed — parsers, judges, and `evaluate.js` are project-agnostic
+
+## Known Limitations
+
+- **Browser checkers require a running dev server** (`npm run dev`)
+- **MongoDB checkers require database connectivity** (seed data must be pre-loaded)
+- **AI Judge requires a separate API key** (use a different model than the coding agent for fairness)
+- **Puppeteer may not install in restricted environments** — static checkers remain functional
