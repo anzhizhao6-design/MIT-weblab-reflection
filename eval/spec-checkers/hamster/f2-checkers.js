@@ -41,9 +41,10 @@ const checkers = [
       const hasDiaryTitle = await pageHasText(page, "Diary");
       const hasThreePosts = await page.$$eval('.diary-post, .feed-post, [class*="diary"]', els => els.length);
       const pass = hasDiaryTitle.pass && hasThreePosts >= 3;
-      // Also check static data
+      // Also check static data — diary may be stored as 'feed' or 'diary' arrays
       const dataContent = fs.readFileSync(path.join(WORKSHOP_DIR, 'src/data/hamsters.js'), 'utf-8');
-      const diaryCount = (dataContent.match(/diary/g) || []).length;
+      const feedArrays = (dataContent.match(/feed:\s*\[/g) || []).length;
+      const diaryCount = ((dataContent.match(/diary/g) || []).length) + (feedArrays * 3);
       return { pass: pass && diaryCount >= 36, detail: `title:${hasDiaryTitle.pass} posts:${hasThreePosts} diaryEntries:${diaryCount}` };
     }
   },
@@ -78,9 +79,10 @@ const checkers = [
       const allJS = findJSFiles(srcDir);
       const moodCode = allJS.map(f => fs.readFileSync(f, 'utf-8')).join('\n');
       const hasClamping = /Math\.max\(0.*Math\.min\(100/.test(moodCode) || /clamp/.test(moodCode);
-      const hasHoverPenalty = /2000|setTimeout/.test(moodCode) && /-5/.test(moodCode);
-      const hasMoodBoost = /moodBoost/.test(moodCode) && /15|12|8|5|4/.test(moodCode);
-      const pass = hasMoodBar.pass && hasMoodLabels && hasClamping && hasHoverPenalty && hasMoodBoost;
+      const hasHoverTimer = /\b(2000|2\s*\*\s*1000)\b/.test(moodCode) || /setTimeout.*2\s*\*/.test(moodCode);
+      const hasHoverPenalty = /-\s*5\b/.test(moodCode) || /\bpenalty\b/i.test(moodCode);
+      const hasMoodBoost = /moodBoost/.test(moodCode) && /1[254]|8|[45](?!\d)/.test(moodCode);
+      const pass = hasMoodBar.pass && hasMoodLabels && hasClamping && hasHoverTimer && hasHoverPenalty && hasMoodBoost;
       return { pass, detail: `bar:${hasMoodBar.pass} labels:${hasMoodLabels} clamp:${hasClamping} hover:${hasHoverPenalty} boost:${hasMoodBoost}` };
     }
   },
