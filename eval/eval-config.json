@@ -1,0 +1,24 @@
+/**
+ * eval-config.json — Register each workflow once. evaluate.js reads this.
+ *
+ *   session:  path to Claude Code session JSONL
+ *   baseline: git ref for the diff baseline (F1 start commit)
+ *   port:     Vite dev server port (3000 or auto-detect)
+ */
+
+{
+  "workflows": {
+    "superpowers": {
+      "session": "benchmark/runs/superpowers/superpowers-F1-F2-F3.jsonl",
+      "baseline": "3502264"
+    },
+    "matt-skills": {
+      "session": "benchmark/runs/matt-skills/matt-skills-F1-F2-F3.jsonl",
+      "baseline": "37c159d"
+    },
+    "agent-skills": {
+      "session": "benchmark/runs/agent-skills/agent-skills-F1-F2-F3.jsonl",
+      "baseline": "37c159d"
+    }
+  }
+}

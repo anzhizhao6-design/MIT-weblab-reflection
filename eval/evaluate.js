@@ -25,10 +25,26 @@ const args = process.argv.slice(2).reduce((acc, a) => {
 }, {});
 
 const project = args.project || 'hamster';
-const sessionPath = args.session;
-const baselineRef = args.baseline || 'HEAD~1';
+let sessionPath = args.session;
+let baselineRef = args.baseline || 'HEAD~1';
 const targetRef = args.target || 'HEAD';
 const port = args.port || '3000';
+
+// ── Load workflow config ─────────────────────────────────
+if (args.workflow) {
+  const configPath = path.join(__dirname, 'eval-config.json');
+  if (fs.existsSync(configPath)) {
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    const wf = config.workflows[args.workflow];
+    if (wf) {
+      sessionPath = sessionPath || wf.session;
+      baselineRef = args.baseline || wf.baseline;
+      console.log(`Workflow: ${args.workflow}`);
+    } else {
+      console.warn(`  ⚠ Unknown workflow "${args.workflow}". Known: ${Object.keys(config.workflows).join(', ')}`);
+    }
+  }
+}
 const baseUrl = `http://localhost:${port}`;
 const useJudge = !args['no-judge'];
 
