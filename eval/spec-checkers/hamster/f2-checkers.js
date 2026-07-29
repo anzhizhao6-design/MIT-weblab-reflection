@@ -41,11 +41,13 @@ const checkers = [
       const hasDiaryTitle = await pageHasText(page, "Diary");
       const hasThreePosts = await page.$$eval('.diary-post, .feed-post, [class*="diary"]', els => els.length);
       const pass = hasDiaryTitle.pass && hasThreePosts >= 3;
-      // Also check static data — diary may be stored as 'feed' or 'diary' arrays
+      // Also check static data — diary stored in 'diary' or 'feed' arrays
       const dataContent = fs.readFileSync(path.join(WORKSHOP_DIR, 'src/data/hamsters.js'), 'utf-8');
-      const feedArrays = (dataContent.match(/feed:\s*\[/g) || []).length;
-      const diaryCount = ((dataContent.match(/diary/g) || []).length) + (feedArrays * 3);
-      return { pass: pass && diaryCount >= 36, detail: `title:${hasDiaryTitle.pass} posts:${hasThreePosts} diaryEntries:${diaryCount}` };
+      // Count lines that look like diary entries (quoted strings in diary/feed arrays)
+      const diaryLines = (dataContent.match(/^\s*'[^']+',?\s*$/gm) || []).length;
+      const hasDiaryField = /diary\s*:\s*\[/.test(dataContent) || /feed\s*:\s*\[/.test(dataContent);
+      const diaryOk = pass && hasDiaryField && diaryLines >= 30;
+      return { pass: diaryOk, detail: `title:${hasDiaryTitle.pass} posts:${hasThreePosts} diaryField:${hasDiaryField} entries:${diaryLines}` };
     }
   },
 
