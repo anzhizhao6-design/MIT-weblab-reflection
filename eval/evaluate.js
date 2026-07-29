@@ -203,7 +203,9 @@ async function main() {
       process.env.LLM_API_KEY = judgeCredentials.key;
       process.env.LLM_BASE_URL = judgeCredentials.baseUrl;
       process.env.LLM_MODEL = judgeCredentials.model;
-      const result = await callJudge('readability', { diff: `Lines: +${gitData.lines_added} -${gitData.lines_deleted}, Files: +${gitData.files_added} ~${gitData.files_modified}` });
+      const { execSync } = require('child_process');
+      const diffContent = execSync(`git diff ${baselineRef}..${targetRef} --stat -- workshop/ ':!workshop/node_modules' ':!workshop/.vite' ':!workshop/dist' ':!.superpowers'`, { encoding: 'utf-8' });
+      const result = await callJudge('readability', { diff: diffContent });
       readabilityScore = result.score || '';
       console.log(`  Readability: ${result.score}/5`);
       if (result.detail) console.log(`  ${result.detail.substring(0, 200)}`);

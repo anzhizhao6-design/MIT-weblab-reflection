@@ -58,7 +58,15 @@ const checkers = [
     type: 'browser',
     async check(page) {
       await page.goto('http://localhost:3000/hamster', { waitUntil: 'networkidle2', timeout: 10000 });
-      const buttonCount = await page.$$eval('button', btns => btns.filter(b => /food|seed|berry|broccoli|carrot|apple|corn|peanut|oat|cucumber|banana|potato/i.test(b.textContent)).length);
+      const buttons = await page.$$('button');
+      const foodButtons = [];
+      for (const btn of buttons) {
+        const text = await page.evaluate(el => el.textContent, btn);
+        if (/sunflower|strawb|broccoli|carrot|apple|corn|peanut|blueb|cinnam|oat|cucumber|banana|potato/i.test(text)) {
+          foodButtons.push(text.trim());
+        }
+      }
+      const buttonCount = foodButtons.length;
       const hasGoldenBorder = await page.$$eval('[class*="favourite"], [class*="fav"], [style*="gold"]', els => els.length);
       const pass = buttonCount >= 12 && hasGoldenBorder > 0;
       return { pass, detail: `buttons:${buttonCount} goldenBorder:${hasGoldenBorder > 0}` };
