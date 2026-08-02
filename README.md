@@ -70,7 +70,8 @@ MIT-weblab-reflection/
 │   ├── screenshots/           ← UI screenshots per workflow
 │   ├── runs/                  ← Full session logs (JSONL)
 │   └── baseline-log/          ← Original project development log
-└── development-log.md         ← Complete project dev journal
+├──  development-log.md        ← Complete project dev journal 
+└──  development-log-EN.md     ← Complete project dev journal (brief & English version)
 ```
 
 ## Automated Evaluation Platform
